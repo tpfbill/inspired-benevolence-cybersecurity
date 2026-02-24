@@ -1,0 +1,35 @@
+{
+  "name": "inspired-benevolence-cybersecurity",
+  "version": "1.0.0",
+  "description": "Cyber security incident response platform with playbook management and incident monitoring",
+  "main": "index.js",
+  "scripts": {
+    "dev": "concurrently \"npm run backend:dev\" \"npm run frontend:dev\"",
+    "backend:dev": "cd backend && npm run dev",
+    "frontend:dev": "cd frontend && npm run dev",
+    "build": "npm run backend:build && npm run frontend:build",
+    "backend:build": "cd backend && npm run build",
+    "frontend:build": "cd frontend && npm run build",
+    "start": "npm run backend:start",
+    "backend:start": "cd backend && npm start",
+    "db:setup": "cd backend && npm run db:migrate",
+    "test": "npm run backend:test && npm run frontend:test",
+    "backend:test": "cd backend && npm test",
+    "frontend:test": "cd frontend && npm test"
+  },
+  "keywords": [
+    "cybersecurity",
+    "incident-response",
+    "playbooks",
+    "security-operations"
+  ],
+  "author": "Inspired Benevolence LLC",
+  "license": "PROPRIETARY",
+  "workspaces": [
+    "backend",
+    "frontend"
+  ],
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}

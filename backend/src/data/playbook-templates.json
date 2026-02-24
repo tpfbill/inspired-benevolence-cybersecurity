@@ -1,0 +1,454 @@
+[
+  {
+    "name": "Ransomware Incident Response",
+    "incidentType": "ransomware",
+    "description": "Comprehensive playbook for responding to ransomware attacks, based on SANS incident response methodology",
+    "framework": "SANS IR, NIST CSF",
+    "tags": ["ransomware", "malware", "critical"],
+    "steps": [
+      {
+        "stepNumber": 1,
+        "title": "Isolate Affected Systems",
+        "description": "Immediately disconnect affected systems from the network to prevent spread. Do not power off devices as this may destroy evidence.",
+        "assignedRole": "IT_DIRECTOR",
+        "estimatedTime": "5-10 minutes",
+        "criticalStep": true
+      },
+      {
+        "stepNumber": 2,
+        "title": "Notify Leadership",
+        "description": "Alert CEO, CISO, and legal counsel about the incident. Initiate crisis management protocol.",
+        "assignedRole": "EXECUTIVE",
+        "estimatedTime": "10-15 minutes",
+        "criticalStep": true
+      },
+      {
+        "stepNumber": 3,
+        "title": "Preserve Evidence",
+        "description": "Take forensic images of affected systems. Document ransom notes, screen captures, and network logs.",
+        "assignedRole": "SECURITY_ANALYST",
+        "estimatedTime": "30-60 minutes",
+        "dependencies": [1],
+        "criticalStep": true
+      },
+      {
+        "stepNumber": 4,
+        "title": "Identify Ransomware Variant",
+        "description": "Analyze the ransomware to determine variant, encryption method, and potential decryption options.",
+        "assignedRole": "SECURITY_ANALYST",
+        "estimatedTime": "1-2 hours",
+        "dependencies": [3],
+        "criticalStep": false
+      },
+      {
+        "stepNumber": 5,
+        "title": "Assess Impact",
+        "description": "Determine scope of encryption, affected data, systems, and business impact. Identify backup status.",
+        "assignedRole": "IT_DIRECTOR",
+        "estimatedTime": "1-2 hours",
+        "dependencies": [1],
+        "criticalStep": true
+      },
+      {
+        "stepNumber": 6,
+        "title": "Contact Law Enforcement",
+        "description": "Report incident to FBI, local law enforcement, and cybersecurity authorities.",
+        "assignedRole": "LEGAL",
+        "estimatedTime": "30 minutes",
+        "dependencies": [2],
+        "criticalStep": false
+      },
+      {
+        "stepNumber": 7,
+        "title": "Evaluate Payment Decision",
+        "description": "Consult with legal, insurance, and executive team on whether to pay ransom. Document decision rationale.",
+        "assignedRole": "EXECUTIVE",
+        "estimatedTime": "2-4 hours",
+        "dependencies": [4, 5],
+        "criticalStep": true
+      },
+      {
+        "stepNumber": 8,
+        "title": "Initiate Recovery",
+        "description": "Restore systems from clean backups or use decryption tools if available. Verify system integrity.",
+        "assignedRole": "IT_DIRECTOR",
+        "estimatedTime": "4-24 hours",
+        "dependencies": [7],
+        "criticalStep": true
+      },
+      {
+        "stepNumber": 9,
+        "title": "Employee Communication",
+        "description": "Notify affected employees, provide guidance on security measures, and address concerns.",
+        "assignedRole": "HR",
+        "estimatedTime": "1-2 hours",
+        "dependencies": [2],
+        "criticalStep": false
+      },
+      {
+        "stepNumber": 10,
+        "title": "Post-Incident Review",
+        "description": "Conduct lessons learned session, update security controls, and improve incident response procedures.",
+        "assignedRole": "SECURITY_ANALYST",
+        "estimatedTime": "4-8 hours",
+        "dependencies": [8],
+        "criticalStep": false
+      }
+    ]
+  },
+  {
+    "name": "Phishing Attack Response",
+    "incidentType": "phishing",
+    "description": "Step-by-step response to phishing attacks targeting employees",
+    "framework": "NIST CSF",
+    "tags": ["phishing", "social-engineering", "email"],
+    "steps": [
+      {
+        "stepNumber": 1,
+        "title": "Verify Phishing Report",
+        "description": "Confirm the email is indeed a phishing attempt. Analyze headers, links, and attachments.",
+        "assignedRole": "SECURITY_ANALYST",
+        "estimatedTime": "10-15 minutes",
+        "criticalStep": true
+      },
+      {
+        "stepNumber": 2,
+        "title": "Identify Affected Users",
+        "description": "Search email logs to identify all recipients of the phishing email.",
+        "assignedRole": "IT_DIRECTOR",
+        "estimatedTime": "15-30 minutes",
+        "dependencies": [1],
+        "criticalStep": true
+      },
+      {
+        "stepNumber": 3,
+        "title": "Quarantine Emails",
+        "description": "Remove phishing emails from all mailboxes and quarantine similar messages.",
+        "assignedRole": "IT_DIRECTOR",
+        "estimatedTime": "20-30 minutes",
+        "dependencies": [2],
+        "criticalStep": true
+      },
+      {
+        "stepNumber": 4,
+        "title": "Block Sender and Malicious URLs",
+        "description": "Add sender to blocklist and blacklist any malicious URLs at firewall/proxy level.",
+        "assignedRole": "SECURITY_ANALYST",
+        "estimatedTime": "15-20 minutes",
+        "dependencies": [1],
+        "criticalStep": true
+      },
+      {
+        "stepNumber": 5,
+        "title": "Check for Compromises",
+        "description": "Identify users who clicked links or opened attachments. Scan for malware and check for credential compromise.",
+        "assignedRole": "SECURITY_ANALYST",
+        "estimatedTime": "1-2 hours",
+        "dependencies": [2],
+        "criticalStep": true
+      },
+      {
+        "stepNumber": 6,
+        "title": "Reset Compromised Credentials",
+        "description": "Force password resets for affected users and enable MFA if not already active.",
+        "assignedRole": "IT_DIRECTOR",
+        "estimatedTime": "30-60 minutes",
+        "dependencies": [5],
+        "criticalStep": true
+      },
+      {
+        "stepNumber": 7,
+        "title": "User Notification",
+        "description": "Send security alert to all employees warning about the phishing campaign.",
+        "assignedRole": "HR",
+        "estimatedTime": "30 minutes",
+        "dependencies": [3],
+        "criticalStep": false
+      },
+      {
+        "stepNumber": 8,
+        "title": "Security Awareness Training",
+        "description": "Conduct targeted training for affected users on identifying phishing attempts.",
+        "assignedRole": "HR",
+        "estimatedTime": "2-4 hours",
+        "dependencies": [7],
+        "criticalStep": false
+      },
+      {
+        "stepNumber": 9,
+        "title": "Report to Authorities",
+        "description": "Report phishing campaign to relevant authorities (FBI IC3, Anti-Phishing Working Group).",
+        "assignedRole": "LEGAL",
+        "estimatedTime": "30 minutes",
+        "dependencies": [1],
+        "criticalStep": false
+      }
+    ]
+  },
+  {
+    "name": "Data Breach Response",
+    "incidentType": "data_breach",
+    "description": "Comprehensive data breach incident response following GDPR and privacy regulations",
+    "framework": "NIST CSF, GDPR, CCPA",
+    "tags": ["data-breach", "privacy", "compliance"],
+    "steps": [
+      {
+        "stepNumber": 1,
+        "title": "Contain the Breach",
+        "description": "Immediately stop unauthorized access. Disable compromised accounts and close attack vectors.",
+        "assignedRole": "SECURITY_ANALYST",
+        "estimatedTime": "30-60 minutes",
+        "criticalStep": true
+      },
+      {
+        "stepNumber": 2,
+        "title": "Activate Breach Response Team",
+        "description": "Assemble incident response team including IT, Legal, PR, and Executive leadership.",
+        "assignedRole": "EXECUTIVE",
+        "estimatedTime": "15-30 minutes",
+        "criticalStep": true
+      },
+      {
+        "stepNumber": 3,
+        "title": "Assess Breach Scope",
+        "description": "Determine what data was accessed, how many records affected, and sensitivity of data.",
+        "assignedRole": "SECURITY_ANALYST",
+        "estimatedTime": "2-4 hours",
+        "dependencies": [1],
+        "criticalStep": true
+      },
+      {
+        "stepNumber": 4,
+        "title": "Preserve Evidence",
+        "description": "Collect and preserve all evidence including logs, forensic images, and network captures.",
+        "assignedRole": "SECURITY_ANALYST",
+        "estimatedTime": "1-3 hours",
+        "dependencies": [1],
+        "criticalStep": true
+      },
+      {
+        "stepNumber": 5,
+        "title": "Legal Review and Notification Requirements",
+        "description": "Determine legal obligations for breach notification under GDPR, CCPA, HIPAA, etc.",
+        "assignedRole": "LEGAL",
+        "estimatedTime": "2-4 hours",
+        "dependencies": [3],
+        "criticalStep": true
+      },
+      {
+        "stepNumber": 6,
+        "title": "Notify Regulatory Authorities",
+        "description": "Report breach to required authorities within mandated timeframes (72 hours for GDPR).",
+        "assignedRole": "LEGAL",
+        "estimatedTime": "2-4 hours",
+        "dependencies": [5],
+        "criticalStep": true
+      },
+      {
+        "stepNumber": 7,
+        "title": "Notify Affected Individuals",
+        "description": "Prepare and send notification to affected individuals with details and remediation steps.",
+        "assignedRole": "LEGAL",
+        "estimatedTime": "4-8 hours",
+        "dependencies": [5],
+        "criticalStep": true
+      },
+      {
+        "stepNumber": 8,
+        "title": "Public Communication",
+        "description": "Prepare public statement and FAQ. Coordinate with PR team on messaging.",
+        "assignedRole": "EXECUTIVE",
+        "estimatedTime": "2-4 hours",
+        "dependencies": [5],
+        "criticalStep": false
+      },
+      {
+        "stepNumber": 9,
+        "title": "Offer Credit Monitoring",
+        "description": "Arrange credit monitoring services for affected individuals if PII was compromised.",
+        "assignedRole": "LEGAL",
+        "estimatedTime": "4-8 hours",
+        "dependencies": [7],
+        "criticalStep": false
+      },
+      {
+        "stepNumber": 10,
+        "title": "Remediation and Prevention",
+        "description": "Fix vulnerabilities, enhance security controls, and implement measures to prevent recurrence.",
+        "assignedRole": "IT_DIRECTOR",
+        "estimatedTime": "1-4 weeks",
+        "dependencies": [4],
+        "criticalStep": true
+      }
+    ]
+  },
+  {
+    "name": "DDoS Attack Mitigation",
+    "incidentType": "ddos",
+    "description": "Response procedures for Distributed Denial of Service attacks",
+    "framework": "NIST CSF",
+    "tags": ["ddos", "availability", "network"],
+    "steps": [
+      {
+        "stepNumber": 1,
+        "title": "Confirm DDoS Attack",
+        "description": "Verify traffic patterns, analyze network logs, and confirm attack is DDoS.",
+        "assignedRole": "SECURITY_ANALYST",
+        "estimatedTime": "10-15 minutes",
+        "criticalStep": true
+      },
+      {
+        "stepNumber": 2,
+        "title": "Contact ISP/DDoS Mitigation Provider",
+        "description": "Immediately contact ISP and DDoS mitigation service to activate protection.",
+        "assignedRole": "IT_DIRECTOR",
+        "estimatedTime": "15-30 minutes",
+        "dependencies": [1],
+        "criticalStep": true
+      },
+      {
+        "stepNumber": 3,
+        "title": "Enable DDoS Protection",
+        "description": "Activate CDN, load balancers, and traffic filtering to absorb and filter attack traffic.",
+        "assignedRole": "IT_DIRECTOR",
+        "estimatedTime": "20-40 minutes",
+        "dependencies": [2],
+        "criticalStep": true
+      },
+      {
+        "stepNumber": 4,
+        "title": "Analyze Attack Vectors",
+        "description": "Identify attack type (volumetric, application layer, protocol) and source IPs.",
+        "assignedRole": "SECURITY_ANALYST",
+        "estimatedTime": "30-60 minutes",
+        "dependencies": [1],
+        "criticalStep": false
+      },
+      {
+        "stepNumber": 5,
+        "title": "Implement Rate Limiting",
+        "description": "Configure rate limiting and traffic shaping to protect critical services.",
+        "assignedRole": "IT_DIRECTOR",
+        "estimatedTime": "30-60 minutes",
+        "dependencies": [4],
+        "criticalStep": true
+      },
+      {
+        "stepNumber": 6,
+        "title": "Business Continuity Assessment",
+        "description": "Assess impact on business operations and activate continuity plans if needed.",
+        "assignedRole": "EXECUTIVE",
+        "estimatedTime": "1-2 hours",
+        "dependencies": [1],
+        "criticalStep": false
+      },
+      {
+        "stepNumber": 7,
+        "title": "Monitor and Adjust",
+        "description": "Continuously monitor attack patterns and adjust mitigation strategies as needed.",
+        "assignedRole": "SECURITY_ANALYST",
+        "estimatedTime": "Ongoing",
+        "dependencies": [3, 5],
+        "criticalStep": true
+      },
+      {
+        "stepNumber": 8,
+        "title": "Document Incident",
+        "description": "Record attack timeline, mitigation steps, and effectiveness for post-incident analysis.",
+        "assignedRole": "SECURITY_ANALYST",
+        "estimatedTime": "2-4 hours",
+        "dependencies": [7],
+        "criticalStep": false
+      }
+    ]
+  },
+  {
+    "name": "Insider Threat Response",
+    "incidentType": "insider_threat",
+    "description": "Procedures for responding to malicious or negligent insider threats",
+    "framework": "NIST CSF",
+    "tags": ["insider-threat", "data-loss", "employee"],
+    "steps": [
+      {
+        "stepNumber": 1,
+        "title": "Verify Threat Indicators",
+        "description": "Review logs, access patterns, and data movement to confirm suspicious insider activity.",
+        "assignedRole": "SECURITY_ANALYST",
+        "estimatedTime": "1-2 hours",
+        "criticalStep": true
+      },
+      {
+        "stepNumber": 2,
+        "title": "Consult Legal and HR",
+        "description": "Immediately involve legal counsel and HR to ensure compliance with employment laws.",
+        "assignedRole": "LEGAL",
+        "estimatedTime": "30-60 minutes",
+        "dependencies": [1],
+        "criticalStep": true
+      },
+      {
+        "stepNumber": 3,
+        "title": "Preserve Evidence",
+        "description": "Collect evidence including logs, emails, file access records without alerting the suspect.",
+        "assignedRole": "SECURITY_ANALYST",
+        "estimatedTime": "2-4 hours",
+        "dependencies": [1],
+        "criticalStep": true
+      },
+      {
+        "stepNumber": 4,
+        "title": "Assess Data Exfiltration",
+        "description": "Determine what data was accessed, copied, or transmitted outside the organization.",
+        "assignedRole": "SECURITY_ANALYST",
+        "estimatedTime": "2-4 hours",
+        "dependencies": [3],
+        "criticalStep": true
+      },
+      {
+        "stepNumber": 5,
+        "title": "Restrict Access",
+        "description": "Revoke suspect's access to systems, networks, and physical facilities.",
+        "assignedRole": "IT_DIRECTOR",
+        "estimatedTime": "15-30 minutes",
+        "dependencies": [2],
+        "criticalStep": true
+      },
+      {
+        "stepNumber": 6,
+        "title": "Conduct Investigation",
+        "description": "Perform detailed investigation with HR, Legal, and potentially external forensics team.",
+        "assignedRole": "SECURITY_ANALYST",
+        "estimatedTime": "1-2 weeks",
+        "dependencies": [3, 4],
+        "criticalStep": true
+      },
+      {
+        "stepNumber": 7,
+        "title": "Employee Interview",
+        "description": "HR and Legal conduct formal interview with the employee if appropriate.",
+        "assignedRole": "HR",
+        "estimatedTime": "1-2 hours",
+        "dependencies": [6],
+        "criticalStep": false
+      },
+      {
+        "stepNumber": 8,
+        "title": "Determine Actions",
+        "description": "Decide on disciplinary action, termination, or legal prosecution based on findings.",
+        "assignedRole": "EXECUTIVE",
+        "estimatedTime": "2-4 hours",
+        "dependencies": [6, 7],
+        "criticalStep": true
+      },
+      {
+        "stepNumber": 9,
+        "title": "Remediation",
+        "description": "Enhance monitoring, implement DLP solutions, and improve access controls.",
+        "assignedRole": "IT_DIRECTOR",
+        "estimatedTime": "1-2 weeks",
+        "dependencies": [8],
+        "criticalStep": false
+      }
+    ]
+  }
+]
