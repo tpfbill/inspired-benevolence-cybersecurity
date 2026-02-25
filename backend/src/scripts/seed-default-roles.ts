@@ -16,7 +16,7 @@ const defaultRoles = [
       'manage_settings'
     ],
     color: '#9333EA',
-    isSystem: true
+    isSystem: false
   },
   {
     name: 'Security Analyst',
@@ -33,7 +33,7 @@ const defaultRoles = [
       'view_compliance'
     ],
     color: '#DC2626',
-    isSystem: true
+    isSystem: false
   },
   {
     name: 'IT Director',
@@ -47,7 +47,7 @@ const defaultRoles = [
       'view_compliance'
     ],
     color: '#2563EB',
-    isSystem: true
+    isSystem: false
   },
   {
     name: 'Legal',
@@ -61,7 +61,7 @@ const defaultRoles = [
       'manage_notifications'
     ],
     color: '#D97706',
-    isSystem: true
+    isSystem: false
   },
   {
     name: 'HR',
@@ -74,7 +74,7 @@ const defaultRoles = [
       'manage_communications'
     ],
     color: '#16A34A',
-    isSystem: true
+    isSystem: false
   },
   {
     name: 'Executive',
@@ -88,7 +88,7 @@ const defaultRoles = [
       'approve_decisions'
     ],
     color: '#1F2937',
-    isSystem: true
+    isSystem: false
   },
   {
     name: 'Viewer',
@@ -100,7 +100,7 @@ const defaultRoles = [
       'view_alerts'
     ],
     color: '#6B7280',
-    isSystem: true
+    isSystem: false
   }
 ];
 
@@ -146,7 +146,8 @@ async function seedDefaultRoles() {
     defaultRoles.forEach(role => role.permissions.forEach(p => allPermissions.add(p)));
     Array.from(allPermissions).sort().forEach(p => console.log(`   - ${p}`));
     
-    console.log(`\n💡 You can now create custom roles using these permissions!`);
+    console.log(`\n💡 All roles are now fully editable and deletable!`);
+    console.log(`   You can modify any role's name, permissions, or color.`);
     
     process.exit(0);
   } catch (error) {

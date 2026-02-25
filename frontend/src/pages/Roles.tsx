@@ -136,36 +136,28 @@ export default function Roles() {
     );
   }
 
-  const systemRoles = roles?.filter((r: any) => r.isSystem) || [];
-  const customRoles = roles?.filter((r: any) => !r.isSystem) || [];
-
   return (
     <div className="space-y-6">
       <div className="flex justify-between items-center">
         <div>
           <h1 className="text-3xl font-bold text-gray-900">Role Management</h1>
-          <p className="text-gray-600 mt-1">Create custom roles with specific permissions</p>
+          <p className="text-gray-600 mt-1">Create and manage roles with specific permissions</p>
         </div>
         <button
           onClick={() => setShowCreateRole(!showCreateRole)}
           className="btn btn-primary flex items-center"
         >
           <Plus className="h-5 w-5 mr-2" />
-          Create Custom Role
+          Create New Role
         </button>
       </div>
 
       {/* Summary Stats */}
-      <div className="grid grid-cols-3 gap-4">
-        <div className="card text-center">
-          <Shield className="h-8 w-8 text-gray-400 mx-auto mb-2" />
-          <div className="text-2xl font-bold text-gray-900">{systemRoles.length}</div>
-          <div className="text-sm text-gray-500">System Roles</div>
-        </div>
+      <div className="grid grid-cols-2 gap-4">
         <div className="card text-center">
           <Shield className="h-8 w-8 text-primary-600 mx-auto mb-2" />
-          <div className="text-2xl font-bold text-gray-900">{customRoles.length}</div>
-          <div className="text-sm text-gray-500">Custom Roles</div>
+          <div className="text-2xl font-bold text-gray-900">{roles?.length || 0}</div>
+          <div className="text-sm text-gray-500">Total Roles</div>
         </div>
         <div className="card text-center">
           <CheckCircle className="h-8 w-8 text-success-600 mx-auto mb-2" />
@@ -322,43 +314,15 @@ export default function Roles() {
         </div>
       )}
 
-      {/* System Roles */}
-      <div className="card">
-        <h2 className="text-xl font-semibold text-gray-900 mb-4 flex items-center">
-          <Lock className="h-6 w-6 mr-2 text-gray-600" />
-          System Roles ({systemRoles.length})
-        </h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {systemRoles.map((role: any) => (
-            <div key={role.id} className="border border-gray-200 rounded-lg p-4 bg-gray-50">
-              <div className="flex items-start justify-between mb-3">
-                <div
-                  className="px-3 py-1 rounded text-sm font-semibold text-white"
-                  style={{ backgroundColor: role.color }}
-                >
-                  {role.name}
-                </div>
-                <Lock className="h-4 w-4 text-gray-400" title="System role - cannot be edited" />
-              </div>
-              <p className="text-sm text-gray-600 mb-3">{role.description}</p>
-              <div className="flex items-center justify-between text-xs text-gray-500">
-                <span>{role.permissions?.length || 0} permissions</span>
-                <span className="text-gray-400">Protected</span>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {/* Custom Roles */}
+      {/* All Roles */}
       <div className="card">
         <h2 className="text-xl font-semibold text-gray-900 mb-4 flex items-center">
           <Shield className="h-6 w-6 mr-2 text-primary-600" />
-          Custom Roles ({customRoles.length})
+          All Roles ({roles?.length || 0})
         </h2>
-        {customRoles.length > 0 ? (
+        {roles && roles.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {customRoles.map((role: any) => (
+            {roles.map((role: any) => (
               <div key={role.id} className="border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow">
                 <div className="flex items-start justify-between mb-3">
                   <div
@@ -387,7 +351,6 @@ export default function Roles() {
                 <p className="text-sm text-gray-600 mb-3">{role.description}</p>
                 <div className="flex items-center justify-between text-xs">
                   <span className="text-gray-500">{role.permissions?.length || 0} permissions</span>
-                  <span className="text-gray-400">Custom</span>
                 </div>
                 {role.permissions && role.permissions.length > 0 && (
                   <div className="mt-3 pt-3 border-t border-gray-200">
@@ -412,13 +375,13 @@ export default function Roles() {
         ) : (
           <div className="text-center py-12 text-gray-500">
             <Shield className="h-16 w-16 mx-auto mb-4 text-gray-400" />
-            <p className="text-lg mb-2">No custom roles yet</p>
-            <p className="text-sm">Create your first custom role to get started!</p>
+            <p className="text-lg mb-2">No roles yet</p>
+            <p className="text-sm">Create your first role to get started!</p>
             <button
               onClick={() => setShowCreateRole(true)}
               className="btn btn-primary mt-4"
             >
-              Create Custom Role
+              Create Role
             </button>
           </div>
         )}

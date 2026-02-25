@@ -111,11 +111,6 @@ router.put(
         return res.status(404).json({ error: 'Role not found' });
       }
 
-      // Prevent editing system roles
-      if (role.isSystem) {
-        return res.status(403).json({ error: 'Cannot edit system roles' });
-      }
-
       const { name, description, permissions, color } = req.body;
 
       await role.update({
@@ -135,7 +130,7 @@ router.put(
   }
 );
 
-// Delete custom role
+// Delete role
 router.delete(
   '/:id',
   authenticate,
@@ -148,14 +143,9 @@ router.delete(
         return res.status(404).json({ error: 'Role not found' });
       }
 
-      // Prevent deleting system roles
-      if (role.isSystem) {
-        return res.status(403).json({ error: 'Cannot delete system roles' });
-      }
-
       await role.destroy();
 
-      logger.info(`Custom role deleted: ${role.name} by user ${req.userId}`);
+      logger.info(`Role deleted: ${role.name} by user ${req.userId}`);
 
       res.json({ message: 'Role deleted successfully' });
     } catch (error) {
