@@ -21,12 +21,6 @@ router.get('/', authenticate, async (req: AuthRequest, res: Response) => {
 
     const incidents = await Incident.findAll({
       where,
-      include: [
-        { model: Playbook, as: 'playbook' },
-        { model: User, as: 'reporter', attributes: ['id', 'firstName', 'lastName', 'email'] },
-        { model: User, as: 'assignee', attributes: ['id', 'firstName', 'lastName', 'email'] },
-        { model: Task, as: 'tasks' }
-      ],
       order: [['detectedAt', 'DESC']]
     });
 
@@ -39,14 +33,7 @@ router.get('/', authenticate, async (req: AuthRequest, res: Response) => {
 
 router.get('/:id', authenticate, async (req: AuthRequest, res: Response) => {
   try {
-    const incident = await Incident.findByPk(req.params.id, {
-      include: [
-        { model: Playbook, as: 'playbook' },
-        { model: User, as: 'reporter', attributes: ['id', 'firstName', 'lastName', 'email'] },
-        { model: User, as: 'assignee', attributes: ['id', 'firstName', 'lastName', 'email'] },
-        { model: Task, as: 'tasks', include: [{ model: User, as: 'assignee', attributes: ['id', 'firstName', 'lastName'] }] }
-      ]
-    });
+    const incident = await Incident.findByPk(req.params.id);
 
     if (!incident) {
       return res.status(404).json({ error: 'Incident not found' });

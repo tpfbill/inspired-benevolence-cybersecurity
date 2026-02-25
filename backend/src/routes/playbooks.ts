@@ -18,10 +18,6 @@ router.get('/', authenticate, async (req: AuthRequest, res: Response) => {
 
     const playbooks = await Playbook.findAll({
       where,
-      include: [
-        { model: User, as: 'creator', attributes: ['id', 'firstName', 'lastName', 'email'] },
-        { model: User, as: 'modifier', attributes: ['id', 'firstName', 'lastName', 'email'] }
-      ],
       order: [['createdAt', 'DESC']]
     });
 
@@ -34,12 +30,7 @@ router.get('/', authenticate, async (req: AuthRequest, res: Response) => {
 
 router.get('/:id', authenticate, async (req: AuthRequest, res: Response) => {
   try {
-    const playbook = await Playbook.findByPk(req.params.id, {
-      include: [
-        { model: User, as: 'creator', attributes: ['id', 'firstName', 'lastName', 'email'] },
-        { model: User, as: 'modifier', attributes: ['id', 'firstName', 'lastName', 'email'] }
-      ]
-    });
+    const playbook = await Playbook.findByPk(req.params.id);
 
     if (!playbook) {
       return res.status(404).json({ error: 'Playbook not found' });
