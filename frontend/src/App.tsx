@@ -7,6 +7,7 @@ import PlaybookEditor from './pages/PlaybookEditor';
 import Incidents from './pages/Incidents';
 import IncidentDetail from './pages/IncidentDetail';
 import Alerts from './pages/Alerts';
+import Users from './pages/Users';
 import Compliance from './pages/Compliance';
 import Layout from './components/Layout';
 
@@ -34,6 +35,7 @@ function App() {
         <Route path="incidents" element={<Incidents />} />
         <Route path="incidents/:id" element={<IncidentDetail />} />
         <Route path="alerts" element={<Alerts />} />
+        <Route path="users" element={<Users />} />
         <Route path="compliance" element={<Compliance />} />
       </Route>
     </Routes>
