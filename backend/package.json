@@ -12,6 +12,7 @@
     "create:sample-alerts": "tsx src/scripts/create-sample-alerts.ts",
     "create:sample-incidents": "tsx src/scripts/create-sample-incidents.ts",
     "create:team-users": "tsx src/scripts/create-team-users.ts",
+    "seed:roles": "tsx src/scripts/seed-default-roles.ts",
     "test": "jest"
   },
   "dependencies": {

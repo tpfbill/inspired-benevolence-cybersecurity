@@ -15,6 +15,7 @@ import userRoutes from './routes/users';
 import complianceRoutes from './routes/compliance';
 import integrationRoutes from './routes/integrations';
 import taskRoutes from './routes/tasks';
+import roleRoutes from './routes/roles';
 
 dotenv.config();
 
@@ -48,6 +49,7 @@ app.use('/api/users', userRoutes);
 app.use('/api/compliance', complianceRoutes);
 app.use('/api/integrations', integrationRoutes);
 app.use('/api/tasks', taskRoutes);
+app.use('/api/roles', roleRoutes);
 
 io.on('connection', (socket) => {
   logger.info(`Client connected: ${socket.id}`);
