@@ -1,9 +1,13 @@
-import { useQuery } from '@tanstack/react-query';
-import { AlertTriangle, CheckCircle, Clock, XCircle } from 'lucide-react';
+import { useState } from 'react';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { AlertTriangle, CheckCircle, Clock, XCircle, ArrowRight } from 'lucide-react';
 import apiClient from '../api/client';
 import { formatDistanceToNow } from 'date-fns';
 
 export default function Alerts() {
+  const queryClient = useQueryClient();
+  const [escalatingAlert, setEscalatingAlert] = useState<string | null>(null);
+
   const { data: alerts, isLoading } = useQuery({
     queryKey: ['alerts'],
     queryFn: async () => {
@@ -11,6 +15,86 @@ export default function Alerts() {
       return response.data;
     },
   });
+
+  const acknowledgeMutation = useMutation({
+    mutationFn: async (alertId: string) => {
+      return apiClient.put(`/api/alerts/${alertId}/acknowledge`);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['alerts'] });
+    },
+  });
+
+  const escalateMutation = useMutation({
+    mutationFn: async ({ alertId, incidentId }: { alertId: string; incidentId: string }) => {
+      return apiClient.put(`/api/alerts/${alertId}/escalate`, { incidentId });
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['alerts'] });
+      setEscalatingAlert(null);
+    },
+  });
+
+  const handleAcknowledge = (alertId: string) => {
+    acknowledgeMutation.mutate(alertId);
+  };
+
+  const handleEscalate = async (alert: any) => {
+    // Map alert to incident type
+    const incidentTypeMap: any = {
+      'ransomware': 'ransomware',
+      'phishing': 'phishing',
+      'ddos': 'ddos',
+      'malware': 'malware',
+      'unauthorized': 'unauthorized_access',
+      'breach': 'data_breach',
+      'insider': 'insider_threat'
+    };
+
+    // Try to guess incident type from alert title/description
+    let incidentType = 'custom';
+    const alertText = (alert.title + ' ' + alert.description).toLowerCase();
+    
+    for (const [key, value] of Object.entries(incidentTypeMap)) {
+      if (alertText.includes(key)) {
+        incidentType = value;
+        break;
+      }
+    }
+
+    // Determine severity based on alert severity
+    const severityMap: any = {
+      'critical': 'critical',
+      'high': 'high',
+      'medium': 'medium',
+      'low': 'low'
+    };
+
+    try {
+      // Create new incident from alert
+      const incidentResponse = await apiClient.post('/api/incidents', {
+        title: alert.title,
+        description: alert.description,
+        incidentType,
+        severity: severityMap[alert.severity] || 'medium',
+        affectedSystems: alert.affectedAssets || []
+      });
+
+      const newIncidentId = incidentResponse.data.id;
+
+      // Link alert to incident
+      await escalateMutation.mutateAsync({ 
+        alertId: alert.id, 
+        incidentId: newIncidentId 
+      });
+
+      // Show success message or redirect
+      alert('Alert escalated to incident successfully! Incident ID: ' + newIncidentId);
+    } catch (error) {
+      console.error('Error escalating alert:', error);
+      alert('Failed to escalate alert. Please try again.');
+    }
+  };
 
   const getSeverityColor = (severity: string) => {
     switch (severity) {
@@ -90,8 +174,38 @@ export default function Alerts() {
                   </div>
                 </div>
                 <div className="ml-4 flex space-x-2">
-                  <button className="btn btn-danger text-sm">Escalate</button>
-                  <button className="btn btn-secondary text-sm">Acknowledge</button>
+                  {alert.status === 'new' && (
+                    <>
+                      <button 
+                        onClick={() => handleEscalate(alert)}
+                        disabled={escalatingAlert === alert.id}
+                        className="btn btn-danger text-sm flex items-center"
+                      >
+                        <ArrowRight className="h-4 w-4 mr-1" />
+                        {escalatingAlert === alert.id ? 'Escalating...' : 'Escalate'}
+                      </button>
+                      <button 
+                        onClick={() => handleAcknowledge(alert.id)}
+                        className="btn btn-secondary text-sm"
+                      >
+                        Acknowledge
+                      </button>
+                    </>
+                  )}
+                  {alert.status === 'escalated' && (
+                    <span className="text-sm text-primary-600 font-medium">
+                      ✓ Escalated to Incident
+                    </span>
+                  )}
+                  {alert.status === 'acknowledged' && (
+                    <button 
+                      onClick={() => handleEscalate(alert)}
+                      className="btn btn-primary text-sm flex items-center"
+                    >
+                      <ArrowRight className="h-4 w-4 mr-1" />
+                      Escalate
+                    </button>
+                  )}
                 </div>
               </div>
             </div>
@@ -131,8 +245,38 @@ export default function Alerts() {
                   </div>
                 </div>
                 <div className="ml-4 flex space-x-2">
-                  <button className="btn btn-primary text-sm">Investigate</button>
-                  <button className="btn btn-secondary text-sm">Acknowledge</button>
+                  {alert.status === 'new' && (
+                    <>
+                      <button 
+                        onClick={() => handleEscalate(alert)}
+                        disabled={escalatingAlert === alert.id}
+                        className="btn btn-primary text-sm flex items-center"
+                      >
+                        <ArrowRight className="h-4 w-4 mr-1" />
+                        {escalatingAlert === alert.id ? 'Escalating...' : 'Escalate'}
+                      </button>
+                      <button 
+                        onClick={() => handleAcknowledge(alert.id)}
+                        className="btn btn-secondary text-sm"
+                      >
+                        Acknowledge
+                      </button>
+                    </>
+                  )}
+                  {alert.status === 'escalated' && (
+                    <span className="text-sm text-primary-600 font-medium">
+                      ✓ Escalated to Incident
+                    </span>
+                  )}
+                  {alert.status === 'acknowledged' && (
+                    <button 
+                      onClick={() => handleEscalate(alert)}
+                      className="btn btn-primary text-sm flex items-center"
+                    >
+                      <ArrowRight className="h-4 w-4 mr-1" />
+                      Escalate
+                    </button>
+                  )}
                 </div>
               </div>
             </div>
@@ -169,7 +313,24 @@ export default function Alerts() {
                   </div>
                 </div>
                 <div className="ml-4 flex space-x-2">
-                  <button className="btn btn-secondary text-sm">Review</button>
+                  {alert.status === 'new' && (
+                    <button 
+                      onClick={() => handleAcknowledge(alert.id)}
+                      className="btn btn-secondary text-sm"
+                    >
+                      Acknowledge
+                    </button>
+                  )}
+                  {alert.status === 'escalated' && (
+                    <span className="text-sm text-primary-600 font-medium">
+                      ✓ Escalated to Incident
+                    </span>
+                  )}
+                  {alert.status === 'acknowledged' && (
+                    <span className="text-sm text-success-600 font-medium">
+                      ✓ Acknowledged
+                    </span>
+                  )}
                 </div>
               </div>
             </div>

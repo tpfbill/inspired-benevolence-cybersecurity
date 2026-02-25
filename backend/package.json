@@ -10,6 +10,7 @@
     "db:migrate": "node -r dotenv/config src/database/migrate.js",
     "import:playbooks": "tsx src/scripts/import-playbooks.ts",
     "create:sample-alerts": "tsx src/scripts/create-sample-alerts.ts",
+    "create:sample-incidents": "tsx src/scripts/create-sample-incidents.ts",
     "test": "jest"
   },
   "dependencies": {
