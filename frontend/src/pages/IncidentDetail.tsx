@@ -50,6 +50,14 @@ export default function IncidentDetail() {
     enabled: !!incident?.playbookId,
   });
 
+  const { data: users } = useQuery({
+    queryKey: ['users'],
+    queryFn: async () => {
+      const response = await apiClient.get('/api/users');
+      return response.data;
+    },
+  });
+
   const updateStatusMutation = useMutation({
     mutationFn: async (status: string) => {
       return apiClient.put(`/api/incidents/${id}`, { status });
@@ -72,8 +80,8 @@ export default function IncidentDetail() {
   });
 
   const updateTaskMutation = useMutation({
-    mutationFn: async ({ taskId, status }: { taskId: string; status: string }) => {
-      return apiClient.put(`/api/tasks/${taskId}`, { status });
+    mutationFn: async ({ taskId, updates }: { taskId: string; updates: any }) => {
+      return apiClient.put(`/api/tasks/${taskId}`, updates);
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['tasks', id] });
@@ -143,7 +151,11 @@ export default function IncidentDetail() {
   };
 
   const handleTaskStatusChange = (taskId: string, newStatus: string) => {
-    updateTaskMutation.mutate({ taskId, status: newStatus });
+    updateTaskMutation.mutate({ taskId, updates: { status: newStatus } });
+  };
+
+  const handleTaskAssignment = (taskId: string, userId: string) => {
+    updateTaskMutation.mutate({ taskId, updates: { assignedTo: userId } });
   };
 
   const getTaskStatusColor = (status: string) => {
@@ -263,11 +275,34 @@ export default function IncidentDetail() {
                         </div>
                         <h4 className="font-semibold text-gray-900 mb-1">{task.title}</h4>
                         <p className="text-sm text-gray-600 mb-2">{task.description}</p>
-                        <div className="text-xs text-gray-500">
-                          Assigned to: {task.assignedRole?.replace('_', ' ').toUpperCase() || 'Unassigned'}
+                        <div className="flex items-center space-x-4 text-xs mt-2">
+                          <div className="flex items-center space-x-2">
+                            <Users className="h-3 w-3 text-gray-400" />
+                            <span className="text-gray-500">Role: {task.assignedRole?.replace('_', ' ').toUpperCase() || 'Unassigned'}</span>
+                          </div>
+                          {task.assignedTo && users && (
+                            <div className="flex items-center space-x-2">
+                              <span className="text-gray-500">→</span>
+                              <span className="text-primary-600 font-medium">
+                                {users.find((u: any) => u.id === task.assignedTo)?.firstName} {users.find((u: any) => u.id === task.assignedTo)?.lastName}
+                              </span>
+                            </div>
+                          )}
                         </div>
                       </div>
-                      <div className="ml-4">
+                      <div className="ml-4 flex flex-col space-y-2">
+                        <select
+                          value={task.assignedTo || ''}
+                          onChange={(e) => handleTaskAssignment(task.id, e.target.value)}
+                          className="text-sm border border-gray-300 rounded px-2 py-1 min-w-[150px]"
+                        >
+                          <option value="">Assign to...</option>
+                          {users?.map((user: any) => (
+                            <option key={user.id} value={user.id}>
+                              {user.firstName} {user.lastName}
+                            </option>
+                          ))}
+                        </select>
                         <select
                           value={task.status}
                           onChange={(e) => handleTaskStatusChange(task.id, e.target.value)}

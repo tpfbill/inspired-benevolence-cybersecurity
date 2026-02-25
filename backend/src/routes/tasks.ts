@@ -32,7 +32,7 @@ router.put('/:id', authenticate, async (req: AuthRequest, res: Response) => {
       return res.status(404).json({ error: 'Task not found' });
     }
 
-    const { status, notes } = req.body;
+    const { status, notes, assignedTo } = req.body;
 
     const updates: any = {};
     if (status) {
@@ -43,6 +43,7 @@ router.put('/:id', authenticate, async (req: AuthRequest, res: Response) => {
       }
     }
     if (notes !== undefined) updates.notes = notes;
+    if (assignedTo !== undefined) updates.assignedTo = assignedTo || null;
 
     await task.update(updates);
 
