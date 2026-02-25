@@ -23,7 +23,7 @@ export default function Layout() {
               <div className="flex-shrink-0 flex items-center min-w-0">
                 <Shield className="h-8 w-8 text-primary-600 flex-shrink-0" />
                 <span className="ml-2 text-lg lg:text-xl font-bold text-gray-900 truncate hidden sm:block">
-                  IBC Security
+                  IB CyberSecurity
                 </span>
               </div>
               <div className="hidden lg:ml-8 lg:flex lg:space-x-4 xl:space-x-6">

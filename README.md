@@ -1,4 +1,4 @@
-# Inspired Benevolence Cybersecurity Platform
+# IB CyberSecurity Platform
 
 A comprehensive cyber security incident response platform featuring playbook management, incident monitoring, and cross-team collaboration.
 

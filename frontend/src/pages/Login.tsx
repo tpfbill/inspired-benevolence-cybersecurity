@@ -36,10 +36,10 @@ export default function Login() {
             <Shield className="h-16 w-16 text-primary-600" />
           </div>
           <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
-            Inspired Benevolence Cybersecurity
+            IB CyberSecurity
           </h2>
           <p className="mt-2 text-center text-sm text-gray-600">
-            Incident Response Platform
+            Incident Response & Security Operations Platform
           </p>
         </div>
         <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
