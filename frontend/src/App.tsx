@@ -8,6 +8,7 @@ import Incidents from './pages/Incidents';
 import IncidentDetail from './pages/IncidentDetail';
 import Alerts from './pages/Alerts';
 import Users from './pages/Users';
+import Roles from './pages/Roles';
 import Compliance from './pages/Compliance';
 import Layout from './components/Layout';
 
@@ -36,6 +37,7 @@ function App() {
         <Route path="incidents/:id" element={<IncidentDetail />} />
         <Route path="alerts" element={<Alerts />} />
         <Route path="users" element={<Users />} />
+        <Route path="roles" element={<Roles />} />
         <Route path="compliance" element={<Compliance />} />
       </Route>
     </Routes>

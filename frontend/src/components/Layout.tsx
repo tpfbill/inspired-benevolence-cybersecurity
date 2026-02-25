@@ -12,6 +12,7 @@ export default function Layout() {
     { name: 'Incidents', href: '/incidents', icon: Shield },
     { name: 'Alerts', href: '/alerts', icon: AlertTriangle },
     { name: 'Users', href: '/users', icon: Users },
+    { name: 'Roles', href: '/roles', icon: Shield },
     { name: 'Compliance', href: '/compliance', icon: FileText },
   ];
 
