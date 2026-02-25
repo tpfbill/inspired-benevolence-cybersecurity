@@ -14,6 +14,7 @@ import alertRoutes from './routes/alerts';
 import userRoutes from './routes/users';
 import complianceRoutes from './routes/compliance';
 import integrationRoutes from './routes/integrations';
+import taskRoutes from './routes/tasks';
 
 dotenv.config();
 
@@ -46,6 +47,7 @@ app.use('/api/alerts', alertRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/compliance', complianceRoutes);
 app.use('/api/integrations', integrationRoutes);
+app.use('/api/tasks', taskRoutes);
 
 io.on('connection', (socket) => {
   logger.info(`Client connected: ${socket.id}`);
