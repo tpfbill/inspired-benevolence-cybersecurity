@@ -24,23 +24,36 @@ router.get('/dashboard', authenticate, async (req: AuthRequest, res: Response) =
     });
     const activePlaybooks = await Playbook.count({ where: { status: 'active' } });
 
-    const incidentsByType = await Incident.findAll({
+    const incidentsByTypeRaw = await Incident.findAll({
       where: dateFilter,
       attributes: [
         'incidentType',
         [Incident.sequelize!.fn('COUNT', Incident.sequelize!.col('id')), 'count']
       ],
-      group: ['incidentType']
+      group: ['incidentType'],
+      raw: true
     });
 
-    const incidentsBySeverity = await Incident.findAll({
+    const incidentsBySeverityRaw = await Incident.findAll({
       where: dateFilter,
       attributes: [
         'severity',
         [Incident.sequelize!.fn('COUNT', Incident.sequelize!.col('id')), 'count']
       ],
-      group: ['severity']
+      group: ['severity'],
+      raw: true
     });
+
+    // Transform data to ensure count is a number
+    const incidentsByType = incidentsByTypeRaw.map((item: any) => ({
+      incidentType: item.incidentType,
+      count: parseInt(item.count, 10)
+    }));
+
+    const incidentsBySeverity = incidentsBySeverityRaw.map((item: any) => ({
+      severity: item.severity,
+      count: parseInt(item.count, 10)
+    }));
 
     const averageResolutionTime = await Incident.findAll({
       where: {

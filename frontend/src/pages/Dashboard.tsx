@@ -24,6 +24,7 @@ export default function Dashboard() {
     queryKey: ['compliance'],
     queryFn: async () => {
       const response = await apiClient.get('/api/compliance/dashboard');
+      console.log('Compliance data:', response.data);
       return response.data;
     },
   });
@@ -121,40 +122,58 @@ export default function Dashboard() {
           <h3 className="text-lg font-semibold text-gray-900 mb-4">
             Incidents by Type
           </h3>
-          <ResponsiveContainer width="100%" height={300}>
-            <BarChart data={compliance?.incidentsByType || []}>
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="incidentType" />
-              <YAxis />
-              <Tooltip />
-              <Bar dataKey="count" fill="#3b82f6" />
-            </BarChart>
-          </ResponsiveContainer>
+          {compliance?.incidentsByType && compliance.incidentsByType.length > 0 ? (
+            <ResponsiveContainer width="100%" height={300}>
+              <BarChart data={compliance.incidentsByType}>
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="incidentType" />
+                <YAxis />
+                <Tooltip />
+                <Bar dataKey="count" fill="#3b82f6" />
+              </BarChart>
+            </ResponsiveContainer>
+          ) : (
+            <div className="flex items-center justify-center h-[300px] text-gray-500">
+              <div className="text-center">
+                <Shield className="h-12 w-12 mx-auto mb-2 text-gray-400" />
+                <p>No incidents data available</p>
+              </div>
+            </div>
+          )}
         </div>
 
         <div className="card">
           <h3 className="text-lg font-semibold text-gray-900 mb-4">
             Incidents by Severity
           </h3>
-          <ResponsiveContainer width="100%" height={300}>
-            <PieChart>
-              <Pie
-                data={compliance?.incidentsBySeverity || []}
-                cx="50%"
-                cy="50%"
-                labelLine={false}
-                label={(entry) => entry.severity}
-                outerRadius={80}
-                fill="#8884d8"
-                dataKey="count"
-              >
-                {(compliance?.incidentsBySeverity || []).map((_: any, index: number) => (
-                  <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-                ))}
-              </Pie>
-              <Tooltip />
-            </PieChart>
-          </ResponsiveContainer>
+          {compliance?.incidentsBySeverity && compliance.incidentsBySeverity.length > 0 ? (
+            <ResponsiveContainer width="100%" height={300}>
+              <PieChart>
+                <Pie
+                  data={compliance.incidentsBySeverity}
+                  cx="50%"
+                  cy="50%"
+                  labelLine={false}
+                  label={(entry) => `${entry.severity}: ${entry.count}`}
+                  outerRadius={80}
+                  fill="#8884d8"
+                  dataKey="count"
+                >
+                  {compliance.incidentsBySeverity.map((_: any, index: number) => (
+                    <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                  ))}
+                </Pie>
+                <Tooltip />
+              </PieChart>
+            </ResponsiveContainer>
+          ) : (
+            <div className="flex items-center justify-center h-[300px] text-gray-500">
+              <div className="text-center">
+                <Shield className="h-12 w-12 mx-auto mb-2 text-gray-400" />
+                <p>No incidents data available</p>
+              </div>
+            </div>
+          )}
         </div>
       </div>
 
