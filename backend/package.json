@@ -13,6 +13,7 @@
     "create:sample-incidents": "tsx src/scripts/create-sample-incidents.ts",
     "create:team-users": "tsx src/scripts/create-team-users.ts",
     "seed:roles": "tsx src/scripts/seed-default-roles.ts",
+    "reset:admin": "tsx src/scripts/reset-admin-password.ts",
     "test": "jest"
   },
   "dependencies": {
