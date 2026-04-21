@@ -1,4 +1,4 @@
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
 import { 
@@ -12,16 +12,24 @@ import {
   PlayCircle,
   ChevronRight,
   Plus,
-  Upload
+  Upload,
+  ListTodo,
+  Archive,
+  RotateCcw,
+  TrendingUp,
+  Trash2
 } from 'lucide-react';
 import apiClient from '../api/client';
 import { format, formatDistanceToNow } from 'date-fns';
+import ActivePlaybookView from '../components/ActivePlaybookView';
 
 export default function IncidentDetail() {
   const { id } = useParams();
+  const navigate = useNavigate();
   const queryClient = useQueryClient();
   const [newTimelineEntry, setNewTimelineEntry] = useState({ action: '', description: '' });
   const [showAddTimeline, setShowAddTimeline] = useState(false);
+  const [activeTab, setActiveTab] = useState<'playbook' | 'tasks'>('playbook');
 
   const { data: incident, isLoading } = useQuery({
     queryKey: ['incident', id],
@@ -85,6 +93,73 @@ export default function IncidentDetail() {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['tasks', id] });
+    },
+  });
+
+  const sendNotificationsMutation = useMutation({
+    mutationFn: async () => {
+      return apiClient.post(`/api/notifications/incident/${id}/notify`);
+    },
+    onSuccess: (response) => {
+      alert(`✅ Sent ${response.data.notified} task notifications!\n${response.data.skipped} tasks skipped (awaiting dependencies).`);
+    },
+    onError: (error: any) => {
+      alert(`❌ Failed to send notifications: ${error.response?.data?.message || error.message}`);
+    },
+  });
+
+  const archiveIncidentMutation = useMutation({
+    mutationFn: async (reason: string) => {
+      return apiClient.post(`/api/incidents/${id}/archive`, { reason });
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['incident', id] });
+      queryClient.invalidateQueries({ queryKey: ['incidents'] });
+      alert('✅ Incident archived successfully!');
+    },
+    onError: (error: any) => {
+      alert(`❌ Failed to archive incident: ${error.response?.data?.message || error.message}`);
+    },
+  });
+
+  const restoreIncidentMutation = useMutation({
+    mutationFn: async () => {
+      return apiClient.post(`/api/incidents/${id}/restore`);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['incident', id] });
+      queryClient.invalidateQueries({ queryKey: ['incidents'] });
+      alert('✅ Incident restored successfully!');
+    },
+    onError: (error: any) => {
+      alert(`❌ Failed to restore incident: ${error.response?.data?.message || error.message}`);
+    },
+  });
+
+  const deleteIncidentMutation = useMutation({
+    mutationFn: async () => {
+      return apiClient.delete(`/api/incidents/${id}`);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['incidents'] });
+      alert('✅ Incident deleted successfully!');
+      navigate('/incidents');
+    },
+    onError: (error: any) => {
+      alert(`❌ Failed to delete incident: ${error.response?.data?.error || error.message}`);
+    },
+  });
+
+  const escalateIncidentMutation = useMutation({
+    mutationFn: async () => {
+      return apiClient.post(`/api/incidents/${id}/escalate`);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['incident', id] });
+      alert('✅ Incident escalated!');
+    },
+    onError: (error: any) => {
+      alert(`❌ Failed to escalate incident: ${error.response?.data?.message || error.message}`);
     },
   });
 
@@ -180,6 +255,12 @@ export default function IncidentDetail() {
               <span className="text-sm text-gray-500 px-2 py-1 bg-gray-100 rounded">
                 {incident.incidentType.replace('_', ' ').toUpperCase()}
               </span>
+              {incident.escalationLevel && incident.escalationLevel > 1 && (
+                <span className="text-sm font-semibold px-2 py-1 bg-orange-100 text-orange-700 rounded border border-orange-300 flex items-center gap-1">
+                  <TrendingUp className="w-4 h-4" />
+                  ESCALATION LEVEL {incident.escalationLevel}
+                </span>
+              )}
             </div>
             <h1 className="text-3xl font-bold text-gray-900 mb-3">{incident.title}</h1>
             <p className="text-gray-600 mb-4">{incident.description}</p>
@@ -199,8 +280,8 @@ export default function IncidentDetail() {
             </div>
           </div>
 
-          <div className="ml-4">
-            <div className="mb-4">
+          <div className="ml-4 space-y-4">
+            <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
                 Status
               </label>
@@ -215,6 +296,131 @@ export default function IncidentDetail() {
                   </option>
                 ))}
               </select>
+            </div>
+
+            {/* Action Buttons */}
+            <div className="space-y-2">
+              {/* Escalate Button */}
+              {incident.status !== 'archived' && incident.status !== 'resolved' && incident.status !== 'closed' && (
+                <button
+                  onClick={() => {
+                    if (window.confirm(`Escalate this incident to Level ${(incident.escalationLevel || 1) + 1}?`)) {
+                      escalateIncidentMutation.mutate();
+                    }
+                  }}
+                  disabled={escalateIncidentMutation.isPending}
+                  className="w-full px-4 py-2 bg-orange-600 text-white rounded-lg hover:bg-orange-700 disabled:bg-gray-400 flex items-center justify-center gap-2 text-sm font-medium"
+                >
+                  {escalateIncidentMutation.isPending ? (
+                    <>⏳ Escalating...</>
+                  ) : (
+                    <>
+                      <TrendingUp className="w-4 h-4" />
+                      Escalate (Level {incident.escalationLevel || 1} → {(incident.escalationLevel || 1) + 1})
+                    </>
+                  )}
+                </button>
+              )}
+
+              {/* Send Notifications */}
+              {playbook && incident.status !== 'archived' && (
+                <button
+                  onClick={() => sendNotificationsMutation.mutate()}
+                  disabled={sendNotificationsMutation.isPending}
+                  className="w-full px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:bg-gray-400 flex items-center justify-center gap-2 text-sm font-medium"
+                >
+                  {sendNotificationsMutation.isPending ? (
+                    <>⏳ Sending...</>
+                  ) : (
+                    <>📧 Send Task Notifications</>
+                  )}
+                </button>
+              )}
+
+              {/* Archive/Restore/Delete Buttons */}
+              {incident.status === 'archived' ? (
+                <>
+                  <button
+                    onClick={() => {
+                      if (window.confirm('Restore this incident?')) {
+                        restoreIncidentMutation.mutate();
+                      }
+                    }}
+                    disabled={restoreIncidentMutation.isPending}
+                    className="w-full px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 disabled:bg-gray-400 flex items-center justify-center gap-2 text-sm font-medium"
+                  >
+                    {restoreIncidentMutation.isPending ? (
+                      <>⏳ Restoring...</>
+                    ) : (
+                      <>
+                        <RotateCcw className="w-4 h-4" />
+                        Restore Incident
+                      </>
+                    )}
+                  </button>
+                  <button
+                    onClick={() => {
+                      if (window.confirm(`Are you sure you want to permanently delete this incident?\n\n"${incident.title}"\n\nThis will also delete all associated tasks and un-link any alerts. This action cannot be undone.`)) {
+                        deleteIncidentMutation.mutate();
+                      }
+                    }}
+                    disabled={deleteIncidentMutation.isPending}
+                    className="w-full px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 disabled:bg-gray-400 flex items-center justify-center gap-2 text-sm font-medium"
+                  >
+                    {deleteIncidentMutation.isPending ? (
+                      <>⏳ Deleting...</>
+                    ) : (
+                      <>
+                        <Trash2 className="w-4 h-4" />
+                        Delete Incident
+                      </>
+                    )}
+                  </button>
+                </>
+              ) : (
+                <>
+                  <button
+                    onClick={() => {
+                      const reason = window.prompt('Reason for archiving this incident:', 'Incident resolved and documented');
+                      if (reason) {
+                        archiveIncidentMutation.mutate(reason);
+                      }
+                    }}
+                    disabled={archiveIncidentMutation.isPending}
+                    className="w-full px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 disabled:bg-gray-400 flex items-center justify-center gap-2 text-sm font-medium"
+                  >
+                    {archiveIncidentMutation.isPending ? (
+                      <>⏳ Archiving...</>
+                    ) : (
+                      <>
+                        <Archive className="w-4 h-4" />
+                        Archive Incident
+                      </>
+                    )}
+                  </button>
+                  {incident.status !== 'active' && incident.status !== 'investigating' && (
+                    <button
+                      onClick={() => {
+                        if (window.confirm(`Are you sure you want to permanently delete this incident?\n\n"${incident.title}"\n\nThis will also delete all associated tasks and un-link any alerts. This action cannot be undone.`)) {
+                          deleteIncidentMutation.mutate();
+                        }
+                      }}
+                      disabled={deleteIncidentMutation.isPending}
+                      className="w-full px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 disabled:bg-gray-400 flex items-center justify-center gap-2 text-sm font-medium"
+                      title="Permanently delete this incident"
+                    >
+                      {deleteIncidentMutation.isPending ? (
+                        <>⏳ Deleting...</>
+                      ) : (
+                        <>
+                          <Trash2 className="w-4 h-4" />
+                          Delete Incident
+                        </>
+                      )}
+                    </button>
+                  )}
+                </>
+              )}
             </div>
           </div>
         </div>
@@ -239,19 +445,67 @@ export default function IncidentDetail() {
         <div className="lg:col-span-2 space-y-6">
           {/* Tasks / Playbook Execution */}
           <div className="card">
-            <div className="flex items-center justify-between mb-4">
-              <h2 className="text-xl font-semibold text-gray-900 flex items-center">
-                <PlayCircle className="h-6 w-6 mr-2 text-primary-600" />
-                Response Tasks
-                {playbook && (
-                  <span className="ml-3 text-sm text-gray-500">
-                    from "{playbook.name}"
-                  </span>
-                )}
-              </h2>
-            </div>
+            {/* Tab Navigation */}
+            {(playbook?.playbookSnapshot || playbook?.phases) && (
+              <div className="flex items-center gap-1 mb-4 border-b border-gray-200">
+                <button
+                  onClick={() => setActiveTab('playbook')}
+                  className={`px-4 py-2 font-medium transition-colors ${
+                    activeTab === 'playbook'
+                      ? 'border-b-2 border-blue-600 text-blue-600'
+                      : 'text-gray-600 hover:text-gray-900'
+                  }`}
+                >
+                  <div className="flex items-center gap-2">
+                    <PlayCircle className="w-4 h-4" />
+                    Active Playbook
+                  </div>
+                </button>
+                <button
+                  onClick={() => setActiveTab('tasks')}
+                  className={`px-4 py-2 font-medium transition-colors ${
+                    activeTab === 'tasks'
+                      ? 'border-b-2 border-blue-600 text-blue-600'
+                      : 'text-gray-600 hover:text-gray-900'
+                  }`}
+                >
+                  <div className="flex items-center gap-2">
+                    <ListTodo className="w-4 h-4" />
+                    Task List ({tasks?.length || 0})
+                  </div>
+                </button>
+              </div>
+            )}
 
-            {tasks && tasks.length > 0 ? (
+            {/* Tab Content */}
+            {activeTab === 'playbook' && (playbook?.playbookSnapshot || playbook?.phases) ? (
+              <ActivePlaybookView 
+                incidentId={id!} 
+                playbook={playbook.playbookSnapshot || playbook} 
+              />
+            ) : activeTab === 'playbook' ? (
+              <div className="text-center py-12 text-gray-500">
+                <PlayCircle className="w-12 h-12 mx-auto mb-4 text-gray-400" />
+                <p className="text-lg font-medium">No Playbook Associated</p>
+                <p className="text-sm mt-2">This incident doesn't have a playbook assigned.</p>
+              </div>
+            ) : null}
+
+            {activeTab === 'tasks' && (
+              <div className="flex items-center justify-between mb-4">
+                <h2 className="text-xl font-semibold text-gray-900 flex items-center">
+                  <ListTodo className="h-6 w-6 mr-2 text-blue-600" />
+                  Response Tasks
+                  {playbook && (
+                    <span className="ml-3 text-sm text-gray-500">
+                      from "{playbook.name}"
+                    </span>
+                  )}
+                </h2>
+              </div>
+            )}
+
+            {activeTab === 'tasks' && tasks && tasks.length > 0 ? (
               <div className="space-y-3">
                 {tasks.map((task: any, idx: number) => (
                   <div
@@ -318,13 +572,13 @@ export default function IncidentDetail() {
                   </div>
                 ))}
               </div>
-            ) : (
+            ) : activeTab === 'tasks' ? (
               <div className="text-center py-8 text-gray-500">
-                <PlayCircle className="h-12 w-12 mx-auto mb-2 text-gray-400" />
+                <ListTodo className="h-12 w-12 mx-auto mb-2 text-gray-400" />
                 <p>No tasks assigned to this incident</p>
                 <p className="text-sm">Tasks are auto-generated when a playbook is selected</p>
               </div>
-            )}
+            ) : null}
           </div>
 
           {/* Timeline */}

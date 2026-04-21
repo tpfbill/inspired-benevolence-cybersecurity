@@ -1,0 +1,1210 @@
+{
+  "name": "Network IoT Incident Response",
+  "description": "Comprehensive playbook for responding to network and IoT security incidents including unauthorized access, compromised devices, and network-based attacks.",
+  "incidentType": "unauthorized_access",
+  "phases": [
+    {
+      "name": "Identification",
+      "description": "The purpose of the Identification stage is to accurately determine the Incident type, severity and perform immediate containment and escalation.",
+      "order": 1,
+      "tasks": [
+        {
+          "title": "Initiate CIRT Team Meeting and Execute Escalation Procedures",
+          "content": "As more information about the incident is known, the core CIRT team will meet and define which organizational SMEs need to be included to respond to the incident.",
+          "taskType": "hybrid",
+          "complexity": "moderate",
+          "estimatedDuration": 120,
+          "preferredWorkRole": "CIRT_LEADER",
+          "order": 1,
+          "outcomes": [
+            "First Core CIRT meeting is held with invited SMEs",
+            "OOB communications channels are set up and periodic checkins scheduled",
+            "Privileged Communications is established with legal counsel"
+          ],
+          "subtasks": [
+            {
+              "subtaskType": "administrative",
+              "title": "Initiate first CIRT meeting",
+              "content": "Initiated first meeting of the organizational core CIRT.",
+              "order": 1
+            },
+            {
+              "subtaskType": "hybrid",
+              "title": "Notify CIRT team members",
+              "content": "Notified CIRT team members using the contacts and role assignments on the My Team page and made sure ORNA roles are assigned so they are aware of the tasks allocated for them.",
+              "order": 2
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Verify Incident Severity",
+              "content": "Verified the Incident Severity determined during the Incident record creation process as promptly and accurately as possible. The severity may change as more details are uncovered and it will need to be updated when the situation changes.",
+              "order": 3
+            },
+            {
+              "subtaskType": "technical",
+              "title": "Invite additional SMEs",
+              "content": "Invited additional SMEs to be included in CIRT update meetings.",
+              "order": 4
+            },
+            {
+              "subtaskType": "technical",
+              "title": "Set up secured meeting room",
+              "content": "Set up a secured meeting room (either physical and/or virtual).",
+              "order": 5
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Schedule follow-up meetings",
+              "content": "Scheduled follow-up meetings according to a defined cadence.",
+              "order": 6
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Work with Legal Counsel",
+              "content": "Worked closely with Legal Counsel to retain client-attorney privilege over the information pertaining to the incident and ensure compliance with applicable laws and regulations.",
+              "order": 7
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Create initial incident assessment",
+              "content": "Created an initial incident assessment to share with organizational leaders. This assessment notification will contain a summary of what has occurred; date & time of incident; scope of compromise; data involved; actions taken so far and next steps recipients can expect to see.",
+              "order": 8
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Establish log of meetings",
+              "content": "Established a log of items covered to keep track of when meetings occurred, who was present, high level discussion notes and follow-up actions.",
+              "order": 9
+            }
+          ]
+        },
+        {
+          "title": "Validate Network or IoT Incident",
+          "content": "Network incidents refer to security events that occur at the network layer including unauthorized network access, network scanning, sniffing or eavesdropping. IoT incidents involve compromised IoT devices such as smart cameras, sensors, or other connected devices.",
+          "taskType": "technical",
+          "complexity": "moderate",
+          "estimatedDuration": 180,
+          "preferredWorkRole": "CORE_CIRT_MEMBER",
+          "order": 2,
+          "outcomes": [
+            "A security incident is confirmed as a network or IoT incident"
+          ],
+          "subtasks": [
+            {
+              "subtaskType": "technical",
+              "title": "Review network logs",
+              "content": "Reviewed network logs, firewall logs, IDS/IPS alerts, and router logs for suspicious activity.",
+              "order": 1
+            },
+            {
+              "subtaskType": "technical",
+              "title": "Analyze IoT device behavior",
+              "content": "Analyzed IoT device behavior for anomalies including unexpected network connections, unusual data transfers, or changes in device configuration.",
+              "order": 2
+            },
+            {
+              "subtaskType": "technical",
+              "title": "Check for unauthorized access",
+              "content": "Checked for signs of unauthorized network access including unknown MAC addresses, rogue access points, or unauthorized VPN connections.",
+              "order": 3
+            },
+            {
+              "subtaskType": "technical",
+              "title": "Verify network scanning activity",
+              "content": "Verified whether network scanning or reconnaissance activity has been detected.",
+              "order": 4
+            }
+          ]
+        },
+        {
+          "title": "Determine Scope of Incident",
+          "content": "Identify all affected network segments, devices, and systems. It is important to collect as much relevant information as possible about all assets that are affected.",
+          "taskType": "technical",
+          "complexity": "high",
+          "estimatedDuration": 240,
+          "preferredWorkRole": "CORE_CIRT_MEMBER",
+          "order": 3,
+          "outcomes": [
+            "All affected network segments are identified",
+            "All affected devices and systems are identified",
+            "Network traffic patterns are analyzed"
+          ],
+          "subtasks": [
+            {
+              "subtaskType": "technical",
+              "title": "Identify affected network segments",
+              "content": "Identified which network segments were affected by reviewing network topology maps, VLAN configurations, and firewall rules.",
+              "order": 1
+            },
+            {
+              "subtaskType": "technical",
+              "title": "Catalog affected devices",
+              "content": "Cataloged all affected devices including servers, workstations, IoT devices, network equipment, and their criticality to business operations.",
+              "order": 2
+            },
+            {
+              "subtaskType": "technical",
+              "title": "Analyze network traffic",
+              "content": "Analyzed network traffic patterns using packet capture tools and network monitoring systems to identify anomalous communications.",
+              "order": 3
+            },
+            {
+              "subtaskType": "technical",
+              "title": "Review device inventory",
+              "content": "Reviewed device inventory and compared against known authorized devices to identify rogue or unauthorized devices on the network.",
+              "order": 4
+            }
+          ]
+        },
+        {
+          "title": "Assess Need for External Support",
+          "content": "After an initial assessment of the scope of the network or IoT incident, the organization will have to make a determination as to whether outside help is needed and for what functions.",
+          "taskType": "administrative",
+          "complexity": "low",
+          "estimatedDuration": 60,
+          "preferredWorkRole": "CIRT_LEADER",
+          "order": 4,
+          "outcomes": [
+            "Decision is made whether to hire external technical help",
+            "Decision is made whether to hire external legal help",
+            "ORNA incident response expertise is utilized if needed"
+          ],
+          "subtasks": [
+            {
+              "subtaskType": "administrative",
+              "title": "Consider network forensics expert",
+              "content": "Considered retaining a network forensics expert to help analyze network traffic and identify attack vectors.",
+              "order": 1
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Consider IoT security specialist",
+              "content": "Considered retaining an IoT security specialist if IoT devices are involved in the incident.",
+              "order": 2
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Consider outside legal counsel",
+              "content": "Considered retaining outside legal counsel if sensitive data or regulatory compliance is involved.",
+              "order": 3
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Consider ORNA support",
+              "content": "Considered retaining ORNA for incident response expertise.",
+              "order": 4
+            }
+          ]
+        },
+        {
+          "title": "Assess Impact",
+          "content": "Assess the impact to prioritize actions. The impacts should be assessed for operational business impact, regulatory impact, and reputational impact.",
+          "taskType": "administrative",
+          "complexity": "low",
+          "estimatedDuration": 120,
+          "preferredWorkRole": "CIRT_LEADER",
+          "order": 5,
+          "outcomes": [
+            "Understand Operational Impact to Organization",
+            "Understand Financial Impact to Organization",
+            "Understand Reputational Impact to Organization"
+          ],
+          "subtasks": [
+            {
+              "subtaskType": "administrative",
+              "title": "Assess business impact",
+              "content": "Assessed impact to business or mission: How critical are the affected network segments and devices? How much disruption has occurred? What services are degraded or unavailable?",
+              "order": 1
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Assess data compromise",
+              "content": "Assessed whether any sensitive data was accessed, exfiltrated, or compromised through network or IoT devices.",
+              "order": 2
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Assess regulatory impact",
+              "content": "Assessed regulatory impact: What is the regulatory status of any compromised data (e.g., PII, ePHI)?",
+              "order": 3
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Assess reputational damage",
+              "content": "Assessed potential reputational damage from the network or IoT security incident.",
+              "order": 4
+            }
+          ]
+        },
+        {
+          "title": "Determine Root Cause(s)",
+          "content": "Identify how the network or IoT incident occurred. Understanding the root cause is critical for effective remediation.",
+          "taskType": "technical",
+          "complexity": "high",
+          "estimatedDuration": 300,
+          "preferredWorkRole": "CORE_CIRT_MEMBER",
+          "order": 6,
+          "outcomes": [
+            "Determined how the incident occurred",
+            "Identified vulnerabilities that were exploited"
+          ],
+          "subtasks": [
+            {
+              "subtaskType": "technical",
+              "title": "Analyze attack vectors",
+              "content": "Analyzed potential attack vectors including: weak or default credentials on IoT devices, unpatched vulnerabilities in network devices, misconfigured firewalls or access controls, rogue access points, or compromised VPN credentials.",
+              "order": 1
+            },
+            {
+              "subtaskType": "technical",
+              "title": "Review authentication logs",
+              "content": "Reviewed authentication logs to determine if unauthorized access occurred and how credentials were obtained.",
+              "order": 2
+            },
+            {
+              "subtaskType": "technical",
+              "title": "Check for exploited vulnerabilities",
+              "content": "Checked whether known vulnerabilities in network devices or IoT firmware were exploited.",
+              "order": 3
+            },
+            {
+              "subtaskType": "technical",
+              "title": "Identify configuration weaknesses",
+              "content": "Identified configuration weaknesses including default passwords, unnecessary open ports, or missing network segmentation.",
+              "order": 4
+            }
+          ]
+        },
+        {
+          "title": "Send Communications",
+          "content": "Communications will need to exist for both internal and external parties. Timely and controlled external communications play a crucial role in managing the narrative.",
+          "taskType": "administrative",
+          "complexity": "low",
+          "estimatedDuration": 120,
+          "preferredWorkRole": "CIRT_LEADER",
+          "order": 7,
+          "outcomes": [
+            "Approved external parties are contacted and notified of incident",
+            "Decision made whether to utilize ORNA templates for communication",
+            "Employees are notified about the incident and instructed on the next steps"
+          ],
+          "subtasks": [
+            {
+              "subtaskType": "administrative",
+              "title": "Work with Legal Counsel",
+              "content": "Worked with Legal Counsel and provided all available details about the incident severity, impact and the type of information involved, if known.",
+              "order": 1
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Craft external messages",
+              "content": "Worked closely with Legal Counsel and Communications Team to craft messages to external parties to be notified.",
+              "order": 2
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Craft internal messages",
+              "content": "Worked closely with Legal Counsel and Communications Team to craft messages for internal staff.",
+              "order": 3
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Utilize ORNA templates",
+              "content": "Utilized ORNA communications templates where appropriate.",
+              "order": 4
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Publish external communications",
+              "content": "Published external communications in line with the communications strategy.",
+              "order": 5
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Work on communications cadence",
+              "content": "Worked with communications team and legal counsel on a cadence for updating external and internal communications.",
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Invoke Data Breach Notification Protocols",
+          "content": "When a cyber incident is suspected or confirmed that may involve data compromise, it is important that the Legal Counsel proceeds swiftly to understand the type of data affected.",
+          "taskType": "administrative",
+          "complexity": "low",
+          "estimatedDuration": 360,
+          "preferredWorkRole": "LEGAL",
+          "order": 8,
+          "outcomes": [
+            "The type of breach and affected data are established and confirmed",
+            "Regulatory obligations are identified",
+            "Appropriate data breach notification protocols are invoked"
+          ],
+          "subtasks": [
+            {
+              "subtaskType": "administrative",
+              "title": "Confirm data impact",
+              "content": "Confirmed whether Personal Identifiable Information (PII), Protected Health Information (PHI), or financial information is impacted.",
+              "order": 1
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Examine regulatory obligations",
+              "content": "Examined regulatory obligations.",
+              "order": 2
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Notify appropriate parties",
+              "content": "Notified the appropriate regulatory agencies and affected individuals as prescribed by relevant laws, regulations and contractual obligations.",
+              "order": 3
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Advise on client-attorney privilege",
+              "content": "Advised the CIRT members on proper communication methods to ensure continuous client-attorney privilege where possible.",
+              "order": 4
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Containment",
+      "description": "The main objective of the Containment stage is to limit the impact of the incident promptly and as much as possible, preventing further damage to the organization's assets.",
+      "order": 2,
+      "tasks": [
+        {
+          "title": "Isolate Affected Network Segments and Devices",
+          "content": "Immediately isolate affected network segments and devices to prevent lateral movement and further compromise.",
+          "taskType": "technical",
+          "complexity": "high",
+          "estimatedDuration": 120,
+          "preferredWorkRole": "CORE_CIRT_MEMBER",
+          "order": 1,
+          "outcomes": [
+            "Affected network segments are isolated",
+            "Compromised devices are disconnected",
+            "Spread of incident is contained"
+          ],
+          "subtasks": [
+            {
+              "subtaskType": "technical",
+              "title": "Isolate network segments",
+              "content": "Isolated affected network segments using VLANs, firewall rules, or physical disconnection to prevent lateral movement.",
+              "order": 1
+            },
+            {
+              "subtaskType": "technical",
+              "title": "Disconnect compromised devices",
+              "content": "Disconnected compromised IoT devices and systems from the network while preserving forensic evidence.",
+              "order": 2
+            },
+            {
+              "subtaskType": "technical",
+              "title": "Block malicious traffic",
+              "content": "Configured firewalls and IPS to block known malicious IP addresses and traffic patterns.",
+              "order": 3
+            },
+            {
+              "subtaskType": "technical",
+              "title": "Preserve evidence",
+              "content": "Preserved forensic evidence before making changes to network configurations.",
+              "order": 4
+            }
+          ]
+        },
+        {
+          "title": "Disable Compromised Accounts",
+          "content": "Disable any user or service accounts that have been compromised or are suspected of being compromised.",
+          "taskType": "technical",
+          "complexity": "moderate",
+          "estimatedDuration": 60,
+          "preferredWorkRole": "CORE_CIRT_MEMBER",
+          "order": 2,
+          "outcomes": [
+            "Compromised accounts are disabled",
+            "Unauthorized access is blocked"
+          ],
+          "subtasks": [
+            {
+              "subtaskType": "technical",
+              "title": "Identify compromised accounts",
+              "content": "Identified compromised user and service accounts through log analysis.",
+              "order": 1
+            },
+            {
+              "subtaskType": "technical",
+              "title": "Disable accounts",
+              "content": "Disabled compromised accounts in Active Directory, LDAP, or other authentication systems.",
+              "order": 2
+            },
+            {
+              "subtaskType": "technical",
+              "title": "Revoke access tokens",
+              "content": "Revoked any active sessions, tokens, or certificates associated with compromised accounts.",
+              "order": 3
+            }
+          ]
+        },
+        {
+          "title": "Block Malicious Network Traffic",
+          "content": "Block malicious network traffic at the perimeter and internal network boundaries.",
+          "taskType": "technical",
+          "complexity": "moderate",
+          "estimatedDuration": 90,
+          "preferredWorkRole": "CORE_CIRT_MEMBER",
+          "order": 3,
+          "outcomes": [
+            "Malicious traffic is blocked",
+            "Command and control communications are disrupted"
+          ],
+          "subtasks": [
+            {
+              "subtaskType": "technical",
+              "title": "Update firewall rules",
+              "content": "Updated firewall rules to block known malicious IP addresses, domains, and ports.",
+              "order": 1
+            },
+            {
+              "subtaskType": "technical",
+              "title": "Configure IPS signatures",
+              "content": "Configured IPS/IDS signatures to detect and block attack traffic.",
+              "order": 2
+            },
+            {
+              "subtaskType": "technical",
+              "title": "Block C2 communications",
+              "content": "Blocked command and control (C2) server communications if malware or botnet activity is detected.",
+              "order": 3
+            },
+            {
+              "subtaskType": "technical",
+              "title": "Update DNS filtering",
+              "content": "Updated DNS filtering to block known malicious domains.",
+              "order": 4
+            }
+          ]
+        },
+        {
+          "title": "Invoke Business Continuity Plan",
+          "content": "To avoid major disruptions of key business functions, invoke the Business Continuity Plan (BCP), if such exists, in accordance with the incident severity and impact.",
+          "taskType": "administrative",
+          "complexity": "low",
+          "estimatedDuration": 240,
+          "preferredWorkRole": "CEO",
+          "order": 4,
+          "outcomes": [
+            "If it exists the Business Continuity Plan is invoked",
+            "If no Business Continuity Plan exists a war room is used to create one",
+            "Situational business continuity procedures are established"
+          ],
+          "subtasks": [
+            {
+              "subtaskType": "administrative",
+              "title": "Invoke BCP communication",
+              "content": "Issued the communication and informed the appropriate stakeholders that the BCP should be invoked to minimize business disruption.",
+              "order": 1
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Proceed with BCP procedures",
+              "content": "Proceeded in accordance with the BCP procedures.",
+              "order": 2
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Establish war room if needed",
+              "content": "Established a war room if no BCP existed for affected systems and networks.",
+              "order": 3
+            }
+          ]
+        },
+        {
+          "title": "Issue External and Internal Communications Update",
+          "content": "Issuing periodic updates on the progress of the incident response activities will help control the narrative.",
+          "taskType": "administrative",
+          "complexity": "moderate",
+          "estimatedDuration": 120,
+          "preferredWorkRole": "COMMUNICATIONS_LEADER",
+          "order": 5,
+          "outcomes": [
+            "Internal stakeholders are informed about the ongoing containment measures",
+            "External stakeholders are informed about the ongoing containment measures"
+          ],
+          "subtasks": [
+            {
+              "subtaskType": "administrative",
+              "title": "Issue internal communications",
+              "content": "Issued the communications update to internal stakeholders in accordance with the communications strategy.",
+              "order": 1
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Issue external communications",
+              "content": "Issued the communications update to external stakeholders in accordance with the communications strategy.",
+              "order": 2
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Use ORNA templates",
+              "content": "Referred to the ORNA Communications Templates section for guidance on the wording.",
+              "order": 3
+            }
+          ]
+        },
+        {
+          "title": "Issue Mandatory Regulatory Notifications or Updates",
+          "content": "Issuing periodic updates about the progress of the incident response activities may be required based on the incident severity and the applicable laws, regulations and contractual obligations.",
+          "taskType": "administrative",
+          "complexity": "moderate",
+          "estimatedDuration": 120,
+          "preferredWorkRole": "LEGAL",
+          "order": 6,
+          "outcomes": [
+            "Applicable internal and external parties are informed about the ongoing containment measures"
+          ],
+          "subtasks": [
+            {
+              "subtaskType": "administrative",
+              "title": "Notify regulatory agencies",
+              "content": "Notified the appropriate regulatory agencies and affected individuals in accordance with the applicable laws and regulations.",
+              "order": 1
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Use ORNA templates",
+              "content": "Referred to the ORNA Communications Templates section for guidance on the wording.",
+              "order": 2
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Advise on privilege",
+              "content": "Continued advising the CIRT members on proper communications methods to ensure maintaining continuous client-attorney privilege where possible.",
+              "order": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Eradication",
+      "description": "The Eradication stage focuses on removing all traces of the threat from the affected assets, and ensuring that the root cause has been eliminated.",
+      "order": 3,
+      "tasks": [
+        {
+          "title": "Remove Unauthorized Devices and Access Points",
+          "content": "Remove any unauthorized or rogue devices, access points, or network equipment from the network.",
+          "taskType": "technical",
+          "complexity": "moderate",
+          "estimatedDuration": 120,
+          "preferredWorkRole": "CORE_CIRT_MEMBER",
+          "order": 1,
+          "outcomes": [
+            "All unauthorized devices are removed from the network",
+            "Rogue access points are eliminated"
+          ],
+          "subtasks": [
+            {
+              "subtaskType": "technical",
+              "title": "Scan for unauthorized devices",
+              "content": "Scanned the network for unauthorized devices using network discovery tools and MAC address filtering.",
+              "order": 1
+            },
+            {
+              "subtaskType": "technical",
+              "title": "Remove rogue devices",
+              "content": "Physically removed or disabled rogue access points, unauthorized switches, or other network equipment.",
+              "order": 2
+            },
+            {
+              "subtaskType": "technical",
+              "title": "Update device inventory",
+              "content": "Updated the authorized device inventory and implemented controls to prevent unauthorized device connections.",
+              "order": 3
+            }
+          ]
+        },
+        {
+          "title": "Patch and Update Vulnerable Systems",
+          "content": "Apply security patches and updates to all vulnerable network devices, IoT devices, and systems.",
+          "taskType": "technical",
+          "complexity": "high",
+          "estimatedDuration": 360,
+          "preferredWorkRole": "CORE_CIRT_MEMBER",
+          "order": 2,
+          "outcomes": [
+            "All critical vulnerabilities are patched",
+            "IoT device firmware is updated",
+            "Network devices are hardened"
+          ],
+          "subtasks": [
+            {
+              "subtaskType": "technical",
+              "title": "Identify vulnerable systems",
+              "content": "Identified all vulnerable network devices, routers, switches, firewalls, and IoT devices requiring patches.",
+              "order": 1
+            },
+            {
+              "subtaskType": "technical",
+              "title": "Apply security patches",
+              "content": "Applied security patches to network infrastructure and IoT devices according to vendor recommendations.",
+              "order": 2
+            },
+            {
+              "subtaskType": "technical",
+              "title": "Update IoT firmware",
+              "content": "Updated firmware on all IoT devices to the latest secure versions.",
+              "order": 3
+            },
+            {
+              "subtaskType": "technical",
+              "title": "Verify patch deployment",
+              "content": "Verified that all patches were successfully deployed and systems are functioning properly.",
+              "order": 4
+            }
+          ]
+        },
+        {
+          "title": "Reset Compromised Credentials",
+          "content": "Reset all credentials that were compromised or potentially exposed during the incident.",
+          "taskType": "technical",
+          "complexity": "moderate",
+          "estimatedDuration": 180,
+          "preferredWorkRole": "CORE_CIRT_MEMBER",
+          "order": 3,
+          "outcomes": [
+            "All compromised credentials are reset",
+            "Strong password policies are enforced"
+          ],
+          "subtasks": [
+            {
+              "subtaskType": "technical",
+              "title": "Reset user passwords",
+              "content": "Reset passwords for all compromised user accounts.",
+              "order": 1
+            },
+            {
+              "subtaskType": "technical",
+              "title": "Reset IoT device credentials",
+              "content": "Changed default credentials on all IoT devices to strong, unique passwords.",
+              "order": 2
+            },
+            {
+              "subtaskType": "technical",
+              "title": "Reset service account credentials",
+              "content": "Reset service account credentials and API keys that may have been exposed.",
+              "order": 3
+            },
+            {
+              "subtaskType": "technical",
+              "title": "Implement MFA",
+              "content": "Implemented multi-factor authentication (MFA) for network access where not already in place.",
+              "order": 4
+            }
+          ]
+        },
+        {
+          "title": "Harden Network and IoT Configurations",
+          "content": "Implement security hardening measures on network devices and IoT systems to prevent future incidents.",
+          "taskType": "technical",
+          "complexity": "high",
+          "estimatedDuration": 300,
+          "preferredWorkRole": "CORE_CIRT_MEMBER",
+          "order": 4,
+          "outcomes": [
+            "Network segmentation is improved",
+            "IoT devices are properly configured",
+            "Security controls are strengthened"
+          ],
+          "subtasks": [
+            {
+              "subtaskType": "technical",
+              "title": "Implement network segmentation",
+              "content": "Implemented or improved network segmentation to isolate IoT devices and critical systems.",
+              "order": 1
+            },
+            {
+              "subtaskType": "technical",
+              "title": "Disable unnecessary services",
+              "content": "Disabled unnecessary services, ports, and protocols on network devices and IoT systems.",
+              "order": 2
+            },
+            {
+              "subtaskType": "technical",
+              "title": "Configure access controls",
+              "content": "Configured strict access controls and implemented the principle of least privilege.",
+              "order": 3
+            },
+            {
+              "subtaskType": "technical",
+              "title": "Enable security logging",
+              "content": "Enabled comprehensive security logging on all network devices and IoT systems.",
+              "order": 4
+            }
+          ]
+        },
+        {
+          "title": "Remove Malware and Backdoors",
+          "content": "If malware or backdoors were installed during the incident, ensure they are completely removed from all affected systems.",
+          "taskType": "technical",
+          "complexity": "high",
+          "estimatedDuration": 240,
+          "preferredWorkRole": "CORE_CIRT_MEMBER",
+          "order": 5,
+          "outcomes": [
+            "All malware is removed",
+            "Backdoors are eliminated",
+            "Systems are verified clean"
+          ],
+          "subtasks": [
+            {
+              "subtaskType": "technical",
+              "title": "Scan for malware",
+              "content": "Performed comprehensive malware scans on all affected network devices and systems.",
+              "order": 1
+            },
+            {
+              "subtaskType": "technical",
+              "title": "Remove identified threats",
+              "content": "Removed or quarantined all identified malware, rootkits, and backdoors.",
+              "order": 2
+            },
+            {
+              "subtaskType": "technical",
+              "title": "Factory reset IoT devices",
+              "content": "Performed factory reset on compromised IoT devices if malware cannot be reliably removed.",
+              "order": 3
+            },
+            {
+              "subtaskType": "technical",
+              "title": "Verify clean state",
+              "content": "Verified that systems are clean through multiple scanning methods and behavioral analysis.",
+              "order": 4
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Recovery",
+      "description": "The Recovery stage aims to restore the affected assets to their full business-as-usual operation in the shortest possible time frame, after eradicating all traces of the threat.",
+      "order": 4,
+      "tasks": [
+        {
+          "title": "Restore Network Services",
+          "content": "Gradually restore network services and connectivity while monitoring for any signs of recurring issues.",
+          "taskType": "technical",
+          "complexity": "moderate",
+          "estimatedDuration": 240,
+          "preferredWorkRole": "CORE_CIRT_MEMBER",
+          "order": 1,
+          "outcomes": [
+            "Network services are restored",
+            "Connectivity is re-established",
+            "Services are monitored for stability"
+          ],
+          "subtasks": [
+            {
+              "subtaskType": "technical",
+              "title": "Test network connectivity",
+              "content": "Tested network connectivity and services in isolated segments before full restoration.",
+              "order": 1
+            },
+            {
+              "subtaskType": "technical",
+              "title": "Gradually restore services",
+              "content": "Gradually restored network services starting with the most critical business functions.",
+              "order": 2
+            },
+            {
+              "subtaskType": "technical",
+              "title": "Monitor for issues",
+              "content": "Continuously monitored restored services for any signs of recurring issues or anomalies.",
+              "order": 3
+            },
+            {
+              "subtaskType": "technical",
+              "title": "Verify functionality",
+              "content": "Verified that all network services are functioning as expected and performance is normal.",
+              "order": 4
+            }
+          ]
+        },
+        {
+          "title": "Reconnect IoT Devices",
+          "content": "Safely reconnect IoT devices to the network after ensuring they are properly secured and configured.",
+          "taskType": "technical",
+          "complexity": "moderate",
+          "estimatedDuration": 180,
+          "preferredWorkRole": "CORE_CIRT_MEMBER",
+          "order": 2,
+          "outcomes": [
+            "IoT devices are securely reconnected",
+            "Device functionality is verified",
+            "Security posture is maintained"
+          ],
+          "subtasks": [
+            {
+              "subtaskType": "technical",
+              "title": "Verify IoT device security",
+              "content": "Verified that all IoT devices are properly patched, configured, and have strong credentials before reconnection.",
+              "order": 1
+            },
+            {
+              "subtaskType": "technical",
+              "title": "Reconnect to isolated network",
+              "content": "Reconnected IoT devices to a properly segmented and monitored network segment.",
+              "order": 2
+            },
+            {
+              "subtaskType": "technical",
+              "title": "Test device functionality",
+              "content": "Tested each IoT device to ensure it functions properly and does not exhibit suspicious behavior.",
+              "order": 3
+            },
+            {
+              "subtaskType": "technical",
+              "title": "Monitor device activity",
+              "content": "Implemented continuous monitoring of IoT device network activity and behavior.",
+              "order": 4
+            }
+          ]
+        },
+        {
+          "title": "Re-enable User Access",
+          "content": "Re-enable user access to network resources after verifying that the environment is secure.",
+          "taskType": "technical",
+          "complexity": "moderate",
+          "estimatedDuration": 120,
+          "preferredWorkRole": "CORE_CIRT_MEMBER",
+          "order": 3,
+          "outcomes": [
+            "User access is restored",
+            "Authentication is verified",
+            "Access controls are enforced"
+          ],
+          "subtasks": [
+            {
+              "subtaskType": "technical",
+              "title": "Re-enable user accounts",
+              "content": "Re-enabled previously disabled user accounts after password resets and security verification.",
+              "order": 1
+            },
+            {
+              "subtaskType": "technical",
+              "title": "Verify MFA enrollment",
+              "content": "Verified that all users have enrolled in multi-factor authentication if newly implemented.",
+              "order": 2
+            },
+            {
+              "subtaskType": "technical",
+              "title": "Grant phased access",
+              "content": "Granted access in phases, starting with critical users and monitoring for any issues.",
+              "order": 3
+            },
+            {
+              "subtaskType": "technical",
+              "title": "Communicate access procedures",
+              "content": "Communicated new access procedures and security requirements to all users.",
+              "order": 4
+            }
+          ]
+        },
+        {
+          "title": "Validate Security Controls",
+          "content": "Validate that all security controls are functioning properly and providing adequate protection.",
+          "taskType": "technical",
+          "complexity": "moderate",
+          "estimatedDuration": 180,
+          "preferredWorkRole": "CORE_CIRT_MEMBER",
+          "order": 4,
+          "outcomes": [
+            "Security controls are validated",
+            "Monitoring is effective",
+            "Protection measures are adequate"
+          ],
+          "subtasks": [
+            {
+              "subtaskType": "technical",
+              "title": "Test firewall rules",
+              "content": "Tested firewall rules to ensure they are properly blocking unauthorized traffic.",
+              "order": 1
+            },
+            {
+              "subtaskType": "technical",
+              "title": "Verify IDS/IPS functionality",
+              "content": "Verified that IDS/IPS systems are detecting and blocking attack patterns.",
+              "order": 2
+            },
+            {
+              "subtaskType": "technical",
+              "title": "Test access controls",
+              "content": "Tested network access controls and segmentation to ensure proper isolation.",
+              "order": 3
+            },
+            {
+              "subtaskType": "technical",
+              "title": "Validate logging and monitoring",
+              "content": "Validated that logging and monitoring systems are capturing all necessary security events.",
+              "order": 4
+            }
+          ]
+        },
+        {
+          "title": "Issue External and Internal Communications Updates",
+          "content": "Once the affected systems are restored and the organization returns to Business As Usual (BAU), issue communications updates.",
+          "taskType": "administrative",
+          "complexity": "moderate",
+          "estimatedDuration": 120,
+          "preferredWorkRole": "COMMUNICATIONS_LEADER",
+          "order": 5,
+          "outcomes": [
+            "External and internal communication updates are issued"
+          ],
+          "subtasks": [
+            {
+              "subtaskType": "administrative",
+              "title": "Issue internal communications",
+              "content": "Issued the communications update to internal stakeholders in accordance with the communications strategy.",
+              "order": 1
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Issue external communications",
+              "content": "Issued the communications update to external stakeholders in accordance with the communications strategy.",
+              "order": 2
+            }
+          ]
+        },
+        {
+          "title": "Issue Mandatory Regulatory Notifications or Updates",
+          "content": "Issuing regular updates about the progress of the incident resolution activities may be required based on the incident severity and the applicable laws and regulations.",
+          "taskType": "administrative",
+          "complexity": "moderate",
+          "estimatedDuration": 120,
+          "preferredWorkRole": "LEGAL",
+          "order": 6,
+          "outcomes": [
+            "Applicable parties are informed about the ongoing recovery measures"
+          ],
+          "subtasks": [
+            {
+              "subtaskType": "administrative",
+              "title": "Notify regulatory agencies",
+              "content": "Notified the appropriate regulatory agencies and affected individuals in accordance with the applicable laws and regulations.",
+              "order": 1
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Advise on privilege",
+              "content": "Continued advising the CIRT members on proper communications methods to ensure maintaining continuous client-attorney privilege where possible.",
+              "order": 2
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Use ORNA templates",
+              "content": "Referred to the ORNA Communications Templates section for guidance on the wording.",
+              "order": 3
+            }
+          ]
+        },
+        {
+          "title": "Resolve Incident",
+          "content": "Once the affected systems and network are restored to normal business operations, the incident can be moved to the 'resolved' state.",
+          "taskType": "administrative",
+          "complexity": "low",
+          "estimatedDuration": 60,
+          "preferredWorkRole": "CIRT_LEADER",
+          "order": 7,
+          "outcomes": [
+            "The incident is declared as resolved"
+          ],
+          "subtasks": [
+            {
+              "subtaskType": "administrative",
+              "title": "Verify systems back to normal",
+              "content": "Verified with Core CIRT Members and IT staff that all systems and network services are back to normal business functions.",
+              "order": 1
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Change incident status",
+              "content": "Changed status of incident to 'resolved'.",
+              "order": 2
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Lessons Learned",
+      "description": "The Lessons Learned stage's main goal is to compile all relevant information about the incident and extract lessons that can help with future incident response activity.",
+      "order": 5,
+      "tasks": [
+        {
+          "title": "Generate Incident Report",
+          "content": "Preparing an incident report is an important part of the cyber incident response process. This report will be used to perform business impact analysis and comply with applicable laws and regulations.",
+          "taskType": "administrative",
+          "complexity": "high",
+          "estimatedDuration": 60,
+          "preferredWorkRole": "CIRT_LEADER",
+          "order": 1,
+          "outcomes": [
+            "The Incident Report is generated"
+          ],
+          "subtasks": [
+            {
+              "subtaskType": "technical",
+              "title": "Generate report",
+              "content": "Once the Incident is marked as Resolved, used the Reports tab to generate and view the report.",
+              "order": 1
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Review for accuracy",
+              "content": "Reviewed the report for accuracy and addressed any errors/issues with the team member(s) responsible for the task in question.",
+              "order": 2
+            },
+            {
+              "subtaskType": "technical",
+              "title": "Ensure artifacts included",
+              "content": "Ensured all relevant artifacts are included for each task.",
+              "order": 3
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Share report",
+              "content": "Downloaded or exported the report and shared it with the appropriate stakeholders.",
+              "order": 4
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Retain report",
+              "content": "Ensured that the Incident report and all related evidence are retained in accordance with legal and regulatory requirements.",
+              "order": 5
+            }
+          ]
+        },
+        {
+          "title": "Fulfill External and Internal Reporting Obligations",
+          "content": "Once the incident is resolved and the investigation is complete, deliver the incident report to required parties.",
+          "taskType": "administrative",
+          "complexity": "moderate",
+          "estimatedDuration": 300,
+          "preferredWorkRole": "LEGAL",
+          "order": 2,
+          "outcomes": [
+            "The Incident Report is shared with applicable parties",
+            "Regulatory and legal obligations are fulfilled"
+          ],
+          "subtasks": [
+            {
+              "subtaskType": "administrative",
+              "title": "Obtain and review report",
+              "content": "Obtained the full Incident Report from the CIRT Leader and reviewed it for accuracy.",
+              "order": 1
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Identify obligations",
+              "content": "Identified all applicable legal and regulatory requirements related to cyber incident reporting.",
+              "order": 2
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Deliver report",
+              "content": "Delivered the Incident report to the appropriate legal and/or regulatory agencies and affected individuals.",
+              "order": 3
+            }
+          ]
+        },
+        {
+          "title": "Host the Lessons Learned Session",
+          "content": "The goal of the Lessons Learned session is to learn from the incident and identify policy, process or procedure gaps.",
+          "taskType": "hybrid",
+          "complexity": "moderate",
+          "estimatedDuration": 360,
+          "preferredWorkRole": "CIRT_LEADER",
+          "order": 3,
+          "outcomes": [
+            "The Lessons Learned session is conducted",
+            "Gaps and areas for improvement are identified",
+            "Initiatives are created to operationalize identified improvements"
+          ],
+          "subtasks": [
+            {
+              "subtaskType": "administrative",
+              "title": "Prepare presentation",
+              "content": "Prepared a presentation covering: when incident was detected, scope, response steps taken, areas where CIRT was effective, gaps and improvement opportunities, prevention steps.",
+              "order": 1
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Host session",
+              "content": "Hosted the Lessons Learned session with all CIRT members actively participating.",
+              "order": 2
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Establish open dialogue",
+              "content": "Established an open dialogue discussing: how well staff handled incident, if procedures were followed and adequate, what held back recovery, what needs to be done differently.",
+              "order": 3
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Document improvements",
+              "content": "Documented all identified areas for improvement and prepared a list of agreed upon action items.",
+              "order": 4
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Distribute action items",
+              "content": "Distributed the action items list among relevant CIRT members and ensured that the improvement steps are implemented.",
+              "order": 5
+            }
+          ]
+        },
+        {
+          "title": "Perform Employee Security Awareness Training",
+          "content": "Conduct employee awareness training after the incident is resolved to prevent similar future incidents.",
+          "taskType": "hybrid",
+          "complexity": "moderate",
+          "estimatedDuration": 1440,
+          "preferredWorkRole": "CIRT_LEADER",
+          "order": 4,
+          "outcomes": [
+            "Employee awareness training is conducted",
+            "A roadmap for table top exercises is developed"
+          ],
+          "subtasks": [
+            {
+              "subtaskType": "administrative",
+              "title": "Prepare educational materials",
+              "content": "Prepared educational materials emphasizing network and IoT security best practices.",
+              "order": 1
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Track attendance",
+              "content": "Tracked employee attendance using a Learning Management System (LMS).",
+              "order": 2
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Work with 3rd party",
+              "content": "Where applicable, worked with a 3rd party to prepare and conduct the employee security awareness training.",
+              "order": 3
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Develop table top exercises",
+              "content": "Used the outcomes from the Lessons Learned to develop table top exercise plans with relevant scenarios.",
+              "order": 4
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

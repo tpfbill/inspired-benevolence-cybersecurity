@@ -1,0 +1,1080 @@
+{
+  "name": "Denial of Service Response",
+  "description": "Comprehensive playbook for responding to Denial of Service (DoS) and Distributed Denial of Service (DDoS) attacks that disrupt or degrade network services and system availability.",
+  "incidentType": "ddos",
+  "phases": [
+    {
+      "name": "Identification",
+      "description": "The purpose of the Identification stage is to accurately determine the Incident type, severity and perform immediate containment and escalation.",
+      "order": 1,
+      "tasks": [
+        {
+          "title": "Initiate CIRT Team Meeting and Execute Escalation Procedures",
+          "content": "As more information about the incident is known, the core CIRT team will meet and define which organizational SMEs need to be included to respond to the incident.",
+          "taskType": "hybrid",
+          "complexity": "moderate",
+          "estimatedDuration": 120,
+          "preferredWorkRole": "CIRT_LEADER",
+          "order": 1,
+          "outcomes": [
+            "First Core CIRT meeting is held with invited SMEs",
+            "OOB communications channels are set up and periodic checkins scheduled",
+            "Privileged Communications is established with legal counsel"
+          ],
+          "subtasks": [
+            {
+              "subtaskType": "administrative",
+              "title": "Initiate first CIRT meeting",
+              "content": "Initiated first meeting of the organizational core CIRT.",
+              "order": 1
+            },
+            {
+              "subtaskType": "hybrid",
+              "title": "Notify CIRT team members",
+              "content": "Notified CIRT team members using the contacts and role assignments on the My Team page and made sure ORNA roles are assigned so they are aware of the tasks allocated for them.",
+              "order": 2
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Verify Incident Severity",
+              "content": "Verified the Incident Severity determined during the Incident record creation process as promptly and accurately as possible. The severity may change as more details are uncovered and it will need to be updated when the situation changes.",
+              "order": 3
+            },
+            {
+              "subtaskType": "technical",
+              "title": "Invite additional SMEs",
+              "content": "Invited additional SMEs to be included in CIRT update meetings.",
+              "order": 4
+            },
+            {
+              "subtaskType": "technical",
+              "title": "Set up secured meeting room",
+              "content": "Set up a secured meeting room (either physical and/or virtual).",
+              "order": 5
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Schedule follow-up meetings",
+              "content": "Scheduled follow-up meetings according to a defined cadence.",
+              "order": 6
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Work with Legal Counsel",
+              "content": "Worked closely with Legal Counsel to retain client-attorney privilege over the information pertaining to the incident and ensure compliance with applicable laws and regulations.",
+              "order": 7
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Create initial incident assessment",
+              "content": "Created an initial incident assessment to share with organizational leaders. This assessment notification will contain a summary of what has occurred; date & time of incident; scope of compromise; data involved; actions taken so far and next steps recipients can expect to see.",
+              "order": 8
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Establish log of meetings",
+              "content": "Established a log of items covered to keep track of when meetings occurred, who was present, high level discussion notes and follow-up actions.",
+              "order": 9
+            }
+          ]
+        },
+        {
+          "title": "Validate Denial of Service Incident",
+          "content": "A Denial of Service (DoS) attack is an attempt to make a machine or network resource unavailable to its intended users. DoS attacks typically flood servers, systems or networks with traffic to overload resources. Distributed Denial of Service (DDoS) attacks use multiple compromised systems as sources of attack traffic.",
+          "taskType": "technical",
+          "complexity": "moderate",
+          "estimatedDuration": 120,
+          "preferredWorkRole": "CORE_CIRT_MEMBER",
+          "order": 2,
+          "outcomes": [
+            "A security incident is confirmed as a DoS/DDoS attack",
+            "Attack type and vectors are identified"
+          ],
+          "subtasks": [
+            {
+              "subtaskType": "technical",
+              "title": "Analyze network traffic patterns",
+              "content": "Analyzed network traffic patterns to identify abnormal spikes in volume, unusual protocols, or suspicious source addresses indicating a DoS/DDoS attack.",
+              "order": 1
+            },
+            {
+              "subtaskType": "technical",
+              "title": "Check service availability",
+              "content": "Checked availability and response times of critical services and systems to determine which resources are being targeted or affected.",
+              "order": 2
+            },
+            {
+              "subtaskType": "technical",
+              "title": "Review monitoring alerts",
+              "content": "Reviewed alerts from network monitoring tools, IDS/IPS, firewalls, and load balancers for indications of attack traffic.",
+              "order": 3
+            },
+            {
+              "subtaskType": "technical",
+              "title": "Identify attack type",
+              "content": "Identified the type of DoS/DDoS attack: volumetric (bandwidth exhaustion), protocol (SYN flood, fragmentation), or application-layer (HTTP flood, Slowloris).",
+              "order": 4
+            }
+          ]
+        },
+        {
+          "title": "Determine Attack Scope and Impact",
+          "content": "Identify all affected services, systems, and network segments. Understanding the full scope is critical for effective response and mitigation.",
+          "taskType": "technical",
+          "complexity": "high",
+          "estimatedDuration": 180,
+          "preferredWorkRole": "CORE_CIRT_MEMBER",
+          "order": 3,
+          "outcomes": [
+            "All affected services and systems are identified",
+            "Attack magnitude and characteristics are documented",
+            "Business impact is understood"
+          ],
+          "subtasks": [
+            {
+              "subtaskType": "technical",
+              "title": "Identify targeted services",
+              "content": "Identified which services, applications, or network segments are being targeted by the attack.",
+              "order": 1
+            },
+            {
+              "subtaskType": "technical",
+              "title": "Measure attack volume",
+              "content": "Measured the volume and rate of attack traffic (packets per second, bits per second, requests per second).",
+              "order": 2
+            },
+            {
+              "subtaskType": "technical",
+              "title": "Analyze attack sources",
+              "content": "Analyzed source IP addresses, geographic locations, and patterns to understand if this is a simple DoS or distributed DDoS attack.",
+              "order": 3
+            },
+            {
+              "subtaskType": "technical",
+              "title": "Document attack vectors",
+              "content": "Documented the attack vectors being used (UDP floods, SYN floods, HTTP requests, DNS amplification, etc.).",
+              "order": 4
+            }
+          ]
+        },
+        {
+          "title": "Assess Need for External Support",
+          "content": "Determine if external assistance is needed to effectively mitigate the attack, especially for large-scale DDoS attacks that may require ISP or cloud provider intervention.",
+          "taskType": "administrative",
+          "complexity": "low",
+          "estimatedDuration": 60,
+          "preferredWorkRole": "CIRT_LEADER",
+          "order": 4,
+          "outcomes": [
+            "Decision is made whether to engage ISP or DDoS mitigation service",
+            "Decision is made whether to hire external technical help",
+            "ORNA incident response expertise is utilized if needed"
+          ],
+          "subtasks": [
+            {
+              "subtaskType": "administrative",
+              "title": "Contact ISP",
+              "content": "Contacted Internet Service Provider (ISP) for upstream filtering and traffic diversion if attack exceeds local mitigation capacity.",
+              "order": 1
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Consider DDoS mitigation service",
+              "content": "Considered engaging a specialized DDoS mitigation service (e.g., Cloudflare, Akamai, AWS Shield) for large-scale attacks.",
+              "order": 2
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Consider network security experts",
+              "content": "Considered retaining network security experts to assist with traffic analysis and mitigation strategy.",
+              "order": 3
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Consider ORNA support",
+              "content": "Considered retaining ORNA for incident response expertise.",
+              "order": 4
+            }
+          ]
+        },
+        {
+          "title": "Assess Impact",
+          "content": "Assess the operational, financial, and reputational impact of the service disruption to prioritize response actions.",
+          "taskType": "administrative",
+          "complexity": "low",
+          "estimatedDuration": 120,
+          "preferredWorkRole": "CIRT_LEADER",
+          "order": 5,
+          "outcomes": [
+            "Understand Operational Impact to Organization",
+            "Understand Financial Impact to Organization",
+            "Understand Reputational Impact to Organization"
+          ],
+          "subtasks": [
+            {
+              "subtaskType": "administrative",
+              "title": "Assess business disruption",
+              "content": "Assessed impact to business operations: Which services are unavailable? How many customers are affected? What revenue is at risk?",
+              "order": 1
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Assess service degradation",
+              "content": "Assessed the degree of service degradation and whether partial functionality can be maintained during the attack.",
+              "order": 2
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Assess financial impact",
+              "content": "Assessed financial impact including lost revenue, SLA penalties, and costs of mitigation services.",
+              "order": 3
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Assess reputational damage",
+              "content": "Assessed potential reputational damage from service outages and customer impact.",
+              "order": 4
+            }
+          ]
+        },
+        {
+          "title": "Determine Root Cause and Attack Motivation",
+          "content": "Investigate how the attack is being executed and potential motivations to inform mitigation strategy.",
+          "taskType": "technical",
+          "complexity": "high",
+          "estimatedDuration": 240,
+          "preferredWorkRole": "CORE_CIRT_MEMBER",
+          "order": 6,
+          "outcomes": [
+            "Attack methodology is understood",
+            "Potential attacker motivation is identified"
+          ],
+          "subtasks": [
+            {
+              "subtaskType": "technical",
+              "title": "Analyze attack patterns",
+              "content": "Analyzed attack patterns to determine if this is an opportunistic attack, targeted attack, extortion attempt, or smokescreen for other malicious activity.",
+              "order": 1
+            },
+            {
+              "subtaskType": "technical",
+              "title": "Check for extortion demands",
+              "content": "Checked for any extortion demands or ransom notes that may accompany the DDoS attack.",
+              "order": 2
+            },
+            {
+              "subtaskType": "technical",
+              "title": "Review threat intelligence",
+              "content": "Reviewed threat intelligence feeds to see if similar attacks are targeting other organizations in the same sector.",
+              "order": 3
+            },
+            {
+              "subtaskType": "technical",
+              "title": "Investigate botnet involvement",
+              "content": "Investigated whether the attack is using a known botnet (e.g., Mirai, Memcached amplification).",
+              "order": 4
+            }
+          ]
+        },
+        {
+          "title": "Send Communications",
+          "content": "Timely communications to internal stakeholders and potentially customers about service disruptions are critical for managing expectations.",
+          "taskType": "administrative",
+          "complexity": "low",
+          "estimatedDuration": 120,
+          "preferredWorkRole": "CIRT_LEADER",
+          "order": 7,
+          "outcomes": [
+            "Internal stakeholders are notified of the incident",
+            "Customer communications strategy is established",
+            "Status page is updated if applicable"
+          ],
+          "subtasks": [
+            {
+              "subtaskType": "administrative",
+              "title": "Work with Legal Counsel",
+              "content": "Worked with Legal Counsel and provided all available details about the incident severity and impact.",
+              "order": 1
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Notify internal stakeholders",
+              "content": "Notified internal stakeholders including executives, customer support teams, and operations teams.",
+              "order": 2
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Update status page",
+              "content": "Updated public status page or service dashboard to inform customers of ongoing service issues.",
+              "order": 3
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Prepare customer communications",
+              "content": "Prepared customer communications explaining service disruptions without revealing technical details that could aid attackers.",
+              "order": 4
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Utilize ORNA templates",
+              "content": "Utilized ORNA communications templates where appropriate.",
+              "order": 5
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Containment",
+      "description": "The main objective of the Containment stage is to limit the impact of the attack and begin restoring service availability.",
+      "order": 2,
+      "tasks": [
+        {
+          "title": "Implement Immediate Traffic Filtering",
+          "content": "Deploy immediate filtering rules to block or rate-limit attack traffic at network perimeter devices.",
+          "taskType": "technical",
+          "complexity": "high",
+          "estimatedDuration": 60,
+          "preferredWorkRole": "CORE_CIRT_MEMBER",
+          "order": 1,
+          "outcomes": [
+            "Attack traffic is being filtered at the perimeter",
+            "Legitimate traffic flow is improved"
+          ],
+          "subtasks": [
+            {
+              "subtaskType": "technical",
+              "title": "Configure firewall rules",
+              "content": "Configured firewall rules to block identified attack source IP addresses, geographic regions, or suspicious traffic patterns.",
+              "order": 1
+            },
+            {
+              "subtaskType": "technical",
+              "title": "Implement rate limiting",
+              "content": "Implemented rate limiting on affected services to prevent resource exhaustion.",
+              "order": 2
+            },
+            {
+              "subtaskType": "technical",
+              "title": "Enable connection limits",
+              "content": "Enabled connection limits and timeout settings to prevent connection table exhaustion.",
+              "order": 3
+            },
+            {
+              "subtaskType": "technical",
+              "title": "Deploy IPS signatures",
+              "content": "Deployed IPS/IDS signatures to detect and block specific attack patterns.",
+              "order": 4
+            }
+          ]
+        },
+        {
+          "title": "Activate DDoS Mitigation Services",
+          "content": "If available, activate cloud-based DDoS mitigation or scrubbing services to filter attack traffic upstream.",
+          "taskType": "technical",
+          "complexity": "moderate",
+          "estimatedDuration": 90,
+          "preferredWorkRole": "CORE_CIRT_MEMBER",
+          "order": 2,
+          "outcomes": [
+            "DDoS mitigation service is activated",
+            "Traffic is being scrubbed before reaching infrastructure"
+          ],
+          "subtasks": [
+            {
+              "subtaskType": "technical",
+              "title": "Activate cloud DDoS protection",
+              "content": "Activated cloud-based DDoS protection service (e.g., Cloudflare, AWS Shield, Azure DDoS Protection).",
+              "order": 1
+            },
+            {
+              "subtaskType": "technical",
+              "title": "Redirect DNS to scrubbing service",
+              "content": "Redirected DNS records to route traffic through scrubbing service if using DNS-based mitigation.",
+              "order": 2
+            },
+            {
+              "subtaskType": "technical",
+              "title": "Configure BGP routing",
+              "content": "Configured BGP routing changes to redirect traffic through mitigation provider if using network-layer mitigation.",
+              "order": 3
+            },
+            {
+              "subtaskType": "technical",
+              "title": "Coordinate with ISP",
+              "content": "Coordinated with ISP to implement upstream filtering or traffic diversion.",
+              "order": 4
+            }
+          ]
+        },
+        {
+          "title": "Scale Infrastructure Resources",
+          "content": "Increase infrastructure capacity to absorb attack traffic and maintain service availability where possible.",
+          "taskType": "technical",
+          "complexity": "moderate",
+          "estimatedDuration": 120,
+          "preferredWorkRole": "CORE_CIRT_MEMBER",
+          "order": 3,
+          "outcomes": [
+            "Additional capacity is deployed",
+            "Service resilience is improved"
+          ],
+          "subtasks": [
+            {
+              "subtaskType": "technical",
+              "title": "Scale compute resources",
+              "content": "Scaled up compute resources (servers, instances) if using cloud infrastructure with auto-scaling capabilities.",
+              "order": 1
+            },
+            {
+              "subtaskType": "technical",
+              "title": "Increase bandwidth capacity",
+              "content": "Increased bandwidth capacity or activated additional transit providers if available.",
+              "order": 2
+            },
+            {
+              "subtaskType": "technical",
+              "title": "Deploy additional load balancers",
+              "content": "Deployed additional load balancers or CDN edge nodes to distribute attack impact.",
+              "order": 3
+            },
+            {
+              "subtaskType": "technical",
+              "title": "Activate failover systems",
+              "content": "Activated failover or backup systems to maintain critical service availability.",
+              "order": 4
+            }
+          ]
+        },
+        {
+          "title": "Implement Application-Level Protections",
+          "content": "Deploy application-level defenses for Layer 7 (application layer) attacks targeting web services.",
+          "taskType": "technical",
+          "complexity": "moderate",
+          "estimatedDuration": 90,
+          "preferredWorkRole": "CORE_CIRT_MEMBER",
+          "order": 4,
+          "outcomes": [
+            "Application-layer attacks are mitigated",
+            "Web services are protected"
+          ],
+          "subtasks": [
+            {
+              "subtaskType": "technical",
+              "title": "Enable WAF rules",
+              "content": "Enabled Web Application Firewall (WAF) rules to block malicious HTTP requests and bot traffic.",
+              "order": 1
+            },
+            {
+              "subtaskType": "technical",
+              "title": "Implement CAPTCHA challenges",
+              "content": "Implemented CAPTCHA or JavaScript challenges to distinguish human users from bots.",
+              "order": 2
+            },
+            {
+              "subtaskType": "technical",
+              "title": "Configure HTTP rate limiting",
+              "content": "Configured HTTP rate limiting and request throttling at the application or reverse proxy level.",
+              "order": 3
+            },
+            {
+              "subtaskType": "technical",
+              "title": "Deploy bot management",
+              "content": "Deployed bot management solutions to identify and block automated attack traffic.",
+              "order": 4
+            }
+          ]
+        },
+        {
+          "title": "Invoke Business Continuity Plan",
+          "content": "Activate business continuity procedures to maintain critical operations during the attack.",
+          "taskType": "administrative",
+          "complexity": "low",
+          "estimatedDuration": 180,
+          "preferredWorkRole": "CEO",
+          "order": 5,
+          "outcomes": [
+            "Business continuity procedures are activated",
+            "Critical services are prioritized",
+            "Stakeholders are coordinated"
+          ],
+          "subtasks": [
+            {
+              "subtaskType": "administrative",
+              "title": "Activate BCP",
+              "content": "Activated Business Continuity Plan procedures for service disruption scenarios.",
+              "order": 1
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Prioritize critical services",
+              "content": "Prioritized critical services and allocated resources to maintain essential business functions.",
+              "order": 2
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Coordinate response teams",
+              "content": "Coordinated response teams including network operations, security, and customer support.",
+              "order": 3
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Document mitigation actions",
+              "content": "Documented all mitigation actions taken for incident reporting and post-incident review.",
+              "order": 4
+            }
+          ]
+        },
+        {
+          "title": "Issue Communications Updates",
+          "content": "Provide regular updates to stakeholders on mitigation progress and service status.",
+          "taskType": "administrative",
+          "complexity": "moderate",
+          "estimatedDuration": 120,
+          "preferredWorkRole": "COMMUNICATIONS_LEADER",
+          "order": 6,
+          "outcomes": [
+            "Stakeholders receive regular updates",
+            "Customers are informed of progress"
+          ],
+          "subtasks": [
+            {
+              "subtaskType": "administrative",
+              "title": "Update internal stakeholders",
+              "content": "Provided updates to internal stakeholders on containment progress and expected timelines.",
+              "order": 1
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Update status page",
+              "content": "Updated public status page with current service status and mitigation progress.",
+              "order": 2
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Communicate with customers",
+              "content": "Communicated with affected customers about service restoration efforts.",
+              "order": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Eradication",
+      "description": "The Eradication stage focuses on fully stopping the attack and ensuring attackers cannot resume the assault.",
+      "order": 3,
+      "tasks": [
+        {
+          "title": "Analyze and Block Attack Infrastructure",
+          "content": "Identify and block the infrastructure being used to conduct the attack, including botnets and command-and-control servers.",
+          "taskType": "technical",
+          "complexity": "high",
+          "estimatedDuration": 240,
+          "preferredWorkRole": "CORE_CIRT_MEMBER",
+          "order": 1,
+          "outcomes": [
+            "Attack infrastructure is identified and blocked",
+            "Botnet C&C communications are disrupted"
+          ],
+          "subtasks": [
+            {
+              "subtaskType": "technical",
+              "title": "Identify botnet C&C servers",
+              "content": "Identified command-and-control servers coordinating the botnet attack through traffic analysis.",
+              "order": 1
+            },
+            {
+              "subtaskType": "technical",
+              "title": "Block C&C communications",
+              "content": "Blocked communications to identified C&C servers at the firewall and DNS level.",
+              "order": 2
+            },
+            {
+              "subtaskType": "technical",
+              "title": "Report to authorities",
+              "content": "Reported botnet infrastructure to appropriate authorities and abuse contacts for takedown efforts.",
+              "order": 3
+            },
+            {
+              "subtaskType": "technical",
+              "title": "Share threat intelligence",
+              "content": "Shared indicators of compromise with security community and threat intelligence platforms.",
+              "order": 4
+            }
+          ]
+        },
+        {
+          "title": "Harden Network and Service Configurations",
+          "content": "Implement long-term hardening measures to make systems more resilient to future attacks.",
+          "taskType": "technical",
+          "complexity": "moderate",
+          "estimatedDuration": 300,
+          "preferredWorkRole": "CORE_CIRT_MEMBER",
+          "order": 2,
+          "outcomes": [
+            "Network defenses are strengthened",
+            "Services are hardened against future attacks"
+          ],
+          "subtasks": [
+            {
+              "subtaskType": "technical",
+              "title": "Implement SYN cookies",
+              "content": "Implemented SYN cookies and other TCP stack hardening to resist SYN flood attacks.",
+              "order": 1
+            },
+            {
+              "subtaskType": "technical",
+              "title": "Configure connection limits",
+              "content": "Configured appropriate connection limits and timeouts on all internet-facing services.",
+              "order": 2
+            },
+            {
+              "subtaskType": "technical",
+              "title": "Disable unnecessary services",
+              "content": "Disabled unnecessary services and protocols that could be exploited in amplification attacks.",
+              "order": 3
+            },
+            {
+              "subtaskType": "technical",
+              "title": "Implement BCP38 filtering",
+              "content": "Implemented BCP38 (ingress filtering) to prevent IP spoofing where possible.",
+              "order": 4
+            }
+          ]
+        },
+        {
+          "title": "Optimize Architecture for Resilience",
+          "content": "Review and optimize architecture to improve resilience against future DDoS attacks.",
+          "taskType": "technical",
+          "complexity": "high",
+          "estimatedDuration": 480,
+          "preferredWorkRole": "CORE_CIRT_MEMBER",
+          "order": 3,
+          "outcomes": [
+            "Architecture is more resilient",
+            "Attack surface is reduced"
+          ],
+          "subtasks": [
+            {
+              "subtaskType": "technical",
+              "title": "Implement geographic distribution",
+              "content": "Implemented geographic distribution of services using CDN or multi-region deployment.",
+              "order": 1
+            },
+            {
+              "subtaskType": "technical",
+              "title": "Deploy anycast routing",
+              "content": "Deployed anycast routing to distribute attack traffic across multiple locations.",
+              "order": 2
+            },
+            {
+              "subtaskType": "technical",
+              "title": "Implement caching",
+              "content": "Implemented aggressive caching strategies to reduce load on origin servers.",
+              "order": 3
+            },
+            {
+              "subtaskType": "technical",
+              "title": "Separate infrastructure",
+              "content": "Separated critical infrastructure from public-facing services where possible.",
+              "order": 4
+            }
+          ]
+        },
+        {
+          "title": "Fine-Tune Detection and Alerting",
+          "content": "Improve monitoring and alerting to detect future attacks more quickly.",
+          "taskType": "technical",
+          "complexity": "moderate",
+          "estimatedDuration": 180,
+          "preferredWorkRole": "CORE_CIRT_MEMBER",
+          "order": 4,
+          "outcomes": [
+            "Detection capabilities are improved",
+            "Alert thresholds are optimized"
+          ],
+          "subtasks": [
+            {
+              "subtaskType": "technical",
+              "title": "Configure baseline monitoring",
+              "content": "Configured baseline monitoring for normal traffic patterns to quickly identify anomalies.",
+              "order": 1
+            },
+            {
+              "subtaskType": "technical",
+              "title": "Set up alerting thresholds",
+              "content": "Set up appropriate alerting thresholds for traffic volume, connection rates, and service response times.",
+              "order": 2
+            },
+            {
+              "subtaskType": "technical",
+              "title": "Deploy flow analysis",
+              "content": "Deployed NetFlow or sFlow analysis tools for detailed traffic visibility.",
+              "order": 3
+            },
+            {
+              "subtaskType": "technical",
+              "title": "Integrate threat intelligence",
+              "content": "Integrated threat intelligence feeds to proactively block known attack sources.",
+              "order": 4
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Recovery",
+      "description": "The Recovery stage aims to fully restore normal service operation and verify system stability.",
+      "order": 4,
+      "tasks": [
+        {
+          "title": "Restore Full Service Availability",
+          "content": "Gradually restore services to full capacity while monitoring for any signs of attack resumption.",
+          "taskType": "technical",
+          "complexity": "moderate",
+          "estimatedDuration": 180,
+          "preferredWorkRole": "CORE_CIRT_MEMBER",
+          "order": 1,
+          "outcomes": [
+            "All services are fully restored",
+            "Performance is back to normal",
+            "No attack activity detected"
+          ],
+          "subtasks": [
+            {
+              "subtaskType": "technical",
+              "title": "Verify attack has ceased",
+              "content": "Verified that attack traffic has stopped and normal traffic patterns have resumed.",
+              "order": 1
+            },
+            {
+              "subtaskType": "technical",
+              "title": "Remove temporary restrictions",
+              "content": "Gradually removed temporary traffic restrictions and rate limits while monitoring for issues.",
+              "order": 2
+            },
+            {
+              "subtaskType": "technical",
+              "title": "Scale down resources",
+              "content": "Scaled down temporarily increased infrastructure resources to normal levels.",
+              "order": 3
+            },
+            {
+              "subtaskType": "technical",
+              "title": "Test service functionality",
+              "content": "Tested all service functionality to ensure complete restoration of capabilities.",
+              "order": 4
+            }
+          ]
+        },
+        {
+          "title": "Validate System Performance",
+          "content": "Verify that all systems are performing normally and no degradation remains.",
+          "taskType": "technical",
+          "complexity": "moderate",
+          "estimatedDuration": 120,
+          "preferredWorkRole": "CORE_CIRT_MEMBER",
+          "order": 2,
+          "outcomes": [
+            "System performance is validated",
+            "No residual issues exist"
+          ],
+          "subtasks": [
+            {
+              "subtaskType": "technical",
+              "title": "Monitor performance metrics",
+              "content": "Monitored key performance metrics including latency, throughput, and error rates.",
+              "order": 1
+            },
+            {
+              "subtaskType": "technical",
+              "title": "Verify customer access",
+              "content": "Verified that customers can access all services without issues.",
+              "order": 2
+            },
+            {
+              "subtaskType": "technical",
+              "title": "Check for collateral damage",
+              "content": "Checked for any collateral damage to systems or data from the attack or mitigation efforts.",
+              "order": 3
+            },
+            {
+              "subtaskType": "technical",
+              "title": "Validate security controls",
+              "content": "Validated that all security controls are functioning properly post-recovery.",
+              "order": 4
+            }
+          ]
+        },
+        {
+          "title": "Maintain Enhanced Monitoring",
+          "content": "Continue enhanced monitoring for a period after attack cessation to detect any resumption.",
+          "taskType": "technical",
+          "complexity": "low",
+          "estimatedDuration": 1440,
+          "preferredWorkRole": "CORE_CIRT_MEMBER",
+          "order": 3,
+          "outcomes": [
+            "Enhanced monitoring continues",
+            "Attack resumption would be quickly detected"
+          ],
+          "subtasks": [
+            {
+              "subtaskType": "technical",
+              "title": "Maintain heightened alerting",
+              "content": "Maintained heightened alerting thresholds for a period after the attack.",
+              "order": 1
+            },
+            {
+              "subtaskType": "technical",
+              "title": "Monitor for follow-up attacks",
+              "content": "Monitored for potential follow-up attacks or attack pattern changes.",
+              "order": 2
+            },
+            {
+              "subtaskType": "technical",
+              "title": "Review daily traffic reports",
+              "content": "Reviewed daily traffic analysis reports for anomalies.",
+              "order": 3
+            }
+          ]
+        },
+        {
+          "title": "Issue Final Communications",
+          "content": "Communicate service restoration and thank stakeholders for their patience.",
+          "taskType": "administrative",
+          "complexity": "moderate",
+          "estimatedDuration": 120,
+          "preferredWorkRole": "COMMUNICATIONS_LEADER",
+          "order": 4,
+          "outcomes": [
+            "Stakeholders are informed of full restoration",
+            "Customers are thanked for patience"
+          ],
+          "subtasks": [
+            {
+              "subtaskType": "administrative",
+              "title": "Update status page",
+              "content": "Updated status page to reflect full service restoration.",
+              "order": 1
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Notify internal stakeholders",
+              "content": "Notified internal stakeholders that incident response is concluding.",
+              "order": 2
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Communicate with customers",
+              "content": "Communicated with customers about service restoration and any follow-up actions.",
+              "order": 3
+            }
+          ]
+        },
+        {
+          "title": "Resolve Incident",
+          "content": "Formally close the incident once all services are restored and stable.",
+          "taskType": "administrative",
+          "complexity": "low",
+          "estimatedDuration": 60,
+          "preferredWorkRole": "CIRT_LEADER",
+          "order": 5,
+          "outcomes": [
+            "The incident is declared as resolved"
+          ],
+          "subtasks": [
+            {
+              "subtaskType": "administrative",
+              "title": "Verify complete restoration",
+              "content": "Verified with all stakeholders that services are fully restored and performing normally.",
+              "order": 1
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Change incident status",
+              "content": "Changed status of incident to 'resolved'.",
+              "order": 2
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Lessons Learned",
+      "description": "The Lessons Learned stage's main goal is to compile all relevant information about the incident and extract lessons for improving future response.",
+      "order": 5,
+      "tasks": [
+        {
+          "title": "Generate Incident Report",
+          "content": "Create a comprehensive incident report documenting the attack, response actions, and outcomes.",
+          "taskType": "administrative",
+          "complexity": "high",
+          "estimatedDuration": 60,
+          "preferredWorkRole": "CIRT_LEADER",
+          "order": 1,
+          "outcomes": [
+            "The Incident Report is generated"
+          ],
+          "subtasks": [
+            {
+              "subtaskType": "technical",
+              "title": "Generate report",
+              "content": "Generated the incident report using the Reports tab.",
+              "order": 1
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Review for accuracy",
+              "content": "Reviewed the report for accuracy and completeness.",
+              "order": 2
+            },
+            {
+              "subtaskType": "technical",
+              "title": "Include attack metrics",
+              "content": "Included detailed attack metrics (volume, duration, vectors, sources) in the report.",
+              "order": 3
+            },
+            {
+              "subtaskType": "technical",
+              "title": "Document mitigation actions",
+              "content": "Documented all mitigation actions taken and their effectiveness.",
+              "order": 4
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Share report",
+              "content": "Shared the report with appropriate stakeholders.",
+              "order": 5
+            }
+          ]
+        },
+        {
+          "title": "Conduct Cost Analysis",
+          "content": "Analyze the financial impact of the attack and response efforts.",
+          "taskType": "administrative",
+          "complexity": "moderate",
+          "estimatedDuration": 240,
+          "preferredWorkRole": "CFO",
+          "order": 2,
+          "outcomes": [
+            "Total cost of incident is calculated",
+            "ROI of mitigation investments is evaluated"
+          ],
+          "subtasks": [
+            {
+              "subtaskType": "administrative",
+              "title": "Calculate direct costs",
+              "content": "Calculated direct costs including mitigation service fees, additional bandwidth, and overtime.",
+              "order": 1
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Calculate revenue impact",
+              "content": "Calculated revenue impact from service downtime and customer attrition.",
+              "order": 2
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Assess insurance coverage",
+              "content": "Assessed insurance coverage and filed claims if applicable.",
+              "order": 3
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Evaluate mitigation ROI",
+              "content": "Evaluated return on investment of DDoS mitigation measures.",
+              "order": 4
+            }
+          ]
+        },
+        {
+          "title": "Host Lessons Learned Session",
+          "content": "Conduct a lessons learned session to identify improvements to DDoS preparedness and response.",
+          "taskType": "hybrid",
+          "complexity": "moderate",
+          "estimatedDuration": 360,
+          "preferredWorkRole": "CIRT_LEADER",
+          "order": 3,
+          "outcomes": [
+            "Lessons learned session is conducted",
+            "Improvements are identified",
+            "Action plan is created"
+          ],
+          "subtasks": [
+            {
+              "subtaskType": "administrative",
+              "title": "Prepare presentation",
+              "content": "Prepared presentation covering attack timeline, response effectiveness, and improvement opportunities.",
+              "order": 1
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Host session",
+              "content": "Hosted the lessons learned session with all key stakeholders.",
+              "order": 2
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Discuss response effectiveness",
+              "content": "Discussed what worked well and what could be improved in the response process.",
+              "order": 3
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Identify infrastructure gaps",
+              "content": "Identified gaps in infrastructure resilience and mitigation capabilities.",
+              "order": 4
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Create improvement plan",
+              "content": "Created an action plan for implementing identified improvements.",
+              "order": 5
+            }
+          ]
+        },
+        {
+          "title": "Update DDoS Response Plan",
+          "content": "Update the DDoS response plan based on lessons learned from this incident.",
+          "taskType": "administrative",
+          "complexity": "moderate",
+          "estimatedDuration": 480,
+          "preferredWorkRole": "CIRT_LEADER",
+          "order": 4,
+          "outcomes": [
+            "DDoS response plan is updated",
+            "Runbooks are improved"
+          ],
+          "subtasks": [
+            {
+              "subtaskType": "administrative",
+              "title": "Update response procedures",
+              "content": "Updated response procedures based on lessons learned.",
+              "order": 1
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Update contact lists",
+              "content": "Updated contact lists for ISPs, mitigation vendors, and internal stakeholders.",
+              "order": 2
+            },
+            {
+              "subtaskType": "technical",
+              "title": "Update runbooks",
+              "content": "Updated technical runbooks with improved mitigation steps.",
+              "order": 3
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Schedule training",
+              "content": "Scheduled training exercises to practice updated response procedures.",
+              "order": 4
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

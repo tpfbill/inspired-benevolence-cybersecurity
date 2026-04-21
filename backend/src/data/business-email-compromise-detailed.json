@@ -1,0 +1,1033 @@
+{
+  "name": "Business Email Compromise Response",
+  "description": "Comprehensive playbook for responding to Business Email Compromise (BEC) attacks including CEO fraud, wire transfer fraud, vendor impersonation, and account takeover targeting financial transactions and sensitive business operations.",
+  "incidentType": "phishing",
+  "phases": [
+    {
+      "name": "Identification",
+      "description": "The purpose of the Identification stage is to accurately determine the BEC attack type, scope, and perform immediate containment to prevent financial loss.",
+      "order": 1,
+      "tasks": [
+        {
+          "title": "Initiate CIRT Team Meeting and Execute Escalation Procedures",
+          "content": "Business Email Compromise incidents require immediate escalation due to potential for significant financial loss. Engage finance, legal, and executive leadership immediately.",
+          "taskType": "hybrid",
+          "complexity": "moderate",
+          "estimatedDuration": 60,
+          "preferredWorkRole": "CIRT_LEADER",
+          "order": 1,
+          "outcomes": [
+            "First Core CIRT meeting is held with Finance and Legal",
+            "Executive leadership is notified immediately",
+            "OOB communications channels are established",
+            "Privileged Communications is established with legal counsel"
+          ],
+          "subtasks": [
+            {
+              "subtaskType": "administrative",
+              "title": "Initiate emergency CIRT meeting",
+              "content": "Initiated emergency meeting of the organizational core CIRT with Finance and Legal present.",
+              "order": 1
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Notify executive leadership",
+              "content": "Immediately notified CFO, CEO, and relevant executives about potential BEC incident.",
+              "order": 2
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Notify CIRT team members",
+              "content": "Notified CIRT team members using emergency contact procedures.",
+              "order": 3
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Verify Incident Severity",
+              "content": "Verified the Incident Severity - BEC incidents are typically high or critical due to financial impact.",
+              "order": 4
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Involve Finance team",
+              "content": "Immediately involved Finance team to review pending/recent wire transfers and payment requests.",
+              "order": 5
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Work with Legal Counsel",
+              "content": "Worked closely with Legal Counsel regarding potential fraud, law enforcement notification, and regulatory requirements.",
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Validate Business Email Compromise Incident",
+          "content": "Confirm the incident is a BEC attack and identify the specific type: CEO fraud, vendor impersonation, account compromise, attorney impersonation, or W-2 phishing.",
+          "taskType": "hybrid",
+          "complexity": "high",
+          "estimatedDuration": 120,
+          "preferredWorkRole": "CORE_CIRT_MEMBER",
+          "order": 2,
+          "outcomes": [
+            "BEC attack is confirmed",
+            "BEC attack type is identified",
+            "Timeline of compromise is established"
+          ],
+          "subtasks": [
+            {
+              "subtaskType": "technical",
+              "title": "Analyze suspicious email",
+              "content": "Analyzed the suspicious email including headers, sender address, reply-to address, and content for signs of spoofing or compromise.",
+              "order": 1
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Identify BEC type",
+              "content": "Identified BEC type: CEO Fraud (executive impersonation), Vendor Email Compromise, Account Compromise, Attorney Impersonation, or HR/W-2 Phishing.",
+              "order": 2
+            },
+            {
+              "subtaskType": "technical",
+              "title": "Check for account compromise",
+              "content": "Checked if legitimate email account was compromised vs. external spoofing by reviewing login logs and sent items.",
+              "order": 3
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Verify with claimed sender",
+              "content": "Verified with the claimed sender (executive, vendor, etc.) through out-of-band communication that they did NOT send the email.",
+              "order": 4
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Review payment requests",
+              "content": "Reviewed any payment or wire transfer requests for legitimacy and whether they were processed.",
+              "order": 5
+            }
+          ]
+        },
+        {
+          "title": "Determine Financial Impact and Stop Payments",
+          "content": "Immediately assess financial impact and take urgent action to stop any fraudulent payments or wire transfers.",
+          "taskType": "administrative",
+          "complexity": "high",
+          "estimatedDuration": 60,
+          "preferredWorkRole": "CFO",
+          "order": 3,
+          "outcomes": [
+            "All fraudulent payment requests are identified",
+            "Pending payments are stopped",
+            "Completed payments are identified for recovery",
+            "Financial impact is assessed"
+          ],
+          "subtasks": [
+            {
+              "subtaskType": "administrative",
+              "title": "Review recent payment requests",
+              "content": "Reviewed all payment requests from the past 30 days that match the BEC pattern (wire transfers, ACH, check requests).",
+              "order": 1
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Stop pending payments",
+              "content": "Immediately stopped any pending payments or wire transfers related to the BEC attack.",
+              "order": 2
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Contact financial institutions",
+              "content": "Contacted banks and financial institutions to stop/recall any recently completed fraudulent transfers.",
+              "order": 3
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Document financial impact",
+              "content": "Documented total financial impact including attempted and completed fraudulent transfers.",
+              "order": 4
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Freeze additional transfers",
+              "content": "Implemented temporary freeze or enhanced verification for all outgoing wire transfers and large payments.",
+              "order": 5
+            }
+          ]
+        },
+        {
+          "title": "Determine Scope of Compromise",
+          "content": "Identify all affected email accounts, systems, and understand how the attacker gained access or impersonated legitimate parties.",
+          "taskType": "technical",
+          "complexity": "high",
+          "estimatedDuration": 180,
+          "preferredWorkRole": "CORE_CIRT_MEMBER",
+          "order": 4,
+          "outcomes": [
+            "All compromised email accounts are identified",
+            "Attack vector is understood",
+            "Other targeted employees are identified"
+          ],
+          "subtasks": [
+            {
+              "subtaskType": "technical",
+              "title": "Review email logs",
+              "content": "Reviewed email server logs and mail flow logs to identify suspicious emails and recipients.",
+              "order": 1
+            },
+            {
+              "subtaskType": "technical",
+              "title": "Check for account compromise",
+              "content": "Checked authentication logs for compromised executive or vendor email accounts showing unauthorized access.",
+              "order": 2
+            },
+            {
+              "subtaskType": "technical",
+              "title": "Identify all recipients",
+              "content": "Identified all employees who received similar BEC emails to determine full scope.",
+              "order": 3
+            },
+            {
+              "subtaskType": "technical",
+              "title": "Search for similar emails",
+              "content": "Searched mailboxes for similar fraudulent emails using patterns, sender domains, and subject lines.",
+              "order": 4
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Interview affected employees",
+              "content": "Interviewed employees who received or responded to BEC emails to understand actions taken.",
+              "order": 5
+            }
+          ]
+        },
+        {
+          "title": "Contact Law Enforcement and Report Fraud",
+          "content": "BEC incidents should be reported to law enforcement immediately, particularly FBI IC3, to enable recovery efforts and investigation.",
+          "taskType": "administrative",
+          "complexity": "moderate",
+          "estimatedDuration": 120,
+          "preferredWorkRole": "LEGAL",
+          "order": 5,
+          "outcomes": [
+            "FBI IC3 complaint is filed",
+            "Local law enforcement is notified",
+            "Case numbers are obtained",
+            "Financial institution fraud departments are engaged"
+          ],
+          "subtasks": [
+            {
+              "subtaskType": "administrative",
+              "title": "File FBI IC3 complaint",
+              "content": "Filed complaint with FBI Internet Crime Complaint Center (IC3) at ic3.gov including all relevant details and transaction information.",
+              "order": 1
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Contact local FBI field office",
+              "content": "Contacted local FBI field office directly for BEC incidents involving large dollar amounts.",
+              "order": 2
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Notify financial institution fraud dept",
+              "content": "Notified bank's fraud department and requested Financial Fraud Kill Chain to potentially recover funds.",
+              "order": 3
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Document case numbers",
+              "content": "Documented all case numbers, contact information, and law enforcement liaison details.",
+              "order": 4
+            }
+          ]
+        },
+        {
+          "title": "Assess Need for External Support",
+          "content": "Determine if external forensics, legal, or fraud recovery experts are needed.",
+          "taskType": "administrative",
+          "complexity": "low",
+          "estimatedDuration": 60,
+          "preferredWorkRole": "CIRT_LEADER",
+          "order": 6,
+          "outcomes": [
+            "Decision is made whether to hire fraud recovery firm",
+            "Decision is made whether to hire forensics experts",
+            "Decision is made whether to hire external legal counsel"
+          ],
+          "subtasks": [
+            {
+              "subtaskType": "administrative",
+              "title": "Consider fraud recovery service",
+              "content": "Considered retaining a fraud recovery service to assist with recovering transferred funds.",
+              "order": 1
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Consider forensics investigation",
+              "content": "Considered retaining digital forensics experts to investigate email compromise or account takeover.",
+              "order": 2
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Consider outside legal counsel",
+              "content": "Considered retaining outside legal counsel specializing in cybercrime and fraud.",
+              "order": 3
+            }
+          ]
+        },
+        {
+          "title": "Send Internal Communications",
+          "content": "Alert employees about the BEC attack to prevent additional victims and reinforce verification procedures.",
+          "taskType": "administrative",
+          "complexity": "moderate",
+          "estimatedDuration": 90,
+          "preferredWorkRole": "COMMUNICATIONS_LEADER",
+          "order": 7,
+          "outcomes": [
+            "Organization-wide BEC alert is sent",
+            "Payment verification procedures are reinforced",
+            "Employees know how to report suspicious requests"
+          ],
+          "subtasks": [
+            {
+              "subtaskType": "administrative",
+              "title": "Send immediate security alert",
+              "content": "Sent immediate security alert to all employees warning about active BEC attack targeting the organization.",
+              "order": 1
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Reinforce verification procedures",
+              "content": "Reinforced payment verification procedures requiring out-of-band confirmation for all wire transfers and payment changes.",
+              "order": 2
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Provide reporting instructions",
+              "content": "Provided clear instructions on how to report suspicious payment requests or executive emails.",
+              "order": 3
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Alert Finance and AP teams",
+              "content": "Sent specific alert to Finance, Accounts Payable, and Procurement teams with enhanced vigilance instructions.",
+              "order": 4
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Containment",
+      "description": "The main objective of the Containment stage is to stop the BEC attack, prevent additional financial loss, and secure compromised accounts.",
+      "order": 2,
+      "tasks": [
+        {
+          "title": "Secure Compromised Email Accounts",
+          "content": "If email accounts were compromised, immediately secure them and revoke access.",
+          "taskType": "technical",
+          "complexity": "high",
+          "estimatedDuration": 60,
+          "preferredWorkRole": "CORE_CIRT_MEMBER",
+          "order": 1,
+          "outcomes": [
+            "Compromised accounts are secured",
+            "Passwords are reset",
+            "MFA is enabled",
+            "Sessions are terminated"
+          ],
+          "subtasks": [
+            {
+              "subtaskType": "technical",
+              "title": "Reset account passwords",
+              "content": "Reset passwords for all compromised email accounts immediately.",
+              "order": 1
+            },
+            {
+              "subtaskType": "technical",
+              "title": "Revoke active sessions",
+              "content": "Revoked all active sessions and forced re-authentication for compromised accounts.",
+              "order": 2
+            },
+            {
+              "subtaskType": "technical",
+              "title": "Enable MFA",
+              "content": "Enabled or re-registered multi-factor authentication for compromised accounts.",
+              "order": 3
+            },
+            {
+              "subtaskType": "technical",
+              "title": "Review mailbox rules",
+              "content": "Reviewed and removed any suspicious mailbox forwarding rules, auto-forward settings, or filters created by attacker.",
+              "order": 4
+            },
+            {
+              "subtaskType": "technical",
+              "title": "Check delegated access",
+              "content": "Checked for and removed any unauthorized delegated mailbox access or application permissions.",
+              "order": 5
+            }
+          ]
+        },
+        {
+          "title": "Block Malicious Emails and Domains",
+          "content": "Block the sender addresses and domains used in the BEC attack to prevent further emails from reaching employees.",
+          "taskType": "technical",
+          "complexity": "moderate",
+          "estimatedDuration": 60,
+          "preferredWorkRole": "CORE_CIRT_MEMBER",
+          "order": 2,
+          "outcomes": [
+            "Malicious sender addresses are blocked",
+            "Spoofed domains are blocked",
+            "Similar emails are quarantined"
+          ],
+          "subtasks": [
+            {
+              "subtaskType": "technical",
+              "title": "Block sender addresses",
+              "content": "Blocked all sender email addresses used in the BEC attack at the email gateway.",
+              "order": 1
+            },
+            {
+              "subtaskType": "technical",
+              "title": "Block spoofed domains",
+              "content": "Blocked lookalike or typosquatting domains used to impersonate legitimate domains.",
+              "order": 2
+            },
+            {
+              "subtaskType": "technical",
+              "title": "Create email filter rules",
+              "content": "Created email filter rules to quarantine similar BEC emails based on subject lines, content patterns, and sender characteristics.",
+              "order": 3
+            },
+            {
+              "subtaskType": "technical",
+              "title": "Remove BEC emails from mailboxes",
+              "content": "Removed/quarantined BEC emails from all user mailboxes to prevent further interaction.",
+              "order": 4
+            }
+          ]
+        },
+        {
+          "title": "Implement Enhanced Payment Verification",
+          "content": "Immediately implement enhanced verification procedures for all payment requests and financial transactions.",
+          "taskType": "administrative",
+          "complexity": "moderate",
+          "estimatedDuration": 90,
+          "preferredWorkRole": "CFO",
+          "order": 3,
+          "outcomes": [
+            "All payments require dual verification",
+            "Out-of-band confirmation is mandatory",
+            "Temporary payment holds are in place"
+          ],
+          "subtasks": [
+            {
+              "subtaskType": "administrative",
+              "title": "Require dual authorization",
+              "content": "Implemented requirement for dual authorization on all wire transfers and payments over threshold amount.",
+              "order": 1
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Mandate callback verification",
+              "content": "Mandated callback verification using known phone numbers (not from email) for all payment change requests and large transfers.",
+              "order": 2
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Flag vendor account changes",
+              "content": "Flagged all vendor banking information changes for extra scrutiny and verification.",
+              "order": 3
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Implement temporary holds",
+              "content": "Implemented temporary holds or delays on all wire transfers to allow for verification.",
+              "order": 4
+            }
+          ]
+        },
+        {
+          "title": "Coordinate with Financial Institutions",
+          "content": "Work with banks and financial institutions to attempt recovery of transferred funds through the Financial Fraud Kill Chain.",
+          "taskType": "administrative",
+          "complexity": "high",
+          "estimatedDuration": 240,
+          "preferredWorkRole": "CFO",
+          "order": 4,
+          "outcomes": [
+            "Banks are engaged for fund recovery",
+            "Financial Fraud Kill Chain is activated",
+            "Receiving banks are contacted",
+            "Funds are frozen if possible"
+          ],
+          "subtasks": [
+            {
+              "subtaskType": "administrative",
+              "title": "Contact originating bank",
+              "content": "Contacted organization's bank immediately to report fraud and request recall of wire transfers.",
+              "order": 1
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Request Financial Fraud Kill Chain",
+              "content": "Requested activation of FBI's Financial Fraud Kill Chain process to freeze funds at receiving bank.",
+              "order": 2
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Provide transaction details",
+              "content": "Provided complete transaction details including amounts, dates, receiving account information, and wire instructions.",
+              "order": 3
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Contact receiving bank",
+              "content": "Worked with law enforcement to contact receiving bank to freeze fraudulent account.",
+              "order": 4
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "File insurance claim",
+              "content": "Filed claim with cyber insurance or crime insurance policy if applicable.",
+              "order": 5
+            }
+          ]
+        },
+        {
+          "title": "Issue Communications Updates",
+          "content": "Provide updates to stakeholders on containment actions and prevention measures.",
+          "taskType": "administrative",
+          "complexity": "moderate",
+          "estimatedDuration": 60,
+          "preferredWorkRole": "COMMUNICATIONS_LEADER",
+          "order": 5,
+          "outcomes": [
+            "Internal stakeholders are updated",
+            "New verification procedures are communicated"
+          ],
+          "subtasks": [
+            {
+              "subtaskType": "administrative",
+              "title": "Update executive leadership",
+              "content": "Updated executive leadership on containment actions, financial impact, and recovery efforts.",
+              "order": 1
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Communicate new procedures",
+              "content": "Communicated new payment verification procedures to all relevant staff.",
+              "order": 2
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Remind about reporting",
+              "content": "Reminded employees to report any suspicious payment requests or executive communications.",
+              "order": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Eradication",
+      "description": "The Eradication stage focuses on removing attacker access, addressing security gaps, and preventing future BEC attacks.",
+      "order": 3,
+      "tasks": [
+        {
+          "title": "Remove Attacker Persistence Mechanisms",
+          "content": "Ensure attackers have no remaining access through compromised credentials, forwarding rules, or other persistence.",
+          "taskType": "technical",
+          "complexity": "high",
+          "estimatedDuration": 180,
+          "preferredWorkRole": "CORE_CIRT_MEMBER",
+          "order": 1,
+          "outcomes": [
+            "All attacker access is removed",
+            "No persistence mechanisms remain",
+            "All credentials are reset"
+          ],
+          "subtasks": [
+            {
+              "subtaskType": "technical",
+              "title": "Remove forwarding rules",
+              "content": "Removed all suspicious email forwarding rules, transport rules, and mail flow modifications.",
+              "order": 1
+            },
+            {
+              "subtaskType": "technical",
+              "title": "Revoke OAuth tokens",
+              "content": "Revoked all OAuth tokens and application permissions for compromised accounts.",
+              "order": 2
+            },
+            {
+              "subtaskType": "technical",
+              "title": "Reset related credentials",
+              "content": "Reset passwords for any accounts that shared credentials with compromised accounts.",
+              "order": 3
+            },
+            {
+              "subtaskType": "technical",
+              "title": "Check for backdoor accounts",
+              "content": "Checked for creation of backdoor accounts or guest accounts by the attacker.",
+              "order": 4
+            }
+          ]
+        },
+        {
+          "title": "Implement Email Authentication Controls",
+          "content": "Deploy email authentication technologies to prevent spoofing and impersonation.",
+          "taskType": "technical",
+          "complexity": "high",
+          "estimatedDuration": 360,
+          "preferredWorkRole": "CORE_CIRT_MEMBER",
+          "order": 2,
+          "outcomes": [
+            "DMARC is configured",
+            "SPF records are hardened",
+            "DKIM is enabled",
+            "External email warnings are deployed"
+          ],
+          "subtasks": [
+            {
+              "subtaskType": "technical",
+              "title": "Configure DMARC policy",
+              "content": "Configured DMARC policy to reject or quarantine emails failing authentication checks.",
+              "order": 1
+            },
+            {
+              "subtaskType": "technical",
+              "title": "Harden SPF records",
+              "content": "Hardened SPF records to explicitly authorize sending servers and reject others.",
+              "order": 2
+            },
+            {
+              "subtaskType": "technical",
+              "title": "Enable DKIM signing",
+              "content": "Enabled DKIM signing for all outbound emails from the organization.",
+              "order": 3
+            },
+            {
+              "subtaskType": "technical",
+              "title": "Deploy external email banners",
+              "content": "Deployed external email warning banners to alert recipients when emails come from outside the organization.",
+              "order": 4
+            },
+            {
+              "subtaskType": "technical",
+              "title": "Block lookalike domains",
+              "content": "Configured email gateway to block emails from lookalike or typosquatting domains.",
+              "order": 5
+            }
+          ]
+        },
+        {
+          "title": "Strengthen Financial Controls",
+          "content": "Implement improved financial controls and verification procedures to prevent future BEC success.",
+          "taskType": "administrative",
+          "complexity": "moderate",
+          "estimatedDuration": 240,
+          "preferredWorkRole": "CFO",
+          "order": 3,
+          "outcomes": [
+            "Payment verification procedures are formalized",
+            "Dual authorization is required",
+            "Out-of-band confirmation is mandatory"
+          ],
+          "subtasks": [
+            {
+              "subtaskType": "administrative",
+              "title": "Formalize verification procedures",
+              "content": "Formalized and documented payment verification procedures including callback requirements.",
+              "order": 1
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Implement dollar thresholds",
+              "content": "Implemented dollar thresholds requiring escalating levels of approval for payments and wire transfers.",
+              "order": 2
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Create vendor verification process",
+              "content": "Created formal process for verifying vendor banking information changes through multiple channels.",
+              "order": 3
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Establish payment delay policy",
+              "content": "Established policy for mandatory delay period between request and execution of large wire transfers.",
+              "order": 4
+            }
+          ]
+        },
+        {
+          "title": "Update Security Policies",
+          "content": "Update security policies to address BEC threats and establish clear procedures.",
+          "taskType": "administrative",
+          "complexity": "moderate",
+          "estimatedDuration": 180,
+          "preferredWorkRole": "MANAGER_IT_SECURITY",
+          "order": 4,
+          "outcomes": [
+            "BEC response procedures are documented",
+            "Financial transaction policies are updated",
+            "Reporting procedures are clarified"
+          ],
+          "subtasks": [
+            {
+              "subtaskType": "administrative",
+              "title": "Create BEC response procedures",
+              "content": "Created formal BEC incident response procedures for future incidents.",
+              "order": 1
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Update AUP",
+              "content": "Updated Acceptable Use Policy to include email security requirements and verification responsibilities.",
+              "order": 2
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Document escalation procedures",
+              "content": "Documented clear escalation procedures for suspicious payment requests.",
+              "order": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Recovery",
+      "description": "The Recovery stage aims to restore normal operations, recover funds if possible, and strengthen defenses.",
+      "order": 4,
+      "tasks": [
+        {
+          "title": "Restore Compromised Accounts",
+          "content": "Fully restore any compromised email accounts to normal operation with enhanced security.",
+          "taskType": "technical",
+          "complexity": "moderate",
+          "estimatedDuration": 120,
+          "preferredWorkRole": "CORE_CIRT_MEMBER",
+          "order": 1,
+          "outcomes": [
+            "Accounts are fully restored",
+            "Security is enhanced",
+            "Monitoring is in place"
+          ],
+          "subtasks": [
+            {
+              "subtaskType": "technical",
+              "title": "Verify account security",
+              "content": "Verified that all security settings are properly configured including MFA, backup codes, and recovery options.",
+              "order": 1
+            },
+            {
+              "subtaskType": "technical",
+              "title": "Restore mailbox functionality",
+              "content": "Restored full mailbox functionality and verified legitimate rules and delegates are in place.",
+              "order": 2
+            },
+            {
+              "subtaskType": "technical",
+              "title": "Monitor for suspicious activity",
+              "content": "Implemented enhanced monitoring for compromised accounts to detect any residual attacker activity.",
+              "order": 3
+            }
+          ]
+        },
+        {
+          "title": "Pursue Fund Recovery",
+          "content": "Continue efforts to recover transferred funds through legal and law enforcement channels.",
+          "taskType": "administrative",
+          "complexity": "high",
+          "estimatedDuration": 2160,
+          "preferredWorkRole": "LEGAL",
+          "order": 2,
+          "outcomes": [
+            "All recovery avenues are pursued",
+            "Legal action is initiated if appropriate",
+            "Insurance claims are filed"
+          ],
+          "subtasks": [
+            {
+              "subtaskType": "administrative",
+              "title": "Work with law enforcement",
+              "content": "Continued working with FBI and local law enforcement on fund recovery and investigation.",
+              "order": 1
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Pursue civil legal action",
+              "content": "Evaluated and pursued civil legal action against receiving parties if identifiable.",
+              "order": 2
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Process insurance claims",
+              "content": "Processed cyber insurance or crime insurance claims for financial losses.",
+              "order": 3
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Document recovery efforts",
+              "content": "Documented all fund recovery efforts and outcomes for financial and legal records.",
+              "order": 4
+            }
+          ]
+        },
+        {
+          "title": "Resume Normal Payment Operations",
+          "content": "Carefully resume normal payment operations with enhanced security measures in place.",
+          "taskType": "administrative",
+          "complexity": "moderate",
+          "estimatedDuration": 120,
+          "preferredWorkRole": "CFO",
+          "order": 3,
+          "outcomes": [
+            "Payment operations resume with new controls",
+            "Staff are trained on new procedures",
+            "Monitoring is enhanced"
+          ],
+          "subtasks": [
+            {
+              "subtaskType": "administrative",
+              "title": "Lift payment holds",
+              "content": "Lifted temporary payment holds and freezes with new verification procedures in place.",
+              "order": 1
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Train finance staff",
+              "content": "Trained finance and AP staff on new payment verification procedures and BEC awareness.",
+              "order": 2
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Communicate to vendors",
+              "content": "Communicated to vendors about new payment verification procedures and potential delays.",
+              "order": 3
+            }
+          ]
+        },
+        {
+          "title": "Issue Final Communications",
+          "content": "Communicate incident resolution and lessons learned to stakeholders.",
+          "taskType": "administrative",
+          "complexity": "moderate",
+          "estimatedDuration": 120,
+          "preferredWorkRole": "COMMUNICATIONS_LEADER",
+          "order": 4,
+          "outcomes": [
+            "Stakeholders are informed of resolution",
+            "New procedures are communicated",
+            "Confidence is restored"
+          ],
+          "subtasks": [
+            {
+              "subtaskType": "administrative",
+              "title": "Update executive leadership",
+              "content": "Provided final update to executive leadership on incident resolution, financial impact, and prevention measures.",
+              "order": 1
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Communicate to organization",
+              "content": "Communicated to entire organization about incident resolution and reinforced BEC awareness.",
+              "order": 2
+            }
+          ]
+        },
+        {
+          "title": "Resolve Incident",
+          "content": "Formally close the BEC incident once all recovery actions are complete.",
+          "taskType": "administrative",
+          "complexity": "low",
+          "estimatedDuration": 30,
+          "preferredWorkRole": "CIRT_LEADER",
+          "order": 5,
+          "outcomes": [
+            "Incident is declared resolved"
+          ],
+          "subtasks": [
+            {
+              "subtaskType": "administrative",
+              "title": "Verify all actions complete",
+              "content": "Verified that all technical remediation, fund recovery efforts, and policy updates are complete.",
+              "order": 1
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Change incident status",
+              "content": "Changed status of incident to 'resolved'.",
+              "order": 2
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Lessons Learned",
+      "description": "The Lessons Learned stage compiles incident information and implements improvements to prevent future BEC attacks.",
+      "order": 5,
+      "tasks": [
+        {
+          "title": "Generate Incident Report",
+          "content": "Create comprehensive incident report documenting the BEC attack, response, and financial impact.",
+          "taskType": "administrative",
+          "complexity": "high",
+          "estimatedDuration": 240,
+          "preferredWorkRole": "CIRT_LEADER",
+          "order": 1,
+          "outcomes": [
+            "Complete incident report is generated",
+            "Financial impact is documented",
+            "Timeline is established"
+          ],
+          "subtasks": [
+            {
+              "subtaskType": "technical",
+              "title": "Generate report",
+              "content": "Generated the incident report using the Reports tab.",
+              "order": 1
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Document financial impact",
+              "content": "Documented complete financial impact including attempted, successful, and recovered amounts.",
+              "order": 2
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Document response effectiveness",
+              "content": "Documented effectiveness of response actions and fund recovery efforts.",
+              "order": 3
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Share with leadership",
+              "content": "Shared report with executive leadership, finance, and board if required.",
+              "order": 4
+            }
+          ]
+        },
+        {
+          "title": "Conduct Lessons Learned Session",
+          "content": "Hold session with all stakeholders to identify improvements to BEC prevention and response.",
+          "taskType": "hybrid",
+          "complexity": "moderate",
+          "estimatedDuration": 180,
+          "preferredWorkRole": "CIRT_LEADER",
+          "order": 2,
+          "outcomes": [
+            "Lessons learned session is conducted",
+            "Control gaps are identified",
+            "Improvements are prioritized"
+          ],
+          "subtasks": [
+            {
+              "subtaskType": "administrative",
+              "title": "Prepare presentation",
+              "content": "Prepared presentation covering attack timeline, financial impact, response actions, and recommendations.",
+              "order": 1
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Host session",
+              "content": "Hosted lessons learned session with Security, Finance, Legal, and Executive teams.",
+              "order": 2
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Identify control gaps",
+              "content": "Identified specific gaps in email security, financial controls, and employee awareness that enabled the attack.",
+              "order": 3
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Create action plan",
+              "content": "Created prioritized action plan for implementing improvements.",
+              "order": 4
+            }
+          ]
+        },
+        {
+          "title": "Implement BEC Awareness Training",
+          "content": "Deploy comprehensive BEC awareness training for all employees, with specialized training for finance staff.",
+          "taskType": "hybrid",
+          "complexity": "moderate",
+          "estimatedDuration": 480,
+          "preferredWorkRole": "CIRT_LEADER",
+          "order": 3,
+          "outcomes": [
+            "Organization-wide BEC training is deployed",
+            "Finance teams receive specialized training",
+            "Simulated BEC exercises are planned"
+          ],
+          "subtasks": [
+            {
+              "subtaskType": "administrative",
+              "title": "Deploy BEC awareness training",
+              "content": "Deployed organization-wide training on BEC attacks, red flags, and reporting procedures.",
+              "order": 1
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Conduct finance team training",
+              "content": "Conducted specialized training for finance, accounting, and procurement teams on BEC threats and verification procedures.",
+              "order": 2
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Conduct executive awareness",
+              "content": "Conducted executive awareness session on CEO fraud and impersonation tactics.",
+              "order": 3
+            },
+            {
+              "subtaskType": "technical",
+              "title": "Plan simulated BEC exercises",
+              "content": "Planned simulated BEC exercises to test employee awareness and verification procedures.",
+              "order": 4
+            }
+          ]
+        },
+        {
+          "title": "Review and Update Financial Controls",
+          "content": "Continuously review and improve financial controls based on emerging BEC tactics.",
+          "taskType": "administrative",
+          "complexity": "moderate",
+          "estimatedDuration": 240,
+          "preferredWorkRole": "CFO",
+          "order": 4,
+          "outcomes": [
+            "Financial controls are continuously improved",
+            "Verification procedures are tested",
+            "Emerging threats are monitored"
+          ],
+          "subtasks": [
+            {
+              "subtaskType": "administrative",
+              "title": "Test verification procedures",
+              "content": "Tested payment verification procedures to ensure they are followed consistently.",
+              "order": 1
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Monitor for BEC trends",
+              "content": "Subscribed to threat intelligence on emerging BEC tactics and trends.",
+              "order": 2
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Schedule periodic reviews",
+              "content": "Scheduled periodic reviews of financial controls and BEC defenses.",
+              "order": 3
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

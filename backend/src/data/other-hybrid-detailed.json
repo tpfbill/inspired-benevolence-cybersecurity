@@ -1,0 +1,446 @@
+{
+  "name": "Other/Hybrid Incident Response",
+  "incidentType": "custom",
+  "description": "Comprehensive playbook for responding to hybrid incidents or attacks that are difficult to identify. Provides systematic approach to handling unknown or complex cyber incidents.",
+  "framework": "NIST CSF",
+  "tags": ["hybrid", "unknown", "custom", "complex"],
+  "phases": [
+    {
+      "phase": "identification",
+      "description": "The purpose of the Identification stage is to accurately determine the incident type, severity and perform immediate containment and escalation.",
+      "tasks": [
+        {
+          "id": "task-identify-1",
+          "title": "Setup the War Room",
+          "content": "When an incident occurs, it is critically important to set up a secure communication channel (sometimes called the War Room) to allow secure cross-team communications. War Rooms are designed to bring key decision-makers together and arm them with all the information necessary to make rapid decisions during high-risk situations. The War Room will be used for sharing all incident-related information between the CIRT members, speeding up the decision-making process and simplifying record-keeping.",
+          "description": "Establish secure physical and virtual war room for incident response",
+          "workRole": "CIRT_LEADER",
+          "estimatedTime": "3 hours",
+          "taskType": "administrative",
+          "complexity": "moderate",
+          "outcomes": [
+            "War Room and out of band communication channels are set up",
+            "Access to relevant CIRT members is established"
+          ],
+          "subtasks": [
+            {
+              "id": "subtask-identify-1-1",
+              "subtaskType": "administrative",
+              "content": "Set up a physical War Room, if applicable: typically, a boardroom inside your office building, access to which is provided to the CIRT members only (for example, accessible only with the use of select few access cards) can be repurposed as a war room for the duration of the incident response activities.\n\nSecured the War Room to ensure that no information shared within can be accessed from the outside (e.g. if the boardroom has glass walls, those may need to be covered to restrict the visibility from the hallway)."
+            },
+            {
+              "id": "subtask-identify-1-2",
+              "subtaskType": "technical",
+              "content": "Set up a virtual War Room, if applicable: selected a communications platform that is not typically used by the organization (e.g. if MS Teams is used for regular business communications, it should not be used as a virtual War Room in case internal communications channels are compromised). Secure the virtual War Room by restricting access to any non-CIRT members."
+            }
+          ],
+          "criticalTask": true
+        },
+        {
+          "id": "task-identify-2",
+          "title": "Inform CIRT Members and Perform Triage",
+          "content": "When an incident occurs, it is critically important to accurately triage it: in other words, collect as much relevant and reliable information as possible. This includes verifying the Incident Severity, its Type, the vulnerability or weakness that was exploited, and, if possible, the exact malware or a threat actor behind the attack. Equally important is the escalation and notification speed. All relevant CIRT members must be notified and briefed as soon as possible in order to start investigation and short-term containment procedures. Consider the need to contact third parties as well, such as your IT Services provider, your insurer, or external forensic investigators where required.",
+          "description": "Notify CIRT team and establish incident type and severity",
+          "workRole": "CIRT_LEADER",
+          "estimatedTime": "2 hours",
+          "taskType": "hybrid",
+          "complexity": "moderate",
+          "outcomes": [
+            "CIRT Members are notified and engaged in Response activities",
+            "Incident Severity and Type are established and confirmed"
+          ],
+          "subtasks": [
+            {
+              "id": "subtask-identify-2-1",
+              "subtaskType": "administrative",
+              "content": "Verified the Incident Severity determined during the Incident record creation process as promptly and accurately as possible. Once the Severity was confirmed, made sure to keep updating it accordingly when the situation changes."
+            },
+            {
+              "id": "subtask-identify-2-2",
+              "subtaskType": "hybrid",
+              "content": "Notified CIRT team members using the contacts and role assignments. Invited all relevant CIRT team members into the war room, whether physical or virtual. Make sure their roles are assigned so they are aware of the tasks allocated for them."
+            },
+            {
+              "id": "subtask-identify-2-3",
+              "subtaskType": "administrative",
+              "content": "Considered retaining a PCI Forensic Investigator (PFI) if a cardholder data breach is suspected."
+            },
+            {
+              "id": "subtask-identify-2-4",
+              "subtaskType": "technical",
+              "content": "Tried to determine the root cause of the Incident (e.g. an unpatched vulnerability, excessive account privileges) and mitigate it, if possible."
+            },
+            {
+              "id": "subtask-identify-2-5",
+              "subtaskType": "technical",
+              "content": "Try to establish the malware family or a particular threat actor responsible for the attack using available Indicators of Compromise."
+            },
+            {
+              "id": "subtask-identify-2-6",
+              "subtaskType": "administrative",
+              "content": "Immediately notified your Insurer (or Insurance Broker) and worked on the next steps closely to ensure coverage."
+            }
+          ],
+          "dependsOn": ["task-identify-1"],
+          "criticalTask": true
+        },
+        {
+          "id": "task-identify-3",
+          "title": "Notify Legal Counsel, Insurance Provider and Law Enforcement",
+          "content": "Once the incident type and severity are established and confirmed, it is important to involve appropriate parties, such as your legal counsel, insurance providers and/or law enforcement, depending on the level of impact.",
+          "description": "Notify stakeholders and ensure legal compliance",
+          "workRole": "CIRT_LEADER",
+          "estimatedTime": "1 hour",
+          "taskType": "administrative",
+          "complexity": "low",
+          "outcomes": [
+            "Legal Counsel and cybersecurity insurance provider/broker are notified"
+          ],
+          "subtasks": [
+            {
+              "id": "subtask-identify-3-1",
+              "subtaskType": "administrative",
+              "content": "Notified your Legal Counsel about the ongoing incident, provided all available details about the incident severity, impact and the type of information involved, if known."
+            },
+            {
+              "id": "subtask-identify-3-2",
+              "subtaskType": "administrative",
+              "content": "Worked closely with your Legal Counsel to retain client-attorney privilege over the information pertaining to the incident and ensured compliance with applicable laws and regulations."
+            },
+            {
+              "id": "subtask-identify-3-3",
+              "subtaskType": "administrative",
+              "content": "Immediately notified your Insurer (or Insurance Broker) and work on the next steps closely to ensure coverage."
+            },
+            {
+              "id": "subtask-identify-3-4",
+              "subtaskType": "administrative",
+              "content": "Depending on the impact and the details of the incident (e.g. evidence of insider threat), and, following the advised of the Legal Counsel, considered contacting appropriate law enforcement agencies."
+            }
+          ],
+          "dependsOn": ["task-identify-2"],
+          "criticalTask": true
+        },
+        {
+          "id": "task-identify-4",
+          "title": "Issue Internal and External Communications",
+          "content": "It is critical to establish proactive communication with your staff and provide clear instructions about what they can do to minimize the impact. Ensure that employees receive the information about the incident directly from your communication leader and/or management team, preferably before they receive it from other, unreliable sources. Provide clear instructions about what they are allowed and not allowed to communicate externally. Controlling the communications will prevent unwanted media attention and misinformation.",
+          "description": "Manage internal and external crisis communications",
+          "workRole": "COMMUNICATIONS_LEADER",
+          "estimatedTime": "2 hours",
+          "taskType": "administrative",
+          "complexity": "moderate",
+          "outcomes": [
+            "Employees are notified about the incident and instructed on the next steps",
+            "External communications to customers, other stakeholders and/or media are made"
+          ],
+          "subtasks": [
+            {
+              "id": "subtask-identify-4-1",
+              "subtaskType": "administrative",
+              "content": "Prepared internal and external communications and consulted the Legal Counsel prior to sharing with any additional parties."
+            },
+            {
+              "id": "subtask-identify-4-2",
+              "subtaskType": "administrative",
+              "content": "Published external communications, if appropriate, in line with the communications strategy to provided advice to affected customers or business partners, engaged with the market, and/or informed the public of the cyber incident."
+            },
+            {
+              "id": "subtask-identify-4-3",
+              "subtaskType": "administrative",
+              "content": "Considered regulatory requirements when issuing incident updates including PIPEDA, GDPR, PCI DSS, NYDFS, FFIEC, NCUA, OSFI, GLBA, SOX, HIPAA/PHIPA and other applicable regulatory frameworks."
+            },
+            {
+              "id": "subtask-identify-4-4",
+              "subtaskType": "technical",
+              "content": "Deployed the alert/warning page containing information about the current incident to inform employees. Used crisis-only communications channels if they exist."
+            }
+          ],
+          "dependsOn": ["task-identify-3"],
+          "criticalTask": false
+        },
+        {
+          "id": "task-identify-5",
+          "title": "Invoke Data Breach Notification Protocols",
+          "content": "When a cyber incident is suspected or confirmed, it is important that the Legal Counsel proceeds swiftly from the very first moments of the initial identification to the initial stages of the post-breach investigation. Understanding the type of the incident and the kind of data affected by a possible breach will dictate which notification protocols need to be invoked to ensure continuous compliance with applicable regulations, laws and contractual obligations.",
+          "description": "Determine and execute data breach notification requirements",
+          "workRole": "LEGAL",
+          "estimatedTime": "2 hours",
+          "taskType": "hybrid",
+          "complexity": "moderate",
+          "outcomes": [
+            "The type of breach and affected data are established and confirmed",
+            "Appropriate data breach notification protocols are invoked"
+          ],
+          "subtasks": [
+            {
+              "id": "subtask-identify-5-1",
+              "subtaskType": "administrative",
+              "content": "Worked with the Communications Leader on the verbiage of applicable internal and external communications."
+            },
+            {
+              "id": "subtask-identify-5-2",
+              "subtaskType": "administrative",
+              "content": "If a data breach is confirmed in regards to Personal Identifiable Information (PII), Protected Health Information (PHI), or financial information, notified the appropriate regulatory agencies and affected individuals as prescribed by relevant laws, regulations and contractual obligations."
+            },
+            {
+              "id": "subtask-identify-5-3",
+              "subtaskType": "administrative",
+              "content": "Advised the CIRT members on proper communication methods within and outside the War Room to ensure continuous client-attorney privilege where possible."
+            }
+          ],
+          "dependsOn": ["task-identify-3"],
+          "criticalTask": true
+        }
+      ]
+    },
+    {
+      "phase": "containment",
+      "description": "The main objective of the Containment stage is to limit the impact of the incident promptly and as much as possible, preventing further damage to the organization's assets, business functions, individuals, and reputation.",
+      "tasks": [
+        {
+          "id": "task-contain-1",
+          "title": "Invoke the Business Continuity Plan",
+          "content": "To avoid major disruptions of key business functions, invoke the Business Continuity Plan (BCP), if such exists, in accordance with the incident severity and impact. The BCP will aid the executive team in performing business impact analysis and driving the incident activities based on the Maximum Tolerable Downtime (MTD), Recovery Point Objective (RPO), Recovery Time Objective (RTO), and Work Recovery Time (WRT).",
+          "description": "Activate BCP to minimize business disruption",
+          "workRole": "EXECUTIVE",
+          "estimatedTime": "4 hours",
+          "taskType": "administrative",
+          "complexity": "low",
+          "outcomes": [
+            "The Business Continuity Plan is invoked"
+          ],
+          "subtasks": [
+            {
+              "id": "subtask-contain-1-1",
+              "subtaskType": "administrative",
+              "content": "Issued the communication and informed the appropriate stakeholders that the BCP should be invoked to minimize business disruption."
+            },
+            {
+              "id": "subtask-contain-1-2",
+              "subtaskType": "administrative",
+              "content": "Proceeded in accordance with the BCP procedures."
+            }
+          ],
+          "criticalTask": false
+        },
+        {
+          "id": "task-contain-2",
+          "title": "Issue External and Internal Communications Update",
+          "content": "Issuing regular updates about the progress of the incident triage activities and the measures the organization is taking to contain and remediate the incident will help control the narrative and maintain trust with both internal and external stakeholders.",
+          "description": "Provide status updates to stakeholders",
+          "workRole": "COMMUNICATIONS_LEADER",
+          "estimatedTime": "2 hours",
+          "taskType": "administrative",
+          "complexity": "moderate",
+          "outcomes": [
+            "Internal stakeholders are informed about the ongoing containment measures",
+            "External stakeholders are informed about the ongoing containment measures"
+          ],
+          "subtasks": [
+            {
+              "id": "subtask-contain-2-1",
+              "subtaskType": "administrative",
+              "content": "Issued the communications update to internal stakeholders in accordance with the communications strategy."
+            },
+            {
+              "id": "subtask-contain-2-2",
+              "subtaskType": "administrative",
+              "content": "Issued the communications update to external stakeholders and the media in accordance with the communications strategy."
+            }
+          ],
+          "criticalTask": false
+        },
+        {
+          "id": "task-contain-3",
+          "title": "Issue Mandatory Notifications or Updates",
+          "content": "Issuing regular updates about the progress of the incident triage activities and the measures the organization is taking to contain and remediate the incident may be required based on the incident severity and the applicable laws, regulations and contractual obligations.",
+          "description": "Fulfill regulatory notification requirements",
+          "workRole": "LEGAL",
+          "estimatedTime": "2 hours",
+          "taskType": "administrative",
+          "complexity": "moderate",
+          "outcomes": [
+            "Applicable internal and external parties are informed about the ongoing containment measures"
+          ],
+          "subtasks": [
+            {
+              "id": "subtask-contain-3-1",
+              "subtaskType": "administrative",
+              "content": "Notified the appropriate regulatory agencies and affected individuals in accordance with the applicable laws and regulations as was done during the Identification stage."
+            },
+            {
+              "id": "subtask-contain-3-2",
+              "subtaskType": "administrative",
+              "content": "Continued advising the CIRT members on proper communications methods within and outside the War Room to ensure maintaining continuous client-attorney privilege where possible."
+            }
+          ],
+          "criticalTask": false
+        }
+      ]
+    },
+    {
+      "phase": "eradication",
+      "description": "The Eradication stage focuses on removing all traces of the threat from the affected assets, and ensuring that the root cause has been eliminated before the assets of affected business functions can be restored to normal.",
+      "tasks": [
+        {
+          "id": "task-erad-1",
+          "title": "Identify and Mitigate Vulnerabilities",
+          "content": "Once the affected systems have been fully rebuilt, it is important to identify any vulnerabilities that may be present on the systems, preventing similar attacks from happening in the future.",
+          "description": "Scan for and remediate security vulnerabilities",
+          "workRole": "CORE_CIRT_MEMBER",
+          "estimatedTime": "14 hours",
+          "taskType": "technical",
+          "complexity": "moderate",
+          "outcomes": [
+            "Vulnerabilities are identified and mitigated"
+          ],
+          "subtasks": [
+            {
+              "id": "subtask-erad-1-1",
+              "subtaskType": "technical",
+              "content": "Ran a vulnerability scan on the entire network and the surrounding infrastructure using specialized vulnerability scanning tools, such as:\n- Nessus free trial (7 days, up to 32 IPs)\n- Qualys free trial (30 days, unlimited IPs)\n- OpenVAS open source scanner"
+            },
+            {
+              "id": "subtask-erad-1-2",
+              "subtaskType": "technical",
+              "content": "Implemented all relevant mitigation recommendations provided by the vulnerability scanning tools."
+            },
+            {
+              "id": "subtask-erad-1-3",
+              "subtaskType": "technical",
+              "content": "Preserved forensic evidence of any discovered vulnerabilities using the Artifact Upload feature."
+            },
+            {
+              "id": "subtask-erad-1-4",
+              "subtaskType": "technical",
+              "content": "Preserved all forensic evidence by using the Upload Artifact feature."
+            }
+          ],
+          "criticalTask": true
+        }
+      ]
+    },
+    {
+      "phase": "recovery",
+      "description": "The Recovery stage aims to restore the affected assets to their full business-as-usual operation in the shortest possible time frame, after eradicating all traces of the threat and verifying that the systems are clean.",
+      "tasks": []
+    },
+    {
+      "phase": "lessons_learned",
+      "description": "The Lessons Learned stage's main goal is to compile all relevant information about the incident and extract lessons that can help with future incident response activity, typically within the two weeks time frame after the incident has been resolved.",
+      "tasks": [
+        {
+          "id": "task-lessons-1",
+          "title": "Generate Incident Report",
+          "content": "Preparing an incident report is an important (and often mandatory) part of the cyber incident response process. This report will be used to perform business impact analysis, comply with the applicable laws and regulations, update relevant stakeholders (e.g. legal counsel, insurance provider, law enforcement, board of directors, etc.) and for other business functions.",
+          "description": "Create comprehensive incident report",
+          "workRole": "CIRT_LEADER",
+          "estimatedTime": "1 hour",
+          "taskType": "administrative",
+          "complexity": "high",
+          "outcomes": [
+            "The Incident Report is generated"
+          ],
+          "subtasks": [
+            {
+              "id": "subtask-lessons-1-1",
+              "subtaskType": "technical",
+              "content": "Once the Incident is marked as Resolved, used the Reports tab to generate and view the report."
+            },
+            {
+              "id": "subtask-lessons-1-2",
+              "subtaskType": "administrative",
+              "content": "Reviewed the report for accuracy and address any errors/issues with the team member(s) responsible for the task in question."
+            },
+            {
+              "id": "subtask-lessons-1-3",
+              "subtaskType": "technical",
+              "content": "Ensured all relevant artifacts are included for each task."
+            },
+            {
+              "id": "subtask-lessons-1-4",
+              "subtaskType": "administrative",
+              "content": "Downloaded or exported the report and shared it with the appropriate stakeholders alongside its unique secure access password."
+            },
+            {
+              "id": "subtask-lessons-1-5",
+              "subtaskType": "administrative",
+              "content": "Ensured that the Incident report and all related evidence are retained in accordance with legal and regulatory requirements."
+            }
+          ],
+          "criticalTask": false
+        },
+        {
+          "id": "task-lessons-2",
+          "title": "Fulfill External and Internal Reporting Obligations",
+          "content": "Once the incident is resolved and the investigation is complete, an organization may be required to deliver the incident report (or its appropriate sections) to the regulatory agencies, affected companies or individuals, law enforcement or other stakeholders based on the applicable laws and regulations.",
+          "description": "Submit reports to regulatory and legal authorities",
+          "workRole": "LEGAL",
+          "estimatedTime": "5 hours",
+          "taskType": "administrative",
+          "complexity": "moderate",
+          "outcomes": [
+            "The Incident Report (or its appropriate sections) is shared with the applicable parties",
+            "Applicable regulatory and legal obligations are fulfilled"
+          ],
+          "subtasks": [
+            {
+              "id": "subtask-lessons-2-1",
+              "subtaskType": "administrative",
+              "content": "Obtained the full Incident Report from the CIRT Leader and reviewed it for accuracy."
+            },
+            {
+              "id": "subtask-lessons-2-2",
+              "subtaskType": "administrative",
+              "content": "Identified all applicable legal and regulatory requirements related to cyber incident reporting."
+            },
+            {
+              "id": "subtask-lessons-2-3",
+              "subtaskType": "administrative",
+              "content": "Delivered the Incident report to the appropriate legal and/or regulatory agencies and the affected individuals, in accordance with the applicable legal and regulatory requirements."
+            }
+          ],
+          "criticalTask": false
+        },
+        {
+          "id": "task-lessons-3",
+          "title": "Host the Lessons Learned Session",
+          "content": "The goal of the Lessons Learned session is to learn from the incident, identify any gaps that were revealed in the process of incident response, and to improve the team's performance in future incidents. The Lessons Learned session should be held as soon as possible, ideally within 2 weeks after the incident was resolved.",
+          "description": "Conduct post-incident review and identify improvements",
+          "workRole": "CIRT_LEADER",
+          "estimatedTime": "2 hours",
+          "taskType": "administrative",
+          "complexity": "moderate",
+          "outcomes": [
+            "The Lessons Learned session is held",
+            "Improvements to the incident response procedures are identified and documented"
+          ],
+          "subtasks": [
+            {
+              "id": "subtask-lessons-3-1",
+              "subtaskType": "administrative",
+              "content": "Scheduled a Lessons Learned session within 2 weeks after the incident resolution."
+            },
+            {
+              "id": "subtask-lessons-3-2",
+              "subtaskType": "administrative",
+              "content": "Invited all relevant CIRT members to the session and requested that they come prepared with findings and recommendations."
+            },
+            {
+              "id": "subtask-lessons-3-3",
+              "subtaskType": "administrative",
+              "content": "Reviewed the findings from the incident and discussed the effectiveness of response procedures, identifying gaps and areas for improvement."
+            },
+            {
+              "id": "subtask-lessons-3-4",
+              "subtaskType": "administrative",
+              "content": "Documented all identified improvements and assigned responsible parties to implement them."
+            }
+          ],
+          "criticalTask": false
+        }
+      ]
+    }
+  ]
+}

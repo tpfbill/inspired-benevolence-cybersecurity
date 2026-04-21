@@ -7,7 +7,7 @@ import { Op } from 'sequelize';
 
 const router = express.Router();
 
-router.get('/dashboard', authenticate, async (req: AuthRequest, res: Response) => {
+router.get('/dashboard', authenticate, async (req: AuthRequest, res: Response): Promise<void> => {
   try {
     const { startDate, endDate } = req.query;
 
@@ -24,8 +24,16 @@ router.get('/dashboard', authenticate, async (req: AuthRequest, res: Response) =
     });
     const activePlaybooks = await Playbook.count({ where: { status: 'active' } });
 
+    // Filter for active incidents only (not resolved, closed, or archived)
+    const activeIncidentFilter = {
+      ...dateFilter,
+      status: {
+        [Op.notIn]: ['resolved', 'closed', 'archived']
+      }
+    };
+
     const incidentsByTypeRaw = await Incident.findAll({
-      where: dateFilter,
+      where: activeIncidentFilter,
       attributes: [
         'incidentType',
         [Incident.sequelize!.fn('COUNT', Incident.sequelize!.col('id')), 'count']
@@ -35,7 +43,7 @@ router.get('/dashboard', authenticate, async (req: AuthRequest, res: Response) =
     });
 
     const incidentsBySeverityRaw = await Incident.findAll({
-      where: dateFilter,
+      where: activeIncidentFilter,
       attributes: [
         'severity',
         [Incident.sequelize!.fn('COUNT', Incident.sequelize!.col('id')), 'count']
@@ -85,10 +93,11 @@ router.get('/dashboard', authenticate, async (req: AuthRequest, res: Response) =
   } catch (error) {
     logger.error('Get compliance dashboard error:', error);
     res.status(500).json({ error: 'Failed to fetch compliance data' });
+      return;
   }
 });
 
-router.get('/frameworks', authenticate, async (req: AuthRequest, res: Response) => {
+router.get('/frameworks', authenticate, async (req: AuthRequest, res: Response): Promise<void> => {
   try {
     const frameworks = [
       {
@@ -112,6 +121,7 @@ router.get('/frameworks', authenticate, async (req: AuthRequest, res: Response) 
   } catch (error) {
     logger.error('Get frameworks error:', error);
     res.status(500).json({ error: 'Failed to fetch frameworks' });
+      return;
   }
 });
 

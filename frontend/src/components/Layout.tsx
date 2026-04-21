@@ -1,5 +1,5 @@
 import { Outlet, Link, useLocation } from 'react-router-dom';
-import { Shield, BookOpen, AlertTriangle, FileText, BarChart3, LogOut, Users } from 'lucide-react';
+import { Shield, BookOpen, AlertTriangle, FileText, BarChart3, LogOut, Users, Settings as SettingsIcon } from 'lucide-react';
 import { useAuthStore } from '../stores/authStore';
 
 export default function Layout() {
@@ -13,7 +13,7 @@ export default function Layout() {
     { name: 'Alerts', href: '/alerts', icon: AlertTriangle },
     { name: 'Users', href: '/users', icon: Users },
     { name: 'Roles', href: '/roles', icon: Shield },
-    { name: 'Compliance', href: '/compliance', icon: FileText },
+    { name: 'Settings', href: '/settings', icon: SettingsIcon },
   ];
 
   return (

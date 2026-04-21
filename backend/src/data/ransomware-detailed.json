@@ -1,0 +1,1572 @@
+{
+  "name": "Ransomware Response",
+  "description": "A malware that employs encryption to hold a victim's information at ransom. Critical data is encrypted so that files, databases, or applications cannot be accessed. A ransom is then demanded to provide access.",
+  "incidentType": "malware",
+  "phases": [
+    {
+      "name": "Identification",
+      "description": "The purpose of the Identification stage is to accurately determine the Incident type, severity and perform immediate containment and escalation.",
+      "order": 1,
+      "tasks": [
+        {
+          "title": "Determine the Type of Ransomware",
+          "content": "When a ransomware incident occurs, it is critical to correctly identify the ransomware variant and, if possible, the threat actor behind the attack. This will allow for more effective containment and recovery procedures.",
+          "taskType": "hybrid",
+          "complexity": "moderate",
+          "estimatedDuration": 1200,
+          "preferredWorkRole": "CORE_CIRT_MEMBER",
+          "order": 1,
+          "outcomes": [
+            "Ransomware variant is confirmed",
+            "Containment and Eradication methods are understood"
+          ],
+          "subtasks": [
+            {
+              "title": "Review ransomware note(s)",
+              "subtaskType": "technical",
+              "content": "Reviewed ransomware note(s) which can include: text or html files, image files as wallpaper, contact emails in encrypted file extensions, pop-ups after trying to open encrypted files, voice or email messages.",
+              "order": 1
+            },
+            {
+              "subtaskType": "technical",
+              "title": "Analyze affected files",
+              "content": "Analyzed affected and/or new files to assess the following behaviors: file renaming scheme, file corruption vs encryption, targeted file types and locations, owning user/group of affected files, icon for encrypted files, file markers, existence of file listings, key files or other data files.",
+              "order": 2
+            },
+            {
+              "subtaskType": "technical",
+              "title": "Analyze affected software or system types",
+              "content": "Analyzed affected software or system types. Some ransomware variants only affect certain tools (e.g., databases) or platforms (e.g., NAS products).",
+              "order": 3
+            },
+            {
+              "subtaskType": "technical",
+              "title": "Review bitcoin address",
+              "content": "Reviewed bitcoin address.",
+              "order": 4
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Utilize CryptoSheriff tool",
+              "content": "Utilized the CryptoSheriff tool from NoMoreRansom. [https://www.nomoreransom.org/crypto-sheriff.php?lang=en]",
+              "order": 5
+            }
+          ]
+        },
+        {
+          "title": "Initiate CIRT Team Meeting and Execute Escalation Procedures",
+          "content": "As more information about the incident is known, the core CIRT team will meet and define which organizational SMEs need to be included to respond to the incident.",
+          "taskType": "hybrid",
+          "complexity": "moderate",
+          "estimatedDuration": 120,
+          "preferredWorkRole": "CIRT_LEADER",
+          "order": 2,
+          "outcomes": [
+            "First Core CIRT meeting is held with invited SMEs",
+            "OOB communications channels are set up and periodic checkins scheduled",
+            "Privileged Communications is established with legal counsel"
+          ],
+          "subtasks": [
+            {
+              "subtaskType": "administrative",
+              "title": "Initiate first CIRT meeting",
+              "content": "Initiated first meeting of the organizational core CIRT.",
+              "order": 1
+            },
+            {
+              "subtaskType": "hybrid",
+              "title": "Notify CIRT team members",
+              "content": "Notified CIRT team members using the contacts and role assignments on the My Team page and made sure ORNA roles are assigned so they are aware of the tasks allocated for them.",
+              "order": 2
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Verify Incident Severity",
+              "content": "Verified the Incident Severity determined during the Incident record creation process as promptly and accurately as possible. The severity may change as more details are uncovered and it will need to be updated when the situation changes.",
+              "order": 3
+            },
+            {
+              "subtaskType": "technical",
+              "title": "Invite additional SMEs",
+              "content": "Invited additional SMEs to be included in CIRT update meetings.",
+              "order": 4
+            },
+            {
+              "subtaskType": "technical",
+              "title": "Set up secured meeting room",
+              "content": "Set up a secured meeting room (either physical and/or virtual).",
+              "order": 5
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Schedule follow-up meetings",
+              "content": "Scheduled follow-up meetings according to a defined cadence.",
+              "order": 6
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Work with Legal Counsel",
+              "content": "Worked closely with Legal Counsel to retain client-attorney privilege over the information pertaining to the incident and ensure compliance with applicable laws and regulations.",
+              "order": 7
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Create initial incident assessment",
+              "content": "Created an initial incident assessment to share with organizational leaders. This assessment notification will contain a summary of what has occurred; date & time of incident; scope of compromise; data involved; actions taken so far and next steps recipients can expect to see.",
+              "order": 8
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Establish log of meetings",
+              "content": "Established a log of items covered to keep track of when meetings occurred, who was present, high level discussion notes and follow-up actions.",
+              "order": 9
+            }
+          ]
+        },
+        {
+          "title": "Validate Ransomware Incident",
+          "content": "Ransomware is usually a specific type of malware designed to encrypt files on systems to render them unavailable and unusable until a ransom is paid.",
+          "taskType": "hybrid",
+          "complexity": "moderate",
+          "estimatedDuration": 120,
+          "preferredWorkRole": "CORE_CIRT_MEMBER",
+          "order": 3,
+          "outcomes": [
+            "A security incident is confirmed as a ransomware attack"
+          ],
+          "subtasks": [
+            {
+              "subtaskType": "administrative",
+              "title": "Validate ransomware message",
+              "content": "Validated any received ransomware message(s).",
+              "order": 1
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Determine if files encrypted",
+              "content": "Determined whether system files have been encrypted.",
+              "order": 2
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Identify new files",
+              "content": "Identified existence of any new files on impacted system(s). Ransomware can rename your data which is a way to create some confusion on which files are affected.",
+              "order": 3
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Identify file extension alterations",
+              "content": "Identified any file extension alterations. Some ransomware will alter the filename extensions. If some filenames have new extensions, this can also help identify which ransomware family is being used in the attack.",
+              "order": 4
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Determine file exfiltration",
+              "content": "Determined whether there has been successful file exfiltration (using mechanisms such as sFTP, WebDAV, DNS tunneling, etc).",
+              "order": 5
+            }
+          ]
+        },
+        {
+          "title": "Assess if Threat Actor is Live",
+          "content": "When there is an active threat actor in the network the containment tasks should start in parallel with the rest of the identification phase to try and mitigate further damage as fast as possible.",
+          "taskType": "technical",
+          "complexity": "moderate",
+          "estimatedDuration": 120,
+          "preferredWorkRole": "CORE_CIRT_MEMBER",
+          "order": 4,
+          "outcomes": [
+            "Determination when to start with the containment phase"
+          ],
+          "subtasks": [
+            {
+              "subtaskType": "administrative",
+              "title": "Review system logs",
+              "content": "Reviewed system logs for active unauthorized access including: open files lists on associated servers, file properties of encrypted files, event logs for RDP connections, Windows Security log, SMB event logs, and any related logs.",
+              "order": 1
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Determine if files being encrypted",
+              "content": "Determined if any files are in midst of getting encrypted. Ran a network analyzer (e.g. Wireshark) on the impacted server with a filter to identify IP addresses involved in actively writing or renaming files.",
+              "order": 2
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Determine if data being exfiltrated",
+              "content": "Determined if any data is being exfiltrated (using mechanisms such as sFTP, WebDAV, DNS tunneling, etc)",
+              "order": 3
+            }
+          ]
+        },
+        {
+          "title": "Execute Initial Containment Steps",
+          "content": "Some initial containment steps need to be executed to ensure that there is no further damage to the organization from the ransomware attack. The most critical aspect is having trusted backups.",
+          "taskType": "technical",
+          "complexity": "moderate",
+          "estimatedDuration": 60,
+          "preferredWorkRole": "CORE_CIRT_MEMBER",
+          "order": 5,
+          "outcomes": [
+            "Backups are protected and trusted",
+            "Spread of infection is contained"
+          ],
+          "subtasks": [
+            {
+              "subtaskType": "administrative",
+              "title": "Analyze backup processes",
+              "content": "Analyzed backup processes for specific systems and data that has been impacted.",
+              "order": 1
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Review BC/DR processes",
+              "content": "Reviewed existing BC/DR processes within your organization if they exist.",
+              "order": 2
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Disconnect infected systems",
+              "content": "Disconnect known infected systems from the network.",
+              "order": 3
+            }
+          ]
+        },
+        {
+          "title": "Determine Scope of Attack",
+          "content": "All of the affected systems and applications need to be identified. It is important to collect as much relevant information as possible about all assets that are affected and how.",
+          "taskType": "technical",
+          "complexity": "high",
+          "estimatedDuration": 1800,
+          "preferredWorkRole": "CORE_CIRT_MEMBER",
+          "order": 6,
+          "outcomes": [
+            "All affected systems are identified",
+            "All affected applications and files are identified"
+          ],
+          "subtasks": [
+            {
+              "subtaskType": "administrative",
+              "title": "Identify affected systems",
+              "content": "Identified which systems were affected by scanning for concrete indicators of compromise (IOCs), reviewing endpoint protection/EDR system logs, checking similar systems for infection, and looking for external command and control (C2).",
+              "order": 1
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Determine affected data",
+              "content": "Determined what data is affected (e.g., file types, department or group, affected software). Found anomalous changes to file metadata such as mass changes to creation or modification times.",
+              "order": 2
+            }
+          ]
+        },
+        {
+          "title": "Assess Need for External Support",
+          "content": "After an initial assessment of the scope of the ransomware attack the organization will have to make some determination as to whether outside help is needed and for what functions.",
+          "taskType": "administrative",
+          "complexity": "low",
+          "estimatedDuration": 60,
+          "preferredWorkRole": "CIRT_LEADER",
+          "order": 7,
+          "outcomes": [
+            "Decision is made whether to hire external technical help",
+            "Decision is made whether to hire external legal help",
+            "ORNA incident response expertise is utilized if needed"
+          ],
+          "subtasks": [
+            {
+              "subtaskType": "administrative",
+              "title": "Consider PCI Forensic Investigator",
+              "content": "Considered retaining a PCI Forensic Investigator (PFI) if a cardholder data breach is suspected.",
+              "order": 1
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Assess other forensics needs",
+              "content": "Assessed whether any other data compromise requires a certified forensics expert to be utilized.",
+              "order": 2
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Consider forensics investigation company",
+              "content": "Considered retaining a forensics investigation company to help assess complete scope of the attack.",
+              "order": 3
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Consider outside legal counsel",
+              "content": "Considered retaining an outside legal counsel.",
+              "order": 4
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Consider ORNA support",
+              "content": "Considered retaining ORNA for incident response expertise.",
+              "order": 5
+            }
+          ]
+        },
+        {
+          "title": "Assess Impact",
+          "content": "Assess the impact to prioritize actions. The impacts should be assessed for operational business impact, regulatory impact, and reputational impact.",
+          "taskType": "administrative",
+          "complexity": "low",
+          "estimatedDuration": 120,
+          "preferredWorkRole": "CIRT_LEADER",
+          "order": 8,
+          "outcomes": [
+            "Understand Operational Impact to Organization",
+            "Understand Financial Impact to Organization",
+            "Understand Reputational Impact to Organization"
+          ],
+          "subtasks": [
+            {
+              "subtaskType": "administrative",
+              "title": "Assess business impact",
+              "content": "Assessed impact to business or mission: How critical is the data? How much money is lost or at risk? How many projects are degraded or at risk?",
+              "order": 1
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Assess regulatory impact",
+              "content": "Assessed regulatory impact: How sensitive is the data? What is the regulatory status of data (e.g., PII, ePHI)?",
+              "order": 2
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Assess reputational damage",
+              "content": "Assessed reputational damage: What type of data was compromised? Was the attack avoidable?",
+              "order": 3
+            }
+          ]
+        },
+        {
+          "title": "Decide Whether to Pay Ransom",
+          "content": "Whether to pay a ransom fee is an organizational decision although there are jurisdictions that are discussing regulating the legality of paying a ransom. It is strongly encouraged that organizations notify Law Enforcement.",
+          "taskType": "administrative",
+          "complexity": "low",
+          "estimatedDuration": 60,
+          "preferredWorkRole": "CFO",
+          "order": 9,
+          "outcomes": [
+            "Decision is made whether to pay ransom"
+          ],
+          "subtasks": [
+            {
+              "subtaskType": "administrative",
+              "title": "Review decryption key availability",
+              "content": "Reviewed whether decryption key available for type of ransomware utilized if file were encrypted.",
+              "order": 1
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Assess with legal counsel",
+              "content": "Assessed with legal counsel whether to pay ransom.",
+              "order": 2
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Decide on law enforcement contact",
+              "content": "Decided whether to contact law enforcement.",
+              "order": 3
+            }
+          ]
+        },
+        {
+          "title": "Determine Root Cause(s)",
+          "content": "There exist a variety of methods that ransomware gangs use to create a successful attack. It is critical to understand the full extent of the ransomware campaign.",
+          "taskType": "technical",
+          "complexity": "high",
+          "estimatedDuration": 1200,
+          "preferredWorkRole": "CORE_CIRT_MEMBER",
+          "order": 10,
+          "outcomes": [
+            "Determined how ransomware attack succeeded"
+          ],
+          "subtasks": [
+            {
+              "subtaskType": "administrative",
+              "title": "Check MITRE ATT&CK tactics",
+              "content": "Checked the tactics captured in the Initial Access tactic of MITRE ATT&CK including: email attachments, insecure RDP, self-propagation, infection via removable drives, delivered by other malware, vulnerability exploitation.",
+              "order": 1
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Check for insider attack",
+              "content": "Checked corporate emails to determine whether it was an insider attack where employee is solicited to install ransomware.",
+              "order": 2
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Check for stolen devices",
+              "content": "Checked whether any previously lost or stolen devices could have divulged credentials for system access.",
+              "order": 3
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Check for human error",
+              "content": "Checked whether human error was involved.",
+              "order": 4
+            }
+          ]
+        },
+        {
+          "title": "Send Communications",
+          "content": "Communications will need to exist for both internal and external parties. Timely and controlled external communications play a crucial role in managing the narrative.",
+          "taskType": "administrative",
+          "complexity": "low",
+          "estimatedDuration": 120,
+          "preferredWorkRole": "CIRT_LEADER",
+          "order": 11,
+          "outcomes": [
+            "Approved external parties are contacted and notified of ransomware incident",
+            "Decision made whether to utilize ORNA templates for communication",
+            "Employees are notified about the incident and instructed on the next steps"
+          ],
+          "subtasks": [
+            {
+              "subtaskType": "administrative",
+              "title": "Work with Legal Counsel",
+              "content": "Worked with Legal Counsel and provided all available details about the incident severity, impact and the type of information involved, if known.",
+              "order": 1
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Craft external messages",
+              "content": "Worked closely with Legal Counsel and Communications Team to craft messages to external parties to be notified.",
+              "order": 2
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Craft internal messages",
+              "content": "Worked closely with Legal Counsel and Communications Team to craft messages for internal staff.",
+              "order": 3
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Utilize ORNA templates",
+              "content": "Utilized ORNA communications templates where appropriate.",
+              "order": 4
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Publish external communications",
+              "content": "Published external communications in line with the communications strategy to provide advice to affected customers or business partners.",
+              "order": 5
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Work on communications cadence",
+              "content": "Worked with communications team and legal counsel on a cadence for updating external and internal communications.",
+              "order": 6
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Consider regulatory requirements",
+              "content": "Considered regulatory requirements when issuing incident updates (PIPEDA, GDPR, PCI DSS, NYDFS, FFIEC, NCUA, OSFI, GLBA, SOX, HIPAA/PHIPA).",
+              "order": 7
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Deploy internal alert page",
+              "content": "Deployed an internal alert/warning page containing information about the current ransomware attack to inform employees.",
+              "order": 8
+            }
+          ]
+        },
+        {
+          "title": "Invoke Data Breach Notification Protocols",
+          "content": "When a cyber incident is suspected or confirmed, it is important that the Legal Counsel proceeds swiftly to understand the type of data affected.",
+          "taskType": "administrative",
+          "complexity": "low",
+          "estimatedDuration": 360,
+          "preferredWorkRole": "LEGAL",
+          "order": 12,
+          "outcomes": [
+            "The type of breach and affected data are established and confirmed",
+            "Regulatory obligations are identified",
+            "Appropriate data breach notification protocols are invoked"
+          ],
+          "subtasks": [
+            {
+              "subtaskType": "administrative",
+              "title": "Confirm PII/PHI/financial data impact",
+              "content": "Confirmed that Personal Identifiable Information (PII), Protected Health Information (PHI), or financial information is impacted.",
+              "order": 1
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Examine regulatory obligations",
+              "content": "Examined regulatory obligations.",
+              "order": 2
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Notify appropriate parties",
+              "content": "Notified the appropriate regulatory agencies and affected individuals as prescribed by relevant laws, regulations and contractual obligations.",
+              "order": 3
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Advise on client-attorney privilege",
+              "content": "Advised the CIRT members on proper communication methods to ensure continuous client-attorney privilege where possible.",
+              "order": 4
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Containment",
+      "description": "The main objective of the Containment stage is to limit the impact of the incident promptly and as much as possible, preventing further damage to the organization's assets.",
+      "order": 2,
+      "tasks": [
+        {
+          "title": "Disconnect Affected Assets from the Network",
+          "content": "Ransomware typically spreads through the network without any user interaction. It is crucial to immediately disconnect all devices that have been infected with ransomware from the rest of the corporate network.",
+          "taskType": "technical",
+          "complexity": "high",
+          "estimatedDuration": 120,
+          "preferredWorkRole": "CORE_CIRT_MEMBER",
+          "order": 1,
+          "outcomes": [
+            "All affected devices are isolated"
+          ],
+          "subtasks": [
+            {
+              "subtaskType": "technical",
+              "title": "Preserve forensic evidence",
+              "content": "Preserved forensic evidence, such as system images, before restarting, shutting down, or modifying configurations of the affected systems and assets.",
+              "order": 1
+            },
+            {
+              "subtaskType": "technical",
+              "title": "Disconnect infected systems",
+              "content": "Disconnected the infected systems, shared drives and devices from any network connection to reduce the risk of the infection spreading to other connected devices.",
+              "order": 2
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Block added communications",
+              "content": "Blocked added communications associated with infected systems to contain the ransomware infection. Considerations include disabling VPN access, remote access servers, single sign on resources, and cloud-based or public-facing assets.",
+              "order": 3
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Upload forensics evidence",
+              "content": "Attached the applicable forensics evidence (such as log files or screenshots) to this task using the Upload Artifact feature.",
+              "order": 4
+            }
+          ]
+        },
+        {
+          "title": "Block Current Network Communication Method",
+          "content": "If the network communication method used by the malware can be determined and blocked between network segments, you should proceed to temporarily (or permanently) block this method.",
+          "taskType": "technical",
+          "complexity": "moderate",
+          "estimatedDuration": 60,
+          "preferredWorkRole": "CORE_CIRT_MEMBER",
+          "order": 2,
+          "outcomes": [
+            "All identified malicious network artifacts are blocked",
+            "Spread of infection is contained"
+          ],
+          "subtasks": [
+            {
+              "subtaskType": "technical",
+              "title": "Block network communication methods",
+              "content": "Temporarily blocked or disabled all relevant network communication methods that could be used by the ransomware to move laterally through the network. Examples include RDP, SMB, SIP, SSH, VNC.",
+              "order": 1
+            }
+          ]
+        },
+        {
+          "title": "Scan the Network for Additional Malware",
+          "content": "Many ransomware campaigns utilize various malware families that threat actors use to ensure persistence on the network or to perform additional tasks.",
+          "taskType": "technical",
+          "complexity": "moderate",
+          "estimatedDuration": 240,
+          "preferredWorkRole": "CORE_CIRT_MEMBER",
+          "order": 3,
+          "outcomes": [
+            "All additional malware is detected and eliminated"
+          ],
+          "subtasks": [
+            {
+              "subtaskType": "technical",
+              "title": "Ensure antivirus up to date",
+              "content": "Ensured that antivirus signatures were up to date and that the antivirus software is installed and enabled on all assets.",
+              "order": 1
+            },
+            {
+              "subtaskType": "technical",
+              "title": "Confirm latest patches deployed",
+              "content": "Confirmed that the latest patches, in particular those relating to security updates, were deployed on all assets (prioritizing the targeted devices, software, operating systems, etc.)",
+              "order": 2
+            },
+            {
+              "subtaskType": "technical",
+              "title": "Run antivirus scan",
+              "content": "Ran an antivirus scan on the network and quarantined or removed any additional detected malware.",
+              "order": 3
+            },
+            {
+              "subtaskType": "technical",
+              "title": "Preserve findings",
+              "content": "Preserved all findings as evidence using the Upload Artifact feature of this Task.",
+              "order": 4
+            }
+          ]
+        },
+        {
+          "title": "Invoke Business Continuity Plan",
+          "content": "To avoid major disruptions of key business functions, invoke the Business Continuity Plan (BCP), if such exists, in accordance with the incident severity and impact.",
+          "taskType": "administrative",
+          "complexity": "low",
+          "estimatedDuration": 240,
+          "preferredWorkRole": "CEO",
+          "order": 4,
+          "outcomes": [
+            "If it exists the Business Continuity Plan is invoked",
+            "If no Business Continuity Plan exists a war room is used to create one",
+            "Situational business continuity procedures are established"
+          ],
+          "subtasks": [
+            {
+              "subtaskType": "administrative",
+              "title": "Invoke BCP communication",
+              "content": "Issued the communication and informed the appropriate stakeholders that the BCP should be invoked to minimize business disruption.",
+              "order": 1
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Proceed with BCP procedures",
+              "content": "Proceeded in accordance with the BCP procedures.",
+              "order": 2
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Establish war room if needed",
+              "content": "Established a war room if no BCP existed for affected systems and data. This war room would consist of technical Subject Matter Experts and business leaders to assess the most critical systems and data.",
+              "order": 3
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Create situational procedures",
+              "content": "If no BCP existed, created situational business continuity procedures.",
+              "order": 4
+            }
+          ]
+        },
+        {
+          "title": "Issue External and Internal Communications Update",
+          "content": "Issuing periodic updates on the progress of the incident response activities and the measures the organization is taking to contain and remediate the incident will help control the narrative.",
+          "taskType": "administrative",
+          "complexity": "moderate",
+          "estimatedDuration": 120,
+          "preferredWorkRole": "COMMUNICATIONS_LEADER",
+          "order": 5,
+          "outcomes": [
+            "Internal stakeholders are informed about the ongoing containment measures",
+            "External stakeholders are informed about the ongoing containment measures"
+          ],
+          "subtasks": [
+            {
+              "subtaskType": "administrative",
+              "title": "Issue internal communications",
+              "content": "Issued the communications update to internal stakeholders in accordance with the communications strategy.",
+              "order": 1
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Issue external communications",
+              "content": "Issued the communications update to external stakeholders and the media in accordance with the communications strategy.",
+              "order": 2
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Use ORNA templates",
+              "content": "Referred to the ORNA Communications Templates section for guidance on the wording.",
+              "order": 3
+            }
+          ]
+        },
+        {
+          "title": "Issue Mandatory Regulatory Notifications or Updates",
+          "content": "Issuing periodic updates about the progress of the incident response activities may be required based on the incident severity and the applicable laws, regulations and contractual obligations.",
+          "taskType": "administrative",
+          "complexity": "moderate",
+          "estimatedDuration": 120,
+          "preferredWorkRole": "LEGAL",
+          "order": 6,
+          "outcomes": [
+            "Applicable internal and external parties are informed about the ongoing containment measures"
+          ],
+          "subtasks": [
+            {
+              "subtaskType": "administrative",
+              "title": "Notify regulatory agencies",
+              "content": "Notified the appropriate regulatory agencies and affected individuals in accordance with the applicable laws and regulations identified during the Impact Assessment of the Identification stage.",
+              "order": 1
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Use ORNA templates",
+              "content": "Referred to the ORNA Communications Templates section for guidance on the wording.",
+              "order": 2
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Advise on privilege",
+              "content": "Continued advising the CIRT members on proper communications methods to ensure maintaining continuous client-attorney privilege where possible.",
+              "order": 3
+            }
+          ]
+        },
+        {
+          "title": "Protect Backups",
+          "content": "The most critical aspect of ransomware recovery is having trusted backups, which will need immediate attention to ensure that they are protected and not overwritten.",
+          "taskType": "technical",
+          "complexity": "low",
+          "estimatedDuration": 120,
+          "preferredWorkRole": "THIRD_PARTY_IT",
+          "order": 7,
+          "outcomes": [
+            "Backups are protected and trusted"
+          ],
+          "subtasks": [
+            {
+              "subtaskType": "administrative",
+              "title": "Analyze backup processes",
+              "content": "Analyzed backup processes for specific systems and data that could have been impacted.",
+              "order": 1
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Check backup snapshots",
+              "content": "Checked status of backup snapshots.",
+              "order": 2
+            }
+          ]
+        },
+        {
+          "title": "Protect Active Directory",
+          "content": "Many organizations utilize Active Directory (AD) to centrally manage user credentials and network resources. Ransomware attacks often exploit AD to obtain privileged credentials.",
+          "taskType": "technical",
+          "complexity": "low",
+          "estimatedDuration": 120,
+          "preferredWorkRole": "THIRD_PARTY_IT",
+          "order": 8,
+          "outcomes": [
+            "AD compromise and lateral movement is contained",
+            "All AD accounts have new credentials enabled"
+          ],
+          "subtasks": [
+            {
+              "subtaskType": "administrative",
+              "title": "Restore or rebuild AD",
+              "content": "Restored AD from backup or rebuilt from scratch if no backup was available which predates the initial compromise.",
+              "order": 1
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Reset KRBTGT account",
+              "content": "Completed the reset of the credentials for the Microsoft Kerberos account.",
+              "order": 2
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Reset all AD credentials",
+              "content": "Completed the reset of all other AD account credentials.",
+              "order": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Eradication",
+      "description": "The Eradication stage focuses on removing all traces of the threat (such as malware) from the affected assets, and ensuring that the root cause has been eliminated.",
+      "order": 3,
+      "tasks": [
+        {
+          "title": "Consider Establishing Contact With the Adversary",
+          "content": "Whether or not to establish contact and/or attempt negotiating with the adversary is a complex decision based on multiple factors. The FBI advises victims to avoid negotiating with hackers.",
+          "taskType": "administrative",
+          "complexity": "high",
+          "estimatedDuration": 60,
+          "preferredWorkRole": "CEO",
+          "order": 1,
+          "outcomes": [
+            "A decision is made as to whether to contact the threat actor",
+            "(Optional) Ransom amount negotiations started"
+          ],
+          "subtasks": [
+            {
+              "subtaskType": "administrative",
+              "title": "Retain professional negotiator",
+              "content": "Retained the services of a professional negotiator, or delegate this task to your cyber insurance provider.",
+              "order": 1
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Decide on contact",
+              "content": "If retaining professional negotiation services or delegating the task to the cyber insurance provider is not possible, consulted the Legal Counsel, CFO, CIRT Leader, law enforcement (if applicable), and other business stakeholders, and decided whether contact with the threat actor should be established.",
+              "order": 2
+            },
+            {
+              "subtaskType": "technical",
+              "title": "Follow ransom note instructions",
+              "content": "If the decision was made to start the negotiations with the threat actor, followed the instructions provided in the ransom note to establish contact.",
+              "order": 3
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Follow negotiation practices",
+              "content": "Followed the recommended negotiation practices to communicate with the attacker and attempt to reduce the ransom amount as much as possible.",
+              "order": 4
+            }
+          ]
+        },
+        {
+          "title": "Attempt to Obtain an Existing Decryption Key",
+          "content": "Depending on the ransomware variant, a known decryption key developed by security researchers and organizations may be freely available on the Internet.",
+          "taskType": "hybrid",
+          "complexity": "moderate",
+          "estimatedDuration": 120,
+          "preferredWorkRole": "CORE_CIRT_MEMBER",
+          "order": 2,
+          "outcomes": [
+            "An existing decryption key may be obtained"
+          ],
+          "subtasks": [
+            {
+              "subtaskType": "technical",
+              "title": "Search for decryption key",
+              "content": "Searched the Internet for an existing decryption key for the ransomware variant involved in this incident. Consulted: Avast, Emsisoft, NoMoreRansom, Kaspersky decryption tools.",
+              "order": 1
+            }
+          ]
+        },
+        {
+          "title": "Identify and Mitigate Vulnerabilities",
+          "content": "Once the affected systems have been fully rebuilt, it is important to identify any vulnerabilities that may be present on the systems, preventing similar attacks from happening in the future.",
+          "taskType": "technical",
+          "complexity": "moderate",
+          "estimatedDuration": 840,
+          "preferredWorkRole": "CORE_CIRT_MEMBER",
+          "order": 3,
+          "outcomes": [
+            "Vulnerabilities are identified and mitigated"
+          ],
+          "subtasks": [
+            {
+              "subtaskType": "technical",
+              "title": "Run vulnerability scan",
+              "content": "Ran a vulnerability scan on the entire network and the surrounding infrastructure using specialized vulnerability scanning tools, such as: Nessus by Tenable, Qualys, OpenVAS.",
+              "order": 1
+            },
+            {
+              "subtaskType": "technical",
+              "title": "Create mitigation plan",
+              "content": "Created a prioritized plan to implement all relevant mitigation recommendations provided by the vulnerability scanning tools. Prioritized patches which have known exploits.",
+              "order": 2
+            },
+            {
+              "subtaskType": "technical",
+              "title": "Preserve evidence",
+              "content": "Preserved forensic evidence of any discovered vulnerabilities using the Artifact Upload feature of this Task.",
+              "order": 3
+            }
+          ]
+        },
+        {
+          "title": "Block and Remove Ransomware Email",
+          "content": "If the ransomware was introduced into the infrastructure via a phishing email, it is important to block the email and remove it from all users' mailboxes.",
+          "taskType": "technical",
+          "complexity": "moderate",
+          "estimatedDuration": 180,
+          "preferredWorkRole": "CORE_CIRT_MEMBER",
+          "order": 4,
+          "outcomes": [
+            "Phishing ransomware email is blocked and removed",
+            "Employee solicitation emails are blocked and removed",
+            "Emails utilizing domains with phishing or solicitation emails are blocked"
+          ],
+          "subtasks": [
+            {
+              "subtaskType": "technical",
+              "title": "Delete phishing emails",
+              "content": "If the ransomware was received via a phishing email, deleted all similar phishing emails from all users' mailboxes. Additionally, configured your email gateway to block the types of attachments, keywords, senders or domains related to the malware.",
+              "order": 1
+            },
+            {
+              "subtaskType": "technical",
+              "title": "Create spam filters",
+              "content": "Created spam filters within email security settings to block the ransomware email and ensured that no further infections can occur.",
+              "order": 2
+            },
+            {
+              "subtaskType": "technical",
+              "title": "Preserve evidence",
+              "content": "Preserved all forensic evidence by using the Upload Artifact feature of this Task.",
+              "order": 3
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Delete solicitation emails",
+              "content": "If employees were solicited via email to perform an insider ransomware attack, deleted all similar solicitation emails from all users' mailboxes.",
+              "order": 4
+            }
+          ]
+        },
+        {
+          "title": "Block Malicious Website",
+          "content": "If the ransomware was introduced to the infrastructure via a malicious website or an attachment download, it is important to block the associated website at the network perimeter.",
+          "taskType": "technical",
+          "complexity": "moderate",
+          "estimatedDuration": 120,
+          "preferredWorkRole": "CORE_CIRT_MEMBER",
+          "order": 5,
+          "outcomes": [
+            "Malicious websites are blocked at the network perimeter",
+            "DNS Sinkholes and Filters are used to block access to malicious websites"
+          ],
+          "subtasks": [
+            {
+              "subtaskType": "technical",
+              "title": "Block malicious website",
+              "content": "If the ransomware was received via a malicious website, blocked the website at the network perimeter.",
+              "order": 1
+            },
+            {
+              "subtaskType": "technical",
+              "title": "Use DNS Sinkhole",
+              "content": "Used DNS Sinkhole and Filtering techniques to block access to malicious websites by configuring the DNS forwarder and blocking access to sites with malicious domain names/URLs.",
+              "order": 2
+            },
+            {
+              "subtaskType": "technical",
+              "title": "Block IP address",
+              "content": "Blocked the site's IP address via the network firewall.",
+              "order": 3
+            },
+            {
+              "subtaskType": "technical",
+              "title": "Preserve evidence",
+              "content": "Preserved all forensic evidence by using the Upload Artifact feature of this Task.",
+              "order": 4
+            }
+          ]
+        },
+        {
+          "title": "Continue Monitoring",
+          "content": "There may still be unidentified Indicators of Compromise (IoCs). The network and systems should continue to be monitored for lateral movement, privilege escalation attempts and unauthorized access attempts.",
+          "taskType": "technical",
+          "complexity": "moderate",
+          "estimatedDuration": 600,
+          "preferredWorkRole": "CORE_CIRT_MEMBER",
+          "order": 6,
+          "outcomes": [
+            "New lateral movement is detected"
+          ],
+          "subtasks": [
+            {
+              "subtaskType": "administrative",
+              "title": "Investigate logging alerts",
+              "content": "Investigated logging alerts from network infrastructure, system and security tool logs to detect any added compromise or lateral movement.",
+              "order": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Recovery",
+      "description": "The Recovery stage aims to restore the affected assets to their full business-as-usual operation in the shortest possible time frame, after eradicating all traces of the threat.",
+      "order": 4,
+      "tasks": [
+        {
+          "title": "Recover Encrypted Data Using Decryption Key",
+          "content": "Perform the decryption process using local access to the machine, and NOT over the network. Even a momentary network outage can cause the decryption process to break and corrupt the files permanently.",
+          "taskType": "technical",
+          "complexity": "high",
+          "estimatedDuration": 960,
+          "preferredWorkRole": "CORE_CIRT_MEMBER",
+          "order": 1,
+          "outcomes": [
+            "All affected files are decrypted"
+          ],
+          "subtasks": [
+            {
+              "subtaskType": "technical",
+              "title": "Follow decryption instructions",
+              "content": "Followed the instructions provided alongside the decryption key, either by the threat actor, or by the validated security research entity to recover the encrypted files. Repeated this step for each of the affected assets.",
+              "order": 1
+            },
+            {
+              "subtaskType": "technical",
+              "title": "Preserve evidence",
+              "content": "Preserved all forensic evidence by using the Upload Artifact feature of this Task.",
+              "order": 2
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Contact threat actors if needed",
+              "content": "If decryption key did not recover data, contacted the threat actors for support on how to decrypt the data.",
+              "order": 3
+            }
+          ]
+        },
+        {
+          "title": "Restore and Recreate the Data",
+          "content": "When the organization chooses not to pay the ransom it will need to recover the impacted data using existing, clean backups or recreate the data.",
+          "taskType": "technical",
+          "complexity": "moderate",
+          "estimatedDuration": 720,
+          "preferredWorkRole": "CORE_CIRT_MEMBER",
+          "order": 2,
+          "outcomes": [
+            "All encrypted and inaccessible data have been restored from backups",
+            "All encrypted and inaccessible data have been rebuilt and recreated"
+          ],
+          "subtasks": [
+            {
+              "subtaskType": "technical",
+              "title": "Restore from backups",
+              "content": "Restored the data from known clean backups (e.g. a cold storage backup).",
+              "order": 1
+            },
+            {
+              "subtaskType": "technical",
+              "title": "Preserve evidence",
+              "content": "Preserved all forensic evidence by using the Upload Artifact feature of this Task.",
+              "order": 2
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Recreate data",
+              "content": "Recreated the data that has been encrypted and is no longer available.",
+              "order": 3
+            }
+          ]
+        },
+        {
+          "title": "Confirm Systems are Functioning Normally",
+          "content": "Once the data is restored (whether using a backup, or via using a decryption key), it is important to verify that all restored systems are functioning as expected, and no additional malware is present.",
+          "taskType": "technical",
+          "complexity": "moderate",
+          "estimatedDuration": 300,
+          "preferredWorkRole": "CORE_CIRT_MEMBER",
+          "order": 3,
+          "outcomes": [
+            "All systems are functioning as expected"
+          ],
+          "subtasks": [
+            {
+              "subtaskType": "technical",
+              "title": "Preserve evidence",
+              "content": "Preserved all forensic evidence by using the Upload Artifact feature of this Task.",
+              "order": 1
+            },
+            {
+              "subtaskType": "technical",
+              "title": "Re-run malware scans",
+              "content": "Re-ran malware scans on all systems to confirm that the infection did not persist.",
+              "order": 2
+            },
+            {
+              "subtaskType": "technical",
+              "title": "Run vulnerability scans",
+              "content": "Ran vulnerability scans on the freshly restored systems to confirm that there are no malicious binaries or security vulnerabilities.",
+              "order": 3
+            },
+            {
+              "subtaskType": "technical",
+              "title": "Mitigate vulnerabilities",
+              "content": "Mitigated all relevant discovered vulnerabilities (if any).",
+              "order": 4
+            },
+            {
+              "subtaskType": "technical",
+              "title": "Reconnect to network",
+              "content": "Connected the restored systems back to the network.",
+              "order": 5
+            }
+          ]
+        },
+        {
+          "title": "Remediate the Root Cause(s)",
+          "content": "Using all the information collected during the Identification and Containment stages, perform a root cause analysis to determine the initial entry point of the ransomware and remediate the vulnerability.",
+          "taskType": "technical",
+          "complexity": "moderate",
+          "estimatedDuration": 240,
+          "preferredWorkRole": "CORE_CIRT_MEMBER",
+          "order": 4,
+          "outcomes": [
+            "Root cause analysis is performed and initial entry points are established",
+            "The root causes are remediated"
+          ],
+          "subtasks": [
+            {
+              "subtaskType": "technical",
+              "title": "Preserve evidence",
+              "content": "Preserved all forensic evidence by using the Upload Artifact feature of this Task.",
+              "order": 1
+            },
+            {
+              "subtaskType": "technical",
+              "title": "Apply security patches",
+              "content": "If a vulnerability was exploited to provide the attacker the initial access to the systems, applied all relevant security patches to the affected systems or software.",
+              "order": 2
+            },
+            {
+              "subtaskType": "technical",
+              "title": "Implement robust configurations",
+              "content": "If a weak security configuration was exploited (e.g. an Internet-facing RDP port, weak account credentials, misconfigured firewall rules, etc.), implemented more robust configuration settings to the device, account, or software.",
+              "order": 3
+            }
+          ]
+        },
+        {
+          "title": "Normalize Affected Networks",
+          "content": "During the Containment and Eradication stages, certain network communication and/or file-sharing protocols may have been disabled. Make sure to restore all previously disabled network protocols and/or suspended user accounts.",
+          "taskType": "technical",
+          "complexity": "moderate",
+          "estimatedDuration": 480,
+          "preferredWorkRole": "CORE_CIRT_MEMBER",
+          "order": 5,
+          "outcomes": [
+            "All networks, protocols and user accounts are restored"
+          ],
+          "subtasks": [
+            {
+              "subtaskType": "technical",
+              "title": "Preserve evidence",
+              "content": "Preserved all forensic evidence by using the Upload Artifact feature of this Task.",
+              "order": 1
+            },
+            {
+              "subtaskType": "technical",
+              "title": "Restore services",
+              "content": "Restored any services that were suspended during the Containment and Eradication stages.",
+              "order": 2
+            },
+            {
+              "subtaskType": "technical",
+              "title": "Restore user accounts",
+              "content": "Restored any user accounts that were suspended during the Containment and Eradication stages.",
+              "order": 3
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Issue password resets",
+              "content": "Issued password resets for all affected systems and addressed any associated vulnerabilities and gaps in security or visibility with system alerts and notifications.",
+              "order": 4
+            }
+          ]
+        },
+        {
+          "title": "Issue External and Internal Communications Updates",
+          "content": "Once the affected systems are restored and the organization returns to Business As Usual (BAU), it is important to issue external and internal communications updates.",
+          "taskType": "administrative",
+          "complexity": "moderate",
+          "estimatedDuration": 120,
+          "preferredWorkRole": "COMMUNICATIONS_LEADER",
+          "order": 6,
+          "outcomes": [
+            "External and internal communication updates are issued"
+          ],
+          "subtasks": [
+            {
+              "subtaskType": "administrative",
+              "title": "Issue internal communications",
+              "content": "Issued the communications update to internal stakeholders in accordance with the communications strategy.",
+              "order": 1
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Issue external communications",
+              "content": "Issued the communications update to external stakeholders in accordance with the communications strategy.",
+              "order": 2
+            }
+          ]
+        },
+        {
+          "title": "Issue Mandatory Regulatory Notifications or Updates",
+          "content": "Issuing regular updates about the progress of the incident resolution activities may be required based on the incident severity, affected data, and the applicable laws and regulations.",
+          "taskType": "administrative",
+          "complexity": "moderate",
+          "estimatedDuration": 120,
+          "preferredWorkRole": "LEGAL",
+          "order": 7,
+          "outcomes": [
+            "Applicable parties are informed about the ongoing recovery measures"
+          ],
+          "subtasks": [
+            {
+              "subtaskType": "administrative",
+              "title": "Notify regulatory agencies",
+              "content": "Notified the appropriate regulatory agencies and the affected individuals in accordance with the applicable laws and regulations as was done during the Containment stage.",
+              "order": 1
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Advise on privilege",
+              "content": "Continued advising the CIRT members on proper communications methods within and outside the War Room to ensure maintaining continuous client-attorney privilege where possible.",
+              "order": 2
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Use ORNA templates",
+              "content": "Referred to the ORNA Communications Templates section for guidance on the wording.",
+              "order": 3
+            }
+          ]
+        },
+        {
+          "title": "Rebuild Affected Systems",
+          "content": "If the organization has decided to proceed with the systems rebuild using the existing backup solution, begin the process of a full rebuild of the affected systems.",
+          "taskType": "technical",
+          "complexity": "high",
+          "estimatedDuration": 1200,
+          "preferredWorkRole": "THIRD_PARTY_IT",
+          "order": 8,
+          "outcomes": [
+            "All Systems Restored"
+          ],
+          "subtasks": [
+            {
+              "subtaskType": "administrative",
+              "title": "Rebuild from clean media",
+              "content": "Rebuilt affected systems from known clean media",
+              "order": 1
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Confirm antivirus up to date",
+              "content": "Confirmed that antivirus is up to date and enabled on all systems.",
+              "order": 2
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Confirm patches deployed",
+              "content": "Confirmed that applicable patches are deployed on all systems.",
+              "order": 3
+            }
+          ]
+        },
+        {
+          "title": "Decide Whether to Pay the Ransom",
+          "content": "Whether or not to pay the ransom is a complex decision influenced by a multitude of factors. It is absolutely imperative to consult with the Legal Counsel, your insurance provider and in some cases law enforcement agencies.",
+          "taskType": "administrative",
+          "complexity": "moderate",
+          "estimatedDuration": 120,
+          "preferredWorkRole": "CEO",
+          "order": 9,
+          "outcomes": [
+            "A Decision Regarding the Ransom Payout is Made"
+          ],
+          "subtasks": [
+            {
+              "subtaskType": "administrative",
+              "title": "Evaluate restore capability",
+              "content": "Evaluated the organization's ability to restore lost/encrypted data without paying the ransom. Consulted with CFO, CIRT Leader, Core CIRT members, Managed Security Services, Digital Forensics Investigator and Third Party IT providers.",
+              "order": 1
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Evaluate business impact",
+              "content": "Evaluated the business impact of restoring the data without paying the ransom. Reviewed the existing BC/DR plan and consulted with the CFO, CIRT Leader, Legal Counsel considering RPO, RTO, and data loss tolerance.",
+              "order": 2
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Evaluate impact if not paid",
+              "content": "Evaluated the business, financial, regulatory and reputational impact to the organization if the ransom is not paid. Considered data exfiltration, PII/PHI compromise, trade secrets exposure, and customer trust.",
+              "order": 3
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Evaluate risks of paying",
+              "content": "Evaluated the risks associated with the option of paying the ransom. Considered whether decryption key will be provided, if data will be destroyed, if organization can afford to pay, if it's legal to pay, and if it's ethically acceptable.",
+              "order": 4
+            }
+          ]
+        },
+        {
+          "title": "Pay the Ransom and Obtain the Decryption Key",
+          "content": "If the decision was made to proceed with the ransom payout, follow the instructions provided by the attacker to make the payment.",
+          "taskType": "administrative",
+          "complexity": "moderate",
+          "estimatedDuration": 120,
+          "preferredWorkRole": "CFO",
+          "order": 10,
+          "outcomes": [
+            "Ransom has been paid",
+            "The decryption key is obtained from the threat actor",
+            "Obtained proof that any exfiltrated data has been destroyed"
+          ],
+          "subtasks": [
+            {
+              "subtaskType": "administrative",
+              "title": "Source ransom funds",
+              "content": "Coordinated with the CEO/COO and consulted with the Legal Counsel, insurance provider and law enforcement (if applicable) to source the funds required for the ransom payout.",
+              "order": 1
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Create cryptocurrency wallet",
+              "content": "Worked with the CIRT Leader and Core CIRT Members to create and configure a cryptocurrency wallet for the organization based on the type of currency requested by the attacker.",
+              "order": 2
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Transfer funds",
+              "content": "Loaded the funds to the cryptocurrency wallet and made the transfer following the instructions provided by the attacker.",
+              "order": 3
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Obtain decryption key",
+              "content": "Obtained the decryption key to regain access to any encrypted data and, if applicable, any proof that sensitive exfiltrated data in the threat actors' possession has been destroyed.",
+              "order": 4
+            }
+          ]
+        },
+        {
+          "title": "Scan the Decryption Key",
+          "content": "If the organization decided to pay the ransom amount and received the decryption key from the attacker, it is crucial to scan the decryption key for any hidden malware or backdoors.",
+          "taskType": "technical",
+          "complexity": "moderate",
+          "estimatedDuration": 120,
+          "preferredWorkRole": "CORE_CIRT_MEMBER",
+          "order": 11,
+          "outcomes": [
+            "The existence or absence of backdoors or malware confirmed"
+          ],
+          "subtasks": [
+            {
+              "subtaskType": "administrative",
+              "title": "Reverse-engineer decryption key",
+              "content": "Consulted with the digital forensics investigator and reverse-engineered the decryption key provided by the attacker to look for built-in malware and/or backdoors.",
+              "order": 1
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Employ 3rd party vendor",
+              "content": "Employed a 3rd party vendor that specializes in ransomware removal and decryption services to analyze the decryption key.",
+              "order": 2
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Test in sandbox",
+              "content": "If the analysis of the decryption key is not feasible, test it out in an isolated (e.g. sandbox) environment and subsequently scan the environment for malware.",
+              "order": 3
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Preserve evidence",
+              "content": "Preserved all relevant forensic evidence by using the Upload Artifact feature of this Task.",
+              "order": 4
+            }
+          ]
+        },
+        {
+          "title": "Resolve Incident",
+          "content": "Once the affected systems and data are restored to normal business operations the incident can be moved to the 'resolved' state.",
+          "taskType": "administrative",
+          "complexity": "low",
+          "estimatedDuration": 60,
+          "preferredWorkRole": "CIRT_LEADER",
+          "order": 12,
+          "outcomes": [
+            "The incident is declared as resolved"
+          ],
+          "subtasks": [
+            {
+              "subtaskType": "administrative",
+              "title": "Verify systems back to normal",
+              "content": "Verified with Core CIRT Members and IT staff that all systems and configurations are back to normal business functions.",
+              "order": 1
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Change incident status",
+              "content": "Changed status of incident to 'resolved'.",
+              "order": 2
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Lessons Learned",
+      "description": "The Lessons Learned stage's main goal is to compile all relevant information about the incident and extract lessons that can help with future incident response activity.",
+      "order": 5,
+      "tasks": [
+        {
+          "title": "Generate Incident Report",
+          "content": "Preparing an incident report is an important (and often mandatory) part of the cyber incident response process. This report will be used to perform business impact analysis, comply with the applicable laws and regulations, and update relevant stakeholders.",
+          "taskType": "administrative",
+          "complexity": "high",
+          "estimatedDuration": 60,
+          "preferredWorkRole": "CIRT_LEADER",
+          "order": 1,
+          "outcomes": [
+            "The Incident Report is generated"
+          ],
+          "subtasks": [
+            {
+              "subtaskType": "technical",
+              "title": "Generate report",
+              "content": "Once the Incident is marked as Resolved, use the Reports tab to generate and view the report.",
+              "order": 1
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Review for accuracy",
+              "content": "Reviewed the report for accuracy and address any errors/issues with the team member(s) responsible for the task in question.",
+              "order": 2
+            },
+            {
+              "subtaskType": "technical",
+              "title": "Ensure artifacts included",
+              "content": "Ensured all relevant artifacts are included for each task.",
+              "order": 3
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Share report",
+              "content": "Downloaded or export the report and share it with the appropriate stakeholders alongside its unique secure access password (available in the Reports tab).",
+              "order": 4
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Retain report",
+              "content": "Ensured that the Incident report and all related evidence are retained in accordance with legal and regulatory requirements.",
+              "order": 5
+            }
+          ]
+        },
+        {
+          "title": "Fulfill External and Internal Reporting Obligations",
+          "content": "Once the incident is resolved and the investigation is complete, an organization may be required to deliver the incident report (or its appropriate sections) to the regulatory agencies, affected companies or individuals, law enforcement or other stakeholders.",
+          "taskType": "administrative",
+          "complexity": "moderate",
+          "estimatedDuration": 300,
+          "preferredWorkRole": "LEGAL",
+          "order": 2,
+          "outcomes": [
+            "The Incident Report (or its appropriate sections) is shared with the applicable parties",
+            "Applicable regulatory and legal obligations are fulfilled"
+          ],
+          "subtasks": [
+            {
+              "subtaskType": "administrative",
+              "title": "Obtain and review report",
+              "content": "Obtained the full Incident Report from the CIRT Leader and review it for accuracy.",
+              "order": 1
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Identify obligations",
+              "content": "Identified all applicable legal and regulatory requirements related to cyber incident reporting.",
+              "order": 2
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Deliver report",
+              "content": "Delivered the Incident report to the appropriate legal and/or regulatory agencies and the affected individuals, in accordance with the applicable legal and regulatory requirements.",
+              "order": 3
+            }
+          ]
+        },
+        {
+          "title": "Host the Lessons Learned Session",
+          "content": "The goal of the Lessons Learned session is to learn from the incident, identify any policy, process or procedure gaps that were revealed during the handling of the incident, and to create initiatives to improve the organizations' security posture.",
+          "taskType": "hybrid",
+          "complexity": "moderate",
+          "estimatedDuration": 360,
+          "preferredWorkRole": "CIRT_LEADER",
+          "order": 3,
+          "outcomes": [
+            "The Lessons Learned session is conducted",
+            "Gaps and areas for improvement are identified",
+            "Initiatives are created to operationalize identified improvements"
+          ],
+          "subtasks": [
+            {
+              "subtaskType": "administrative",
+              "title": "Prepare presentation",
+              "content": "Prepared a presentation for the Lessons Learned meeting, containing: when incident was detected and by whom, scope of incident, response steps taken, areas where CIRT was effective, gaps and improvement opportunities, prevention steps.",
+              "order": 1
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Host session",
+              "content": "Hosted the Lessons Learned session. Make sure that all CIRT members attend and actively participate in the session.",
+              "order": 2
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Establish open dialogue",
+              "content": "Established an open dialogue which discussed: how well staff handled incident, if procedures were followed, if procedures were adequate, what held back recovery, what needs to be done differently, if 3rd parties were responsive, what policy modifications are needed, what training is required, what tools and resources are needed.",
+              "order": 3
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Document improvements",
+              "content": "Documented all identified areas for improvement and prepared a list of agreed upon action items.",
+              "order": 4
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Distribute action items",
+              "content": "Distributed the action items list among relevant CIRT members and ensured that the improvement steps are implemented.",
+              "order": 5
+            }
+          ]
+        },
+        {
+          "title": "Perform Employee Security Awareness Training",
+          "content": "Whether the incident resulted from a phishing campaign, configuration error or from an exploited vulnerability, it is always a good idea to conduct an employee awareness training session after any incident is resolved.",
+          "taskType": "hybrid",
+          "complexity": "moderate",
+          "estimatedDuration": 1440,
+          "preferredWorkRole": "CIRT_LEADER",
+          "order": 4,
+          "outcomes": [
+            "The employee awareness training is conducted",
+            "A roadmap for table top exercises is developed based on lessons learnt"
+          ],
+          "subtasks": [
+            {
+              "subtaskType": "administrative",
+              "title": "Prepare educational materials",
+              "content": "Prepared educational materials for the employee awareness training, with emphasis on the recent incident and the steps employees can take to help the organization avoid similar incidents in the future.",
+              "order": 1
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Track attendance",
+              "content": "Tracked employee attendance using a Learning Management System (LMS).",
+              "order": 2
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Work with 3rd party",
+              "content": "Where applicable, worked with a 3rd party to prepare and conduct the employee security awareness training.",
+              "order": 3
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Develop table top exercises",
+              "content": "Used the outcomes from the Lessons Learned part of the Incident Management Process to develop a table top exercise plan with relevant scenarios and participants to practice any new processes developed post incident.",
+              "order": 4
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -5,7 +5,7 @@ import logger from '../utils/logger';
 
 const router = express.Router();
 
-router.get('/', authenticate, async (req: AuthRequest, res: Response) => {
+router.get('/', authenticate, async (req: AuthRequest, res: Response): Promise<void> => {
   try {
     const users = await User.findAll({
       attributes: { exclude: ['password'] },
@@ -16,10 +16,11 @@ router.get('/', authenticate, async (req: AuthRequest, res: Response) => {
   } catch (error) {
     logger.error('Get users error:', error);
     res.status(500).json({ error: 'Failed to fetch users' });
+      return;
   }
 });
 
-router.get('/me', authenticate, async (req: AuthRequest, res: Response) => {
+router.get('/me', authenticate, async (req: AuthRequest, res: Response): Promise<void> => {
   try {
     const user = await User.findByPk(req.userId!, {
       attributes: { exclude: ['password'] }
@@ -29,6 +30,7 @@ router.get('/me', authenticate, async (req: AuthRequest, res: Response) => {
   } catch (error) {
     logger.error('Get current user error:', error);
     res.status(500).json({ error: 'Failed to fetch user' });
+      return;
   }
 });
 
@@ -36,12 +38,13 @@ router.put(
   '/:id',
   authenticate,
   authorize(UserRole.ADMIN),
-  async (req: AuthRequest, res: Response) => {
+  async (req: AuthRequest, res: Response): Promise<void> => {
     try {
       const user = await User.findByPk(req.params.id);
 
       if (!user) {
-        return res.status(404).json({ error: 'User not found' });
+        res.status(404).json({ error: 'User not found' });
+      return;
       }
 
       const { firstName, lastName, role, department, phone, isActive } = req.body;
@@ -64,6 +67,7 @@ router.put(
     } catch (error) {
       logger.error('Update user error:', error);
       res.status(500).json({ error: 'Failed to update user' });
+      return;
     }
   }
 );

@@ -16,6 +16,9 @@ import complianceRoutes from './routes/compliance';
 import integrationRoutes from './routes/integrations';
 import taskRoutes from './routes/tasks';
 import roleRoutes from './routes/roles';
+import taskProgressRoutes from './routes/taskProgress';
+import notificationRoutes from './routes/notifications';
+import settingsRoutes from './routes/settings';
 
 dotenv.config();
 
@@ -23,8 +26,15 @@ const app: Express = express();
 const httpServer = createServer(app);
 const io = new Server(httpServer, {
   cors: {
-    origin: process.env.CORS_ORIGIN || 'http://localhost:3000',
-    methods: ['GET', 'POST', 'PUT', 'DELETE']
+    origin: [
+      'http://localhost:3012',
+      'http://127.0.0.1:3012',
+      'http://localhost:3000',
+      'http://127.0.0.1:3000',
+      process.env.CORS_ORIGIN || 'http://localhost:3000'
+    ],
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    credentials: true
   }
 });
 
@@ -32,12 +42,19 @@ const PORT = process.env.PORT || 3001;
 
 app.use(helmet());
 app.use(cors({
-  origin: process.env.CORS_ORIGIN || 'http://localhost:3000'
+  origin: [
+    'http://localhost:3012',
+    'http://127.0.0.1:3012',
+    'http://localhost:3000',
+    'http://127.0.0.1:3000',
+    process.env.CORS_ORIGIN || 'http://localhost:3000'
+  ],
+  credentials: true
 }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.get('/health', (req: Request, res: Response) => {
+app.get('/', (_req, res: Response) => {
   res.json({ status: 'ok', timestamp: new Date().toISOString() });
 });
 
@@ -50,6 +67,9 @@ app.use('/api/compliance', complianceRoutes);
 app.use('/api/integrations', integrationRoutes);
 app.use('/api/tasks', taskRoutes);
 app.use('/api/roles', roleRoutes);
+app.use('/api/task-progress', taskProgressRoutes);
+app.use('/api/notifications', notificationRoutes);
+app.use('/api/settings', settingsRoutes);
 
 io.on('connection', (socket) => {
   logger.info(`Client connected: ${socket.id}`);

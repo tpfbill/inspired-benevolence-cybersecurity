@@ -12,6 +12,18 @@ export default function Playbooks() {
     },
   });
 
+  const getTaskCount = (playbook: any) => {
+    if (playbook.steps && playbook.steps.length > 0) {
+      return playbook.steps.length;
+    }
+    if (playbook.phases && Array.isArray(playbook.phases)) {
+      return playbook.phases.reduce((total: number, phase: any) => {
+        return total + (phase.tasks?.length || 0);
+      }, 0);
+    }
+    return 0;
+  };
+
   return (
     <div className="space-y-6">
       <div className="flex justify-between items-center">
@@ -46,7 +58,7 @@ export default function Playbooks() {
                       {playbook.status}
                     </span>
                     <span className="text-xs text-gray-500">
-                      {playbook.steps.length} steps
+                      {getTaskCount(playbook)} {playbook.phases ? 'tasks' : 'steps'}
                     </span>
                   </div>
                   <div className="mt-2">

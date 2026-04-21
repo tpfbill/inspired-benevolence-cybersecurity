@@ -1,0 +1,1127 @@
+{
+  "name": "Insider Threat Response",
+  "description": "Comprehensive playbook for responding to insider threat incidents involving employees, contractors, or business associates who misuse their authorized access to harm the organization.",
+  "incidentType": "insider_threat",
+  "phases": [
+    {
+      "name": "Identification",
+      "description": "The purpose of the Identification stage is to accurately determine the Incident type, severity and perform immediate containment and escalation.",
+      "order": 1,
+      "tasks": [
+        {
+          "title": "Initiate CIRT Team Meeting and Execute Escalation Procedures",
+          "content": "As more information about the incident is known, the core CIRT team will meet and define which organizational SMEs need to be included to respond to the incident. Insider threat incidents require special handling due to legal, privacy, and personnel considerations.",
+          "taskType": "hybrid",
+          "complexity": "moderate",
+          "estimatedDuration": 120,
+          "preferredWorkRole": "CIRT_LEADER",
+          "order": 1,
+          "outcomes": [
+            "First Core CIRT meeting is held with invited SMEs",
+            "OOB communications channels are set up and periodic checkins scheduled",
+            "Privileged Communications is established with legal counsel",
+            "HR and Legal are involved from the beginning"
+          ],
+          "subtasks": [
+            {
+              "subtaskType": "administrative",
+              "title": "Initiate first CIRT meeting",
+              "content": "Initiated first meeting of the organizational core CIRT.",
+              "order": 1
+            },
+            {
+              "subtaskType": "hybrid",
+              "title": "Notify CIRT team members",
+              "content": "Notified CIRT team members using the contacts and role assignments on the My Team page and made sure ORNA roles are assigned so they are aware of the tasks allocated for them.",
+              "order": 2
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Immediately involve HR and Legal",
+              "content": "Immediately involved HR and Legal Counsel given the sensitive nature of insider threat investigations and potential employment law implications.",
+              "order": 3
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Verify Incident Severity",
+              "content": "Verified the Incident Severity determined during the Incident record creation process as promptly and accurately as possible. The severity may change as more details are uncovered and it will need to be updated when the situation changes.",
+              "order": 4
+            },
+            {
+              "subtaskType": "technical",
+              "title": "Invite additional SMEs",
+              "content": "Invited additional SMEs to be included in CIRT update meetings.",
+              "order": 5
+            },
+            {
+              "subtaskType": "technical",
+              "title": "Set up secured meeting room",
+              "content": "Set up a secured meeting room (either physical and/or virtual) with strict confidentiality.",
+              "order": 6
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Establish strict need-to-know policy",
+              "content": "Established strict need-to-know policy for all information about the investigation to protect employee privacy and investigation integrity.",
+              "order": 7
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Work with Legal Counsel",
+              "content": "Worked closely with Legal Counsel to retain client-attorney privilege over the information pertaining to the incident and ensure compliance with applicable laws and regulations including employment law.",
+              "order": 8
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Create initial incident assessment",
+              "content": "Created an initial incident assessment to share with organizational leaders. This assessment notification will contain a summary of what has occurred; date & time of incident; scope of compromise; data involved; actions taken so far and next steps recipients can expect to see.",
+              "order": 9
+            }
+          ]
+        },
+        {
+          "title": "Validate Insider Threat Incident",
+          "content": "An insider threat is a security risk that originates from within the organization. It involves employees, former employees, contractors, or business associates who have inside information concerning the organization's security practices, data and computer systems.",
+          "taskType": "hybrid",
+          "complexity": "high",
+          "estimatedDuration": 240,
+          "preferredWorkRole": "CORE_CIRT_MEMBER",
+          "order": 2,
+          "outcomes": [
+            "A security incident is confirmed as an insider threat",
+            "Type of insider threat is determined (malicious, negligent, compromised)"
+          ],
+          "subtasks": [
+            {
+              "subtaskType": "technical",
+              "title": "Review initial indicators",
+              "content": "Reviewed initial indicators that triggered the investigation including: unusual access patterns, data exfiltration alerts, policy violations, or behavioral concerns reported by managers or colleagues.",
+              "order": 1
+            },
+            {
+              "subtaskType": "technical",
+              "title": "Analyze user activity logs",
+              "content": "Analyzed user activity logs, file access logs, email logs, and system logs for suspicious patterns or unauthorized activity.",
+              "order": 2
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Determine threat type",
+              "content": "Determined whether this is: malicious insider (intentional harm), negligent insider (careless behavior), or compromised insider (account taken over by external actor).",
+              "order": 3
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Gather preliminary evidence",
+              "content": "Gathered preliminary evidence while maintaining chain of custody and following legal requirements for employee monitoring and investigation.",
+              "order": 4
+            }
+          ]
+        },
+        {
+          "title": "Determine Scope of Insider Activity",
+          "content": "Identify what systems, data, and resources the insider has accessed and potentially compromised. This must be done carefully to avoid alerting the insider if they are still active.",
+          "taskType": "technical",
+          "complexity": "high",
+          "estimatedDuration": 300,
+          "preferredWorkRole": "CORE_CIRT_MEMBER",
+          "order": 3,
+          "outcomes": [
+            "All accessed systems and data are identified",
+            "Timeline of insider activity is established",
+            "Potential data exfiltration is assessed"
+          ],
+          "subtasks": [
+            {
+              "subtaskType": "technical",
+              "title": "Identify accessed systems",
+              "content": "Identified all systems, applications, and resources the insider has accessed using their legitimate credentials.",
+              "order": 1
+            },
+            {
+              "subtaskType": "technical",
+              "title": "Review data access logs",
+              "content": "Reviewed detailed logs of file access, downloads, email attachments, cloud storage usage, and removable media usage.",
+              "order": 2
+            },
+            {
+              "subtaskType": "technical",
+              "title": "Check for data exfiltration",
+              "content": "Checked for signs of data exfiltration including: large file transfers, uploads to personal cloud storage, emails to personal accounts, use of USB drives or external storage.",
+              "order": 3
+            },
+            {
+              "subtaskType": "technical",
+              "title": "Establish timeline",
+              "content": "Established a timeline of the insider's activities to understand when the behavior started and what actions were taken.",
+              "order": 4
+            },
+            {
+              "subtaskType": "technical",
+              "title": "Identify sensitive data exposure",
+              "content": "Identified what sensitive or confidential data the insider may have accessed or exfiltrated.",
+              "order": 5
+            }
+          ]
+        },
+        {
+          "title": "Assess Need for External Support",
+          "content": "Determine if external legal counsel, forensics experts, or law enforcement should be involved based on the severity and nature of the insider threat.",
+          "taskType": "administrative",
+          "complexity": "low",
+          "estimatedDuration": 60,
+          "preferredWorkRole": "CIRT_LEADER",
+          "order": 4,
+          "outcomes": [
+            "Decision is made whether to involve law enforcement",
+            "Decision is made whether to hire external legal counsel",
+            "Decision is made whether to hire forensics investigators"
+          ],
+          "subtasks": [
+            {
+              "subtaskType": "administrative",
+              "title": "Consult with legal counsel",
+              "content": "Consulted with legal counsel to determine if the incident constitutes a crime (theft, fraud, sabotage) requiring law enforcement involvement.",
+              "order": 1
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Consider forensics investigator",
+              "content": "Considered retaining a digital forensics investigator to ensure evidence is properly collected and preserved for potential legal proceedings.",
+              "order": 2
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Consider employment law specialist",
+              "content": "Considered retaining an employment law specialist to ensure compliance with employment laws and regulations during the investigation.",
+              "order": 3
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Consider ORNA support",
+              "content": "Considered retaining ORNA for incident response expertise.",
+              "order": 4
+            }
+          ]
+        },
+        {
+          "title": "Assess Impact",
+          "content": "Assess the operational, financial, legal, and reputational impact of the insider threat incident.",
+          "taskType": "administrative",
+          "complexity": "moderate",
+          "estimatedDuration": 180,
+          "preferredWorkRole": "CIRT_LEADER",
+          "order": 5,
+          "outcomes": [
+            "Understand Operational Impact to Organization",
+            "Understand Financial Impact to Organization",
+            "Understand Legal and Regulatory Impact",
+            "Understand Reputational Impact to Organization"
+          ],
+          "subtasks": [
+            {
+              "subtaskType": "administrative",
+              "title": "Assess data compromise",
+              "content": "Assessed what sensitive data was compromised including: intellectual property, trade secrets, customer data, employee information, financial data.",
+              "order": 1
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Assess business disruption",
+              "content": "Assessed whether any systems were sabotaged or disrupted affecting business operations.",
+              "order": 2
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Assess regulatory impact",
+              "content": "Assessed regulatory impact and whether any data breach notification laws are triggered (PII, PHI, financial data).",
+              "order": 3
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Assess competitive harm",
+              "content": "Assessed potential competitive harm if the insider is moving to a competitor or sharing information with competitors.",
+              "order": 4
+            }
+          ]
+        },
+        {
+          "title": "Determine Insider Motivation and Method",
+          "content": "Understand why the insider took these actions and how they bypassed or exploited security controls.",
+          "taskType": "hybrid",
+          "complexity": "high",
+          "estimatedDuration": 240,
+          "preferredWorkRole": "CORE_CIRT_MEMBER",
+          "order": 6,
+          "outcomes": [
+            "Insider motivation is understood",
+            "Methods used to compromise security are identified",
+            "Security control gaps are documented"
+          ],
+          "subtasks": [
+            {
+              "subtaskType": "administrative",
+              "title": "Investigate motivation",
+              "content": "Investigated potential motivations: financial gain, revenge/disgruntlement, ideology, coercion/blackmail, or simply negligence/carelessness.",
+              "order": 1
+            },
+            {
+              "subtaskType": "technical",
+              "title": "Identify bypassed controls",
+              "content": "Identified what security controls were bypassed or exploited using legitimate access credentials.",
+              "order": 2
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Review HR records",
+              "content": "Reviewed HR records for context: recent disciplinary actions, resignation notice, performance issues, or upcoming termination.",
+              "order": 3
+            },
+            {
+              "subtaskType": "technical",
+              "title": "Check for accomplices",
+              "content": "Checked whether the insider had accomplices inside or outside the organization.",
+              "order": 4
+            }
+          ]
+        },
+        {
+          "title": "Coordinate with HR and Legal on Employee Actions",
+          "content": "Work closely with HR and Legal to determine appropriate personnel actions while the investigation continues.",
+          "taskType": "administrative",
+          "complexity": "moderate",
+          "estimatedDuration": 120,
+          "preferredWorkRole": "LEGAL",
+          "order": 7,
+          "outcomes": [
+            "Personnel action plan is established",
+            "Legal requirements are understood",
+            "Employee rights are protected"
+          ],
+          "subtasks": [
+            {
+              "subtaskType": "administrative",
+              "title": "Review employment agreements",
+              "content": "Reviewed employment agreements, confidentiality agreements, and acceptable use policies that the insider signed.",
+              "order": 1
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Determine employee status",
+              "content": "Determined whether the employee should be: suspended, placed on administrative leave, allowed to continue working with monitoring, or terminated.",
+              "order": 2
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Plan for employee interview",
+              "content": "Planned for potential employee interview or confrontation with HR and Legal present.",
+              "order": 3
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Consider legal action",
+              "content": "Considered whether civil or criminal legal action should be pursued.",
+              "order": 4
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Containment",
+      "description": "The main objective of the Containment stage is to stop the insider's unauthorized activities and prevent further damage.",
+      "order": 2,
+      "tasks": [
+        {
+          "title": "Disable or Restrict Insider's Access",
+          "content": "Carefully disable or restrict the insider's access to systems and data to prevent further harm. This must be done carefully to avoid alerting them if continued monitoring is needed.",
+          "taskType": "technical",
+          "complexity": "high",
+          "estimatedDuration": 60,
+          "preferredWorkRole": "CORE_CIRT_MEMBER",
+          "order": 1,
+          "outcomes": [
+            "Insider's access is appropriately restricted",
+            "Further unauthorized activity is prevented",
+            "Evidence preservation is maintained"
+          ],
+          "subtasks": [
+            {
+              "subtaskType": "technical",
+              "title": "Disable user accounts",
+              "content": "Disabled the insider's user accounts across all systems: Active Directory, email, VPN, cloud services, and applications.",
+              "order": 1
+            },
+            {
+              "subtaskType": "technical",
+              "title": "Revoke credentials and tokens",
+              "content": "Revoked all credentials, API keys, security tokens, and certificates associated with the insider.",
+              "order": 2
+            },
+            {
+              "subtaskType": "technical",
+              "title": "Disable physical access",
+              "content": "Disabled physical access badges and changed any access codes or locks the insider may have known.",
+              "order": 3
+            },
+            {
+              "subtaskType": "technical",
+              "title": "Block remote access",
+              "content": "Blocked all remote access methods including VPN, remote desktop, and cloud service access.",
+              "order": 4
+            },
+            {
+              "subtaskType": "technical",
+              "title": "Preserve evidence",
+              "content": "Ensured that account disabling preserved audit logs and evidence needed for investigation.",
+              "order": 5
+            }
+          ]
+        },
+        {
+          "title": "Secure and Preserve Evidence",
+          "content": "Immediately secure all digital and physical evidence related to the insider's activities while maintaining proper chain of custody.",
+          "taskType": "technical",
+          "complexity": "high",
+          "estimatedDuration": 180,
+          "preferredWorkRole": "CORE_CIRT_MEMBER",
+          "order": 2,
+          "outcomes": [
+            "All digital evidence is preserved",
+            "Chain of custody is established",
+            "Evidence is admissible for legal proceedings"
+          ],
+          "subtasks": [
+            {
+              "subtaskType": "technical",
+              "title": "Image insider's devices",
+              "content": "Created forensic images of the insider's computer, laptop, and mobile devices before they can be altered.",
+              "order": 1
+            },
+            {
+              "subtaskType": "technical",
+              "title": "Preserve email and communications",
+              "content": "Preserved the insider's email account, chat messages, and other communications before they can be deleted.",
+              "order": 2
+            },
+            {
+              "subtaskType": "technical",
+              "title": "Preserve log files",
+              "content": "Preserved all relevant log files including authentication logs, file access logs, network logs, and application logs.",
+              "order": 3
+            },
+            {
+              "subtaskType": "technical",
+              "title": "Document chain of custody",
+              "content": "Documented chain of custody for all evidence collected to ensure admissibility in legal proceedings.",
+              "order": 4
+            },
+            {
+              "subtaskType": "technical",
+              "title": "Secure physical evidence",
+              "content": "Secured any physical evidence including documents, USB drives, hard drives, or other media.",
+              "order": 5
+            }
+          ]
+        },
+        {
+          "title": "Monitor for Continued Activity",
+          "content": "Implement monitoring to detect if the insider attempts to access systems through other means or if accomplices are continuing malicious activity.",
+          "taskType": "technical",
+          "complexity": "moderate",
+          "estimatedDuration": 120,
+          "preferredWorkRole": "CORE_CIRT_MEMBER",
+          "order": 3,
+          "outcomes": [
+            "Monitoring is in place for continued threats",
+            "Alternative access attempts are detected"
+          ],
+          "subtasks": [
+            {
+              "subtaskType": "technical",
+              "title": "Monitor for access attempts",
+              "content": "Monitored for attempts by the insider to access systems using alternative credentials or methods.",
+              "order": 1
+            },
+            {
+              "subtaskType": "technical",
+              "title": "Monitor associate accounts",
+              "content": "Monitored accounts of close associates who might be accomplices or whose credentials might be used.",
+              "order": 2
+            },
+            {
+              "subtaskType": "technical",
+              "title": "Monitor external communications",
+              "content": "Monitored for attempts to communicate with external parties to share stolen data or coordinate further activity.",
+              "order": 3
+            }
+          ]
+        },
+        {
+          "title": "Execute Personnel Actions",
+          "content": "Coordinate with HR to execute appropriate personnel actions based on legal guidance and investigation findings.",
+          "taskType": "administrative",
+          "complexity": "moderate",
+          "estimatedDuration": 180,
+          "preferredWorkRole": "HR",
+          "order": 4,
+          "outcomes": [
+            "Appropriate personnel action is taken",
+            "Employee rights are respected",
+            "Legal requirements are met"
+          ],
+          "subtasks": [
+            {
+              "subtaskType": "administrative",
+              "title": "Coordinate with Legal",
+              "content": "Coordinated with Legal Counsel on the appropriate personnel action and process.",
+              "order": 1
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Conduct employee meeting",
+              "content": "Conducted meeting with the employee (with HR and Legal present) to address the incident and explain actions being taken.",
+              "order": 2
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Execute suspension or termination",
+              "content": "Executed suspension, administrative leave, or termination according to company policy and legal requirements.",
+              "order": 3
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Collect company property",
+              "content": "Collected all company property including laptops, phones, badges, keys, and documents.",
+              "order": 4
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Document all actions",
+              "content": "Documented all personnel actions taken for the employee's file and potential legal proceedings.",
+              "order": 5
+            }
+          ]
+        },
+        {
+          "title": "Invoke Business Continuity Plan",
+          "content": "If the insider held a critical role, activate business continuity procedures to maintain operations.",
+          "taskType": "administrative",
+          "complexity": "moderate",
+          "estimatedDuration": 180,
+          "preferredWorkRole": "CEO",
+          "order": 5,
+          "outcomes": [
+            "Critical business functions continue",
+            "Insider's responsibilities are reassigned"
+          ],
+          "subtasks": [
+            {
+              "subtaskType": "administrative",
+              "title": "Identify critical responsibilities",
+              "content": "Identified the insider's critical responsibilities and knowledge.",
+              "order": 1
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Reassign responsibilities",
+              "content": "Reassigned critical responsibilities to other team members.",
+              "order": 2
+            },
+            {
+              "subtaskType": "technical",
+              "title": "Transfer knowledge and access",
+              "content": "Transferred necessary knowledge and legitimate system access to team members covering the insider's role.",
+              "order": 3
+            }
+          ]
+        },
+        {
+          "title": "Control Internal Communications",
+          "content": "Carefully manage internal communications about the incident to protect the investigation and employee privacy.",
+          "taskType": "administrative",
+          "complexity": "moderate",
+          "estimatedDuration": 120,
+          "preferredWorkRole": "COMMUNICATIONS_LEADER",
+          "order": 6,
+          "outcomes": [
+            "Investigation integrity is maintained",
+            "Employee privacy is protected",
+            "Need-to-know principle is enforced"
+          ],
+          "subtasks": [
+            {
+              "subtaskType": "administrative",
+              "title": "Prepare internal statement",
+              "content": "Prepared a limited internal statement (if needed) that protects the investigation and employee privacy.",
+              "order": 1
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Brief management",
+              "content": "Briefed relevant management on need-to-know basis about the situation and expected actions.",
+              "order": 2
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Control information flow",
+              "content": "Controlled information flow to prevent gossip or speculation that could harm the investigation or employee.",
+              "order": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Eradication",
+      "description": "The Eradication stage focuses on removing any backdoors or persistent threats and addressing security gaps that enabled the insider threat.",
+      "order": 3,
+      "tasks": [
+        {
+          "title": "Remove Insider's Unauthorized Access Methods",
+          "content": "Identify and remove any backdoors, unauthorized accounts, or persistence mechanisms the insider may have created.",
+          "taskType": "technical",
+          "complexity": "high",
+          "estimatedDuration": 240,
+          "preferredWorkRole": "CORE_CIRT_MEMBER",
+          "order": 1,
+          "outcomes": [
+            "All backdoors are identified and removed",
+            "Unauthorized accounts are deleted",
+            "Persistence mechanisms are eliminated"
+          ],
+          "subtasks": [
+            {
+              "subtaskType": "technical",
+              "title": "Scan for rogue accounts",
+              "content": "Scanned all systems for unauthorized accounts or accounts with elevated privileges that the insider may have created.",
+              "order": 1
+            },
+            {
+              "subtaskType": "technical",
+              "title": "Check for backdoors",
+              "content": "Checked for backdoors including: modified system files, unauthorized remote access tools, or hidden services.",
+              "order": 2
+            },
+            {
+              "subtaskType": "technical",
+              "title": "Review API keys and tokens",
+              "content": "Reviewed all API keys, service accounts, and authentication tokens the insider had access to and rotated them.",
+              "order": 3
+            },
+            {
+              "subtaskType": "technical",
+              "title": "Remove unauthorized software",
+              "content": "Removed any unauthorized software or tools the insider may have installed.",
+              "order": 4
+            }
+          ]
+        },
+        {
+          "title": "Reset Credentials and Secrets",
+          "content": "Reset all credentials, passwords, and secrets that the insider had knowledge of or access to.",
+          "taskType": "technical",
+          "complexity": "high",
+          "estimatedDuration": 240,
+          "preferredWorkRole": "CORE_CIRT_MEMBER",
+          "order": 2,
+          "outcomes": [
+            "All potentially compromised credentials are reset",
+            "Secrets are rotated",
+            "Systems are secured"
+          ],
+          "subtasks": [
+            {
+              "subtaskType": "technical",
+              "title": "Reset shared credentials",
+              "content": "Reset all shared passwords, service account credentials, and admin passwords the insider had access to.",
+              "order": 1
+            },
+            {
+              "subtaskType": "technical",
+              "title": "Rotate encryption keys",
+              "content": "Rotated encryption keys and certificates that the insider may have had access to.",
+              "order": 2
+            },
+            {
+              "subtaskType": "technical",
+              "title": "Reset database credentials",
+              "content": "Reset database connection strings and credentials that the insider had access to.",
+              "order": 3
+            },
+            {
+              "subtaskType": "technical",
+              "title": "Update access codes",
+              "content": "Updated physical access codes, alarm codes, and safe combinations the insider knew.",
+              "order": 4
+            }
+          ]
+        },
+        {
+          "title": "Address Security Control Gaps",
+          "content": "Implement security improvements to address the control gaps that allowed the insider threat to succeed.",
+          "taskType": "technical",
+          "complexity": "high",
+          "estimatedDuration": 480,
+          "preferredWorkRole": "CORE_CIRT_MEMBER",
+          "order": 3,
+          "outcomes": [
+            "Security controls are strengthened",
+            "Monitoring capabilities are improved",
+            "Data loss prevention is enhanced"
+          ],
+          "subtasks": [
+            {
+              "subtaskType": "technical",
+              "title": "Implement DLP controls",
+              "content": "Implemented or enhanced Data Loss Prevention (DLP) controls to detect and prevent unauthorized data exfiltration.",
+              "order": 1
+            },
+            {
+              "subtaskType": "technical",
+              "title": "Enhance user activity monitoring",
+              "content": "Enhanced user activity monitoring and behavioral analytics to detect anomalous insider behavior.",
+              "order": 2
+            },
+            {
+              "subtaskType": "technical",
+              "title": "Implement privileged access management",
+              "content": "Implemented Privileged Access Management (PAM) solutions to control and monitor privileged account usage.",
+              "order": 3
+            },
+            {
+              "subtaskType": "technical",
+              "title": "Restrict removable media",
+              "content": "Implemented stricter controls on removable media and external storage devices.",
+              "order": 4
+            },
+            {
+              "subtaskType": "technical",
+              "title": "Improve access controls",
+              "content": "Improved access controls based on principle of least privilege and need-to-know.",
+              "order": 5
+            }
+          ]
+        },
+        {
+          "title": "Review and Update Policies",
+          "content": "Review and update security policies, acceptable use policies, and data handling policies based on lessons learned.",
+          "taskType": "administrative",
+          "complexity": "moderate",
+          "estimatedDuration": 360,
+          "preferredWorkRole": "MANAGER_IT_SECURITY",
+          "order": 4,
+          "outcomes": [
+            "Policies are updated",
+            "Gaps are addressed",
+            "Employee expectations are clear"
+          ],
+          "subtasks": [
+            {
+              "subtaskType": "administrative",
+              "title": "Update acceptable use policy",
+              "content": "Updated acceptable use policy to clarify expectations and prohibited activities.",
+              "order": 1
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Update data handling policy",
+              "content": "Updated data classification and handling policies to better protect sensitive information.",
+              "order": 2
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Update monitoring policy",
+              "content": "Updated employee monitoring policy to clearly communicate what is monitored and why.",
+              "order": 3
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Update offboarding procedures",
+              "content": "Updated employee offboarding procedures to ensure proper access revocation and knowledge transfer.",
+              "order": 4
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Recovery",
+      "description": "The Recovery stage aims to restore normal operations and rebuild trust while addressing any ongoing legal or HR matters.",
+      "order": 4,
+      "tasks": [
+        {
+          "title": "Restore Affected Systems and Data",
+          "content": "Restore any systems or data that were damaged or deleted by the insider.",
+          "taskType": "technical",
+          "complexity": "moderate",
+          "estimatedDuration": 240,
+          "preferredWorkRole": "CORE_CIRT_MEMBER",
+          "order": 1,
+          "outcomes": [
+            "All affected systems are restored",
+            "Data integrity is verified",
+            "Normal operations resume"
+          ],
+          "subtasks": [
+            {
+              "subtaskType": "technical",
+              "title": "Restore from backups",
+              "content": "Restored any deleted or corrupted data from clean backups.",
+              "order": 1
+            },
+            {
+              "subtaskType": "technical",
+              "title": "Rebuild compromised systems",
+              "content": "Rebuilt any systems that were sabotaged or compromised by the insider.",
+              "order": 2
+            },
+            {
+              "subtaskType": "technical",
+              "title": "Verify data integrity",
+              "content": "Verified integrity of critical data to ensure nothing was tampered with or corrupted.",
+              "order": 3
+            },
+            {
+              "subtaskType": "technical",
+              "title": "Test functionality",
+              "content": "Tested all restored systems and data to ensure proper functionality.",
+              "order": 4
+            }
+          ]
+        },
+        {
+          "title": "Mitigate Data Exposure",
+          "content": "Take steps to mitigate the impact of any data that was exfiltrated by the insider.",
+          "taskType": "hybrid",
+          "complexity": "high",
+          "estimatedDuration": 480,
+          "preferredWorkRole": "LEGAL",
+          "order": 2,
+          "outcomes": [
+            "Data exposure impact is mitigated",
+            "Affected parties are notified if required",
+            "Legal protections are invoked"
+          ],
+          "subtasks": [
+            {
+              "subtaskType": "administrative",
+              "title": "Assess data breach notification requirements",
+              "content": "Assessed whether data breach notification laws require notification to regulators or affected individuals.",
+              "order": 1
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Invoke legal protections",
+              "content": "Worked with Legal to invoke cease-and-desist orders, non-compete agreements, or trade secret protections.",
+              "order": 2
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Notify affected parties",
+              "content": "Notified customers, partners, or other affected parties if their data was compromised.",
+              "order": 3
+            },
+            {
+              "subtaskType": "technical",
+              "title": "Monitor for data disclosure",
+              "content": "Monitored dark web, public repositories, and competitor activity for signs of stolen data being disclosed or used.",
+              "order": 4
+            }
+          ]
+        },
+        {
+          "title": "Address Team and Cultural Impact",
+          "content": "Address the impact on team morale and organizational culture from the insider threat incident.",
+          "taskType": "administrative",
+          "complexity": "moderate",
+          "estimatedDuration": 360,
+          "preferredWorkRole": "HR",
+          "order": 3,
+          "outcomes": [
+            "Team morale is addressed",
+            "Trust is being rebuilt",
+            "Culture of security is reinforced"
+          ],
+          "subtasks": [
+            {
+              "subtaskType": "administrative",
+              "title": "Support affected team members",
+              "content": "Provided support to team members who worked closely with the insider and may be affected by the incident.",
+              "order": 1
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Rebuild trust",
+              "content": "Worked to rebuild trust within the organization while maintaining necessary security controls.",
+              "order": 2
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Reinforce security culture",
+              "content": "Reinforced a positive security culture that balances trust with appropriate monitoring and controls.",
+              "order": 3
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Address concerns",
+              "content": "Addressed employee concerns about privacy and monitoring in an open and transparent manner.",
+              "order": 4
+            }
+          ]
+        },
+        {
+          "title": "Complete Legal and HR Proceedings",
+          "content": "Complete any ongoing legal proceedings, employment actions, or investigations related to the insider.",
+          "taskType": "administrative",
+          "complexity": "moderate",
+          "estimatedDuration": 720,
+          "preferredWorkRole": "LEGAL",
+          "order": 4,
+          "outcomes": [
+            "Legal proceedings are completed or ongoing",
+            "HR matters are resolved",
+            "Appropriate actions are taken"
+          ],
+          "subtasks": [
+            {
+              "subtaskType": "administrative",
+              "title": "Complete termination process",
+              "content": "Completed employee termination process according to company policy and legal requirements.",
+              "order": 1
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Pursue legal action",
+              "content": "Pursued appropriate civil or criminal legal action if warranted and approved by leadership.",
+              "order": 2
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Cooperate with law enforcement",
+              "content": "Cooperated with law enforcement investigation if criminal charges are being pursued.",
+              "order": 3
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Document outcomes",
+              "content": "Documented all legal and HR outcomes for organizational records.",
+              "order": 4
+            }
+          ]
+        },
+        {
+          "title": "Resolve Incident",
+          "content": "Once all technical remediation and immediate personnel matters are addressed, resolve the incident.",
+          "taskType": "administrative",
+          "complexity": "low",
+          "estimatedDuration": 60,
+          "preferredWorkRole": "CIRT_LEADER",
+          "order": 5,
+          "outcomes": [
+            "The incident is declared as resolved"
+          ],
+          "subtasks": [
+            {
+              "subtaskType": "administrative",
+              "title": "Verify technical remediation",
+              "content": "Verified that all technical remediation is complete and systems are secure.",
+              "order": 1
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Change incident status",
+              "content": "Changed status of incident to 'resolved' (noting that legal proceedings may continue).",
+              "order": 2
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Lessons Learned",
+      "description": "The Lessons Learned stage's main goal is to compile all relevant information about the incident and implement improvements to prevent future insider threats.",
+      "order": 5,
+      "tasks": [
+        {
+          "title": "Generate Incident Report",
+          "content": "Create a comprehensive but carefully controlled incident report given the sensitive personnel nature of the incident.",
+          "taskType": "administrative",
+          "complexity": "high",
+          "estimatedDuration": 60,
+          "preferredWorkRole": "CIRT_LEADER",
+          "order": 1,
+          "outcomes": [
+            "The Incident Report is generated",
+            "Employee privacy is protected",
+            "Legal requirements are met"
+          ],
+          "subtasks": [
+            {
+              "subtaskType": "technical",
+              "title": "Generate report",
+              "content": "Generated the incident report using the Reports tab.",
+              "order": 1
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Review with Legal and HR",
+              "content": "Reviewed the report with Legal and HR to ensure employee privacy protection and legal compliance.",
+              "order": 2
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Redact sensitive information",
+              "content": "Redacted employee names and other personally identifiable information from reports shared beyond need-to-know individuals.",
+              "order": 3
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Document technical findings",
+              "content": "Documented technical findings about control gaps and detection methods for security improvement.",
+              "order": 4
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Secure report storage",
+              "content": "Ensured the incident report is stored securely with appropriate access controls given its sensitive nature.",
+              "order": 5
+            }
+          ]
+        },
+        {
+          "title": "Conduct Confidential Lessons Learned Session",
+          "content": "Conduct a lessons learned session with appropriate participants while protecting employee privacy and investigation details.",
+          "taskType": "hybrid",
+          "complexity": "high",
+          "estimatedDuration": 360,
+          "preferredWorkRole": "CIRT_LEADER",
+          "order": 2,
+          "outcomes": [
+            "Lessons learned session is conducted",
+            "Security improvements are identified",
+            "Prevention strategies are developed"
+          ],
+          "subtasks": [
+            {
+              "subtaskType": "administrative",
+              "title": "Prepare presentation",
+              "content": "Prepared presentation focusing on technical and procedural lessons while protecting employee privacy.",
+              "order": 1
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Host confidential session",
+              "content": "Hosted the lessons learned session with appropriate stakeholders under strict confidentiality.",
+              "order": 2
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Discuss detection methods",
+              "content": "Discussed what detection methods worked and what indicators were missed or delayed.",
+              "order": 3
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Identify control gaps",
+              "content": "Identified security control gaps that enabled the insider threat.",
+              "order": 4
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Create improvement plan",
+              "content": "Created an action plan for implementing technical and policy improvements.",
+              "order": 5
+            }
+          ]
+        },
+        {
+          "title": "Implement Insider Threat Program Improvements",
+          "content": "Implement or enhance an insider threat program based on lessons learned from this incident.",
+          "taskType": "administrative",
+          "complexity": "high",
+          "estimatedDuration": 1440,
+          "preferredWorkRole": "MANAGER_IT_SECURITY",
+          "order": 3,
+          "outcomes": [
+            "Insider threat program is implemented or improved",
+            "Detection capabilities are enhanced",
+            "Prevention controls are strengthened"
+          ],
+          "subtasks": [
+            {
+              "subtaskType": "administrative",
+              "title": "Establish insider threat program",
+              "content": "Established or enhanced a formal insider threat program with defined roles, responsibilities, and processes.",
+              "order": 1
+            },
+            {
+              "subtaskType": "technical",
+              "title": "Implement behavioral analytics",
+              "content": "Implemented User and Entity Behavior Analytics (UEBA) to detect anomalous insider behavior.",
+              "order": 2
+            },
+            {
+              "subtaskType": "technical",
+              "title": "Enhance DLP capabilities",
+              "content": "Enhanced Data Loss Prevention (DLP) capabilities to detect and prevent data exfiltration.",
+              "order": 3
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Improve hiring and screening",
+              "content": "Worked with HR to improve pre-employment screening and background check processes.",
+              "order": 4
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Create insider threat awareness",
+              "content": "Created insider threat awareness training for managers to recognize warning signs.",
+              "order": 5
+            }
+          ]
+        },
+        {
+          "title": "Conduct Security Awareness Training",
+          "content": "Conduct security awareness training for employees on insider threats, focusing on reporting procedures and security best practices.",
+          "taskType": "hybrid",
+          "complexity": "moderate",
+          "estimatedDuration": 480,
+          "preferredWorkRole": "CIRT_LEADER",
+          "order": 4,
+          "outcomes": [
+            "Employees understand insider threat risks",
+            "Reporting mechanisms are known",
+            "Security culture is reinforced"
+          ],
+          "subtasks": [
+            {
+              "subtaskType": "administrative",
+              "title": "Develop training materials",
+              "content": "Developed training materials on insider threats, warning signs, and reporting procedures (without revealing details of this incident).",
+              "order": 1
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Conduct awareness training",
+              "content": "Conducted security awareness training for all employees emphasizing the importance of reporting concerns.",
+              "order": 2
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Train managers",
+              "content": "Provided specialized training for managers on recognizing warning signs and proper escalation procedures.",
+              "order": 3
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Establish anonymous reporting",
+              "content": "Established or promoted anonymous reporting mechanisms for employees to report concerns.",
+              "order": 4
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

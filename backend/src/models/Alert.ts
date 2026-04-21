@@ -15,7 +15,8 @@ export enum AlertStatus {
   INVESTIGATING = 'investigating',
   ESCALATED = 'escalated',
   RESOLVED = 'resolved',
-  FALSE_POSITIVE = 'false_positive'
+  FALSE_POSITIVE = 'false_positive',
+  ARCHIVED = 'archived'
 }
 
 interface AlertAttributes {
@@ -32,6 +33,9 @@ interface AlertAttributes {
   rawData?: any;
   threatIntelligence?: any;
   affectedAssets?: string[];
+  archivedAt?: Date;
+  archivedBy?: string;
+  archiveReason?: string;
   createdAt?: Date;
   updatedAt?: Date;
 }
@@ -52,6 +56,9 @@ class Alert extends Model<AlertAttributes, AlertCreationAttributes> implements A
   public rawData?: any;
   public threatIntelligence?: any;
   public affectedAssets?: string[];
+  public archivedAt?: Date;
+  public archivedBy?: string;
+  public archiveReason?: string;
   public readonly createdAt!: Date;
   public readonly updatedAt!: Date;
 }
@@ -111,6 +118,22 @@ Alert.init(
     affectedAssets: {
       type: DataTypes.ARRAY(DataTypes.STRING),
       defaultValue: []
+    },
+    archivedAt: {
+      type: DataTypes.DATE,
+      allowNull: true
+    },
+    archivedBy: {
+      type: DataTypes.UUID,
+      allowNull: true,
+      references: {
+        model: 'users',
+        key: 'id'
+      }
+    },
+    archiveReason: {
+      type: DataTypes.TEXT,
+      allowNull: true
     }
   },
   {

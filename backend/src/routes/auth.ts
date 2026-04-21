@@ -19,14 +19,16 @@ router.post(
     try {
       const errors = validationResult(req);
       if (!errors.isEmpty()) {
-        return res.status(400).json({ errors: errors.array() });
+        res.status(400).json({ errors: errors.array() });
+      return;
       }
 
       const { email, password, firstName, lastName, role, department, phone } = req.body;
 
       const existingUser = await User.findOne({ where: { email } });
       if (existingUser) {
-        return res.status(400).json({ error: 'User already exists' });
+        res.status(400).json({ error: 'User already exists' });
+      return;
       }
 
       const user = await User.create({
@@ -58,6 +60,7 @@ router.post(
     } catch (error) {
       logger.error('Registration error:', error);
       res.status(500).json({ error: 'Registration failed' });
+      return;
     }
   }
 );
@@ -69,19 +72,22 @@ router.post(
     try {
       const errors = validationResult(req);
       if (!errors.isEmpty()) {
-        return res.status(400).json({ errors: errors.array() });
+        res.status(400).json({ errors: errors.array() });
+      return;
       }
 
       const { email, password } = req.body;
 
       const user = await User.findOne({ where: { email } });
       if (!user || !user.isActive) {
-        return res.status(401).json({ error: 'Invalid credentials' });
+        res.status(401).json({ error: 'Invalid credentials' });
+      return;
       }
 
       const isValidPassword = await user.comparePassword(password);
       if (!isValidPassword) {
-        return res.status(401).json({ error: 'Invalid credentials' });
+        res.status(401).json({ error: 'Invalid credentials' });
+      return;
       }
 
       user.lastLogin = new Date();
@@ -107,6 +113,7 @@ router.post(
     } catch (error) {
       logger.error('Login error:', error);
       res.status(500).json({ error: 'Login failed' });
+      return;
     }
   }
 );

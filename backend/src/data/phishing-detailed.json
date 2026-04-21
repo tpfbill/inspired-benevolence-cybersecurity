@@ -1,0 +1,653 @@
+{
+  "name": "Phishing Attack Response",
+  "incidentType": "phishing",
+  "description": "Comprehensive playbook for responding to phishing attacks including spear phishing, whaling, and smishing. Covers identification, containment, eradication and recovery with detailed procedures for email analysis and credential protection.",
+  "framework": "NIST CSF",
+  "tags": ["phishing", "email", "spear-phishing", "whaling", "credentials"],
+  "phases": [
+    {
+      "phase": "identification",
+      "description": "The purpose of the Identification stage is to accurately determine the incident type, severity and perform immediate containment and escalation.",
+      "tasks": [
+        {
+          "id": "task-identify-1",
+          "title": "Validate Phishing Incident",
+          "content": "Phishing is the fraudulent attempt to obtain sensitive information such as usernames, passwords and credit card details, by disguising oneself as a trustworthy entity in an email or phone text message.\n\nVarying forms of phishing attacks exist:\n- Spear phishing is targeted at an individual or specific group, typically with access to sensitive information or the ability to transfer funds. Information is gathered by cybercriminals about the intended target and leveraged to personalize the attack, creating a sense of familiarity and make the malicious email seem trustworthy.\n- Whaling is a spear-phishing attack that specifically targets senior executives at an organization.\n- Smishing uses text messages to try and persuade victims into revealing account information or installing malware.\n\nEmployees should be educated on reporting any suspected phishing attempts and not click on any links found in suspicious emails or phone texts. While many phishing campaigns are generic, spear phishing and whaling attempts are more critical to contain and eradicate as they are specifically targeting the organization.",
+          "description": "Confirm security event is phishing and notify organization",
+          "workRole": "CORE_CIRT_MEMBER",
+          "estimatedTime": "2 hours",
+          "taskType": "hybrid",
+          "complexity": "moderate",
+          "outcomes": [
+            "A security event is confirmed as a phishing attack",
+            "Organization is notified of targeted phishing campaign"
+          ],
+          "subtasks": [
+            {
+              "id": "subtask-identify-1-1",
+              "subtaskType": "administrative",
+              "content": "Reviewed reported email as suspected phish. This required reviewing the emails for the following indicators:\n• Strange names and email addresses\n• Links to external and unknown URLs\n• Words that depict urgency or importance such as 'Urgent', 'Mandatory', 'Critical', 'Restricted', 'Confirm Immediately' or 'Review Now'\n• Spelling and grammatical mistakes\n• Generic greetings\n• Requests for personal or financial information\n• Attachments including fake invoices, fake fax documents, fake voice messages"
+            },
+            {
+              "id": "subtask-identify-1-2",
+              "subtaskType": "administrative",
+              "content": "Once confirmed as phishing attempt, sent corporate wide message to warn employees of any general widely used phishing campaign or targeted campaigns against organization."
+            },
+            {
+              "id": "subtask-identify-1-3",
+              "subtaskType": "administrative",
+              "content": "If the email is verified as legitimate, marked the event as a false positive and resolved the event."
+            }
+          ],
+          "criticalTask": true
+        },
+        {
+          "id": "task-identify-2",
+          "title": "Confirm Phishing Purpose",
+          "content": "Phishing attacks are typically utilized to steal credentials, install malware and/or spyware or initiate ransomware attacks. The emails may contain URLs leading to a malicious website replicating legitimate web resources, tricking victims into downloading malicious files or providing employee username/password credentials. It is critical to identify the source of the phishing attack and to determine what the end goal of the phishing campaign is so that effective containment and eradication steps can be performed.\n\nThe phishing emails headers contain valuable information that help determine the source of the attack. Other techniques used to determine phishing campaign goals include checking hashes against known phishing emails, checking malicious links against known databases and researching IP addresses and domain names linked with the phishing campaign. Gathering as much evidence as possible during the incident identification stage is crucial for future forensic activities, accurate record-keeping and ongoing triage activities.",
+          "description": "Analyze email headers and determine attack purpose and source",
+          "workRole": "CORE_CIRT_MEMBER",
+          "estimatedTime": "10 hours",
+          "taskType": "technical",
+          "complexity": "high",
+          "outcomes": [
+            "The purpose of the phishing email is determined",
+            "The source of the phishing attack is established",
+            "IOCs are identified"
+          ],
+          "subtasks": [
+            {
+              "id": "subtask-identify-2-1",
+              "subtaskType": "administrative",
+              "content": "Analyzed email headers. If using Outlook, opened the email in a separate window and navigate to 'File' -> Properties' to view the properties. Relevant email headers will be displayed under 'Internet headers'. The following fields were analyzed:\n· The 'received' headers to find the source of the phishing email\n· X-apparently to: This field contains recipient address when BCC is used\n· 'From' or 'x-sender' header which contains information about the email account used\n· The mail server's IP address from where the phishing email was sent"
+            },
+            {
+              "id": "subtask-identify-2-2",
+              "subtaskType": "administrative",
+              "content": "Identified all URLs in the phishing email:\n· Resolved the DNS name into an IP address using tools such as 'nslookup' or 'dig'\n· Used IP reputation feeds to gain more information on the associated IP address(es)"
+            },
+            {
+              "id": "subtask-identify-2-3",
+              "subtaskType": "administrative",
+              "content": "Used a sandboxed testing machine that is not connected to the organization's network to retrieve the contents of the phishing URL. After retrieving the contents, identify the purpose of the URL (phishing employees, web application replication, malicious download, web exploit, etc.)\nNote: This action requires subject matter expertise and should only have been performed if there is absolute certainty that it is being performed in an isolated environment."
+            },
+            {
+              "id": "subtask-identify-2-4",
+              "subtaskType": "administrative",
+              "content": "Preserved all forensic evidence by using the Upload Artifact feature of this Task."
+            }
+          ],
+          "dependsOn": ["task-identify-1"],
+          "criticalTask": true
+        },
+        {
+          "id": "task-identify-3",
+          "title": "Initiate CIRT Team Meeting and Execute Escalation Procedures",
+          "content": "As more information about the incident is known, the core CIRT team will meet and define which organizational SMEs need to be included to respond to the incident. During the meeting, an initial assessment is made to determine what type of communication channel needs to be set up and what the periodic meeting cadence should be.\n\nFor any digital communications, it is best to assume complete compromise and utilize out-of-band communications mechanisms. Incident response escalation procedures are activated once some preliminary assessments are made. Typical escalation procedures would first include informing the corporate general council to create legal privilege.",
+          "description": "Setup war room and establish secure communications",
+          "workRole": "CIRT_LEADER",
+          "estimatedTime": "2 hours",
+          "taskType": "administrative",
+          "complexity": "moderate",
+          "outcomes": [
+            "First Core CIRT meeting is held with invited SMEs",
+            "OOB communication channels are set up and periodic checkins scheduled",
+            "Privileged Communications is established with legal counsel"
+          ],
+          "subtasks": [
+            {
+              "id": "subtask-identify-3-1",
+              "subtaskType": "administrative",
+              "content": "Initiated first meeting of the organizational core CIRT."
+            },
+            {
+              "id": "subtask-identify-3-2",
+              "subtaskType": "administrative",
+              "content": "Notified CIRT team members using the contacts and role assignments and made sure ORNA roles are assigned."
+            },
+            {
+              "id": "subtask-identify-3-3",
+              "subtaskType": "administrative",
+              "content": "Verified the Incident Severity determined during the Incident record creation process as promptly and accurately as possible. The severity may change as more details are uncovered."
+            },
+            {
+              "id": "subtask-identify-3-4",
+              "subtaskType": "administrative",
+              "content": "Invited additional SMEs to be included in CIRT update meetings."
+            },
+            {
+              "id": "subtask-identify-3-5",
+              "subtaskType": "administrative",
+              "content": "Set up a secured meeting room (either physical and/or virtual)."
+            },
+            {
+              "id": "subtask-identify-3-6",
+              "subtaskType": "administrative",
+              "content": "Scheduled follow-up meetings according to a defined cadence."
+            },
+            {
+              "id": "subtask-identify-3-7",
+              "subtaskType": "administrative",
+              "content": "Worked closely with Legal Counsel to retain client-attorney privilege over the information pertaining to the incident and ensure compliance with applicable laws and regulations."
+            },
+            {
+              "id": "subtask-identify-3-8",
+              "subtaskType": "administrative",
+              "content": "Created an initial incident assessment to share with organizational leaders containing summary of what occurred, date & time, scope, data involved, actions taken and next steps."
+            },
+            {
+              "id": "subtask-identify-3-9",
+              "subtaskType": "administrative",
+              "content": "Established a log of items covered to keep track of meetings, attendees, discussion notes and follow-up actions."
+            }
+          ],
+          "dependsOn": ["task-identify-2"],
+          "criticalTask": true
+        },
+        {
+          "id": "task-identify-4",
+          "title": "Initiate Added Playbooks",
+          "content": "If the phishing attack has been successful and subsequently created a malware or ransomware attack or employee username/password credentials have been compromised, the relevant incident response playbook needs to be initiated.",
+          "description": "Trigger additional playbooks if phishing led to other attacks",
+          "workRole": "CIRT_LEADER",
+          "estimatedTime": "1 hour",
+          "taskType": "administrative",
+          "complexity": "low",
+          "outcomes": [
+            "Additional incident response playbooks are initiated"
+          ],
+          "subtasks": [
+            {
+              "id": "subtask-identify-4-1",
+              "subtaskType": "administrative",
+              "content": "Initiated added incident response playbooks if the phishing campaign was discovered to successfully create a malware attack, ransomware attack or get access to employees' username/password credentials."
+            }
+          ],
+          "dependsOn": ["task-identify-2"],
+          "criticalTask": false
+        },
+        {
+          "id": "task-identify-5",
+          "title": "Determine Scope of Attack",
+          "content": "Phishing attacks are common security events and many email tools exist to filter out phishing messages. Employees should be made aware that reporting all phishing messages is necessary so that tools can be updated. Employee reporting of phishing attacks can also help ascertain whether the attack is targeted specifically to the organization. The scope of general phishing attacks is hard to ascertain, however, targeted organizational attacks usually have the same message characteristics and with organizational wide employee notification and reviews of email servers the affected employees should be able to be identified.",
+          "description": "Identify all affected employees and determine attack scope",
+          "workRole": "CORE_CIRT_MEMBER",
+          "estimatedTime": "12 hours",
+          "taskType": "hybrid",
+          "complexity": "high",
+          "outcomes": [
+            "All affected employees of targeted phishing attack are identified"
+          ],
+          "subtasks": [
+            {
+              "id": "subtask-identify-5-1",
+              "subtaskType": "administrative",
+              "content": "Reviewed all detection channels for indicators of recent phishing emails:\n· Non-deliverable emails\n· Reports from internal users about suspicious emails\n· Reports from external users and clients\n· Notifications from the email provider\n· Notifications from 3rd parties, law enforcement or ISP"
+            },
+            {
+              "id": "subtask-identify-5-2",
+              "subtaskType": "administrative",
+              "content": "Reviewed replies from corporate wide message that was sent during 'Validate Phishing Incident' to warn employees."
+            },
+            {
+              "id": "subtask-identify-5-3",
+              "subtaskType": "administrative",
+              "content": "Analyzed all corporate emails:\n- Reviewed the email logs of the email gateway server and filtered for logs associated with the sender's email, malicious URLs or attachments\n- Exported the email list and documented it as evidence\n- Looked for links that do not point to the same URLs displayed (URL masking)\n- Checked the email domain in the 'From:' field corresponds to the topic\n- Looked for suspicious email subject lines"
+            },
+            {
+              "id": "subtask-identify-5-4",
+              "subtaskType": "administrative",
+              "content": "Updated antivirus (AV) signatures with the newly found hash/hashes and scanned the environment for these hashes to identify all other infected hosts."
+            },
+            {
+              "id": "subtask-identify-5-5",
+              "subtaskType": "administrative",
+              "content": "Determined how many employees visited a malicious URL or downloaded the attachment by checking network logs for the specified URL or file name."
+            },
+            {
+              "id": "subtask-identify-5-6",
+              "subtaskType": "administrative",
+              "content": "Preserved all forensic evidence by using the Upload Artifact feature."
+            }
+          ],
+          "dependsOn": ["task-identify-3"],
+          "criticalTask": true
+        },
+        {
+          "id": "task-identify-6",
+          "title": "Assess Impact",
+          "content": "Assess the impact to prioritize actions. The impacts should be assessed for:\n- Any operational business impact which would affect the organization being able to function\n- Any regulatory impact due to unavailability of systems or data\n- Any reputational impact concerns with customer trust",
+          "description": "Evaluate operational, financial and reputational impact",
+          "workRole": "CIRT_LEADER",
+          "estimatedTime": "2 hours",
+          "taskType": "administrative",
+          "complexity": "low",
+          "outcomes": [
+            "Understand Operational Impact to Organization",
+            "Understand Financial Impact to Organization",
+            "Understand Reputational Impact to Organization"
+          ],
+          "subtasks": [
+            {
+              "id": "subtask-identify-6-1",
+              "subtaskType": "administrative",
+              "content": "Assessed impact to business or mission:\n• How critical is the data to the business/mission?\n• How much money is lost or at risk?\n• How many (and which) projects are degraded or at risk?"
+            },
+            {
+              "id": "subtask-identify-6-2",
+              "subtaskType": "administrative",
+              "content": "Assessed regulatory impact."
+            },
+            {
+              "id": "subtask-identify-6-3",
+              "subtaskType": "administrative",
+              "content": "Assessed reputational damage:\n• What type of data or service was inaccessible?\n• Was the attack avoidable?"
+            }
+          ],
+          "dependsOn": ["task-identify-5"],
+          "criticalTask": false
+        }
+      ]
+    },
+    {
+      "phase": "containment",
+      "description": "The main objective of the Containment stage is to limit the impact of the incident promptly and as much as possible, preventing further damage to the organization's assets, business functions, individuals, and reputation.",
+      "tasks": [
+        {
+          "id": "task-contain-1",
+          "title": "Request a Malicious Domain Takedown",
+          "content": "A malicious domain takedown is a process of disabling a domain name from being active. While an organization can go through the process itself, the difficulty of knowing exactly what evidence to present in varying global jurisdictions has created an industry around domain takedown services. These services exist to handle the domain takedown requests since there has to be sufficient proof that a domain is being used for criminal purposes. Requesting to take down the malicious domain or webpage will not only protect your employees, but other potential victims as well.",
+          "description": "Request takedown of malicious domain or webpage",
+          "workRole": "CIRT_LEADER",
+          "estimatedTime": "10 hours",
+          "taskType": "administrative",
+          "complexity": "low",
+          "outcomes": [
+            "Malicious domain takedown request is submitted",
+            "The malicious domain is taken down"
+          ],
+          "subtasks": [
+            {
+              "id": "subtask-contain-1-1",
+              "subtaskType": "administrative",
+              "content": "Decided whether to request a takedown from a hosting company or registrar or to use a domain takedown service."
+            },
+            {
+              "id": "subtask-contain-1-2",
+              "subtaskType": "administrative",
+              "content": "Sent a domain takedown request. If handled internally, contacted the hosting company or registrar. If using external service, contacted the service. The evidence necessary for a domain takedown will vary across jurisdictions and was collected as part of this task."
+            },
+            {
+              "id": "subtask-contain-1-3",
+              "subtaskType": "administrative",
+              "content": "Preserved all forensic evidence by using the Upload Artifact feature."
+            }
+          ],
+          "criticalTask": false
+        },
+        {
+          "id": "task-contain-2",
+          "title": "Block Malicious Artifacts",
+          "content": "Malicious artifacts related to phishing emails can be in a form of a URL, attachment, sender's email, domain name, or IP address. Blocking malicious artifacts helps contain the spread of the phishing emails and minimizes the impact. The information collected during the Identification stage should be used for this task.",
+          "description": "Blacklist malicious domains, IPs, and email addresses",
+          "workRole": "CORE_CIRT_MEMBER",
+          "estimatedTime": "2 hours",
+          "taskType": "technical",
+          "complexity": "moderate",
+          "outcomes": [
+            "All malicious artifacts are blocked"
+          ],
+          "subtasks": [
+            {
+              "id": "subtask-contain-2-1",
+              "subtaskType": "administrative",
+              "content": "Blacklisted the sender domain, IP address and marked the email as spam (this will prevent additional users from being phished while the containment procedures are underway)."
+            },
+            {
+              "id": "subtask-contain-2-2",
+              "subtaskType": "administrative",
+              "content": "Created a DNS sinkhole for the malicious domain. A DNS sinkhole is a technique that can be used to disable a phishing website without taking any action against the hosting company or registrar."
+            },
+            {
+              "id": "subtask-contain-2-3",
+              "subtaskType": "administrative",
+              "content": "Blocked the IP addresses and DNS names associated with the phishing emails using network firewall and DNS firewall rules."
+            },
+            {
+              "id": "subtask-contain-2-4",
+              "subtaskType": "administrative",
+              "content": "Preserved all forensic evidence by using the Upload Artifact feature."
+            }
+          ],
+          "criticalTask": true
+        },
+        {
+          "id": "task-contain-3",
+          "title": "Lock Affected Accounts and Force Password Resets",
+          "content": "In some cases, an attacker will use phishing emails to steal the victim's credentials, gain access to their account(s) and subsequently move laterally across the network. It is crucial to lock all affected accounts and force password resets to prevent the adversary from accessing any sensitive information. In cases where malware is delivered as an attachment, locking down affected users' accounts and resetting their passwords prevents the malware from using those accounts to spread across the network.",
+          "description": "Secure compromised accounts through locking and password resets",
+          "workRole": "CORE_CIRT_MEMBER",
+          "estimatedTime": "2 hours",
+          "taskType": "hybrid",
+          "complexity": "low",
+          "outcomes": [
+            "All affected accounts are locked",
+            "All account passwords are reset"
+          ],
+          "subtasks": [
+            {
+              "id": "subtask-contain-3-1",
+              "subtaskType": "administrative",
+              "content": "If a user clicked on a malicious URL and/or provided their credentials or other sensitive information, temporarily locked this user's account and performed a password reset."
+            },
+            {
+              "id": "subtask-contain-3-2",
+              "subtaskType": "administrative",
+              "content": "Preserved all forensic evidence by using the Upload Artifact feature."
+            }
+          ],
+          "criticalTask": true
+        }
+      ]
+    },
+    {
+      "phase": "eradication",
+      "description": "The Eradication stage focuses on removing all traces of the threat from the affected assets, and ensuring that the root cause has been eliminated before the assets of affected business functions can be restored to normal.",
+      "tasks": [
+        {
+          "id": "task-erad-1",
+          "title": "Remove Phishing Emails",
+          "content": "Once all phishing emails and their corresponding IoCs are identified, it is important to remove those emails from all users' mailboxes and all cloud or on-premise servers. Additionally, all downloaded attachments should be removed. These steps will prevent anyone from interacting with the malicious content.",
+          "description": "Delete phishing emails from all mailboxes and servers",
+          "workRole": "CORE_CIRT_MEMBER",
+          "estimatedTime": "5 hours",
+          "taskType": "technical",
+          "complexity": "moderate",
+          "outcomes": [
+            "All phishing emails are removed from all users' mailboxes",
+            "All downloaded attachments are deleted",
+            "All phishing emails are deleted from cloud and on premise servers"
+          ],
+          "subtasks": [
+            {
+              "id": "subtask-erad-1-1",
+              "subtaskType": "technical",
+              "content": "In Exchange/Office 365, added the admin user (that will be deleting the emails) to the Discovery Management role group. Administrators are not assigned this role by default."
+            },
+            {
+              "id": "subtask-erad-1-2",
+              "subtaskType": "technical",
+              "content": "Created and ran a Compliance Search to find the email:\n- Opened the Exchange Management Shell\n- Ran: New-ComplianceSearch -Name 'Remove Phishing Message' -ExchangeLocation all -ContentMatchQuery 'subject:\"Subject of malicious email\"'\n- Ran: Start-ComplianceSearch -Identity 'Remove Phishing Message'"
+            },
+            {
+              "id": "subtask-erad-1-3",
+              "subtaskType": "technical",
+              "content": "Deleted the relevant emails:\n- Ran the PowerShell command: New-ComplianceSearchAction -SearchName 'Remove Phishing Message' -Purge -PurgeType SoftDelete"
+            },
+            {
+              "id": "subtask-erad-1-4",
+              "subtaskType": "technical",
+              "content": "Configured the organizational email anti-spam software to block similar types of attachments, keywords, domains or senders. Popular anti-spam software options include SpamTitan and ZeroSpam."
+            },
+            {
+              "id": "subtask-erad-1-5",
+              "subtaskType": "technical",
+              "content": "Preserved all forensic evidence by using the Upload Artifact feature."
+            }
+          ],
+          "criticalTask": true
+        },
+        {
+          "id": "task-erad-2",
+          "title": "Update Email SPAM Filter Rules",
+          "content": "As phishing campaigns continue to increase in sophistication, the SPAM filters will also need to be reviewed and updated on a periodic basis. This is especially critical after handling a successful phishing attack incident to ensure that a recurrence from a similar event will not occur.",
+          "description": "Update anti-spam filters to prevent similar attacks",
+          "workRole": "THIRD_PARTY_IT",
+          "estimatedTime": "2 hours",
+          "taskType": "hybrid",
+          "complexity": "low",
+          "outcomes": [
+            "Updated SPAM filter rules"
+          ],
+          "subtasks": [
+            {
+              "id": "subtask-erad-2-1",
+              "subtaskType": "administrative",
+              "content": "Configured email anti-spam software to block similar types of attachments, keywords, domains or senders."
+            }
+          ],
+          "criticalTask": false
+        }
+      ]
+    },
+    {
+      "phase": "recovery",
+      "description": "The Recovery stage aims to restore the affected assets to their full business-as-usual operation in the shortest possible time frame, after eradicating all traces of the threat and verifying that the systems are clean.",
+      "tasks": [
+        {
+          "id": "task-recover-1",
+          "title": "Enable Additional Email Security Measures",
+          "content": "The use of Sender Policy Framework (SPF), DomainKeys Identified Mail (DKIM) and Domain-based Message Authentication, Reporting and Conformance (DMARC) can help protect against email phishing attacks and should be considered if they are not already implemented.\n\nSPF is used to restrict who can send emails from your domain. SPF can prevent domain spoofing and it enables your mail server to determine when a message came from the domain that it uses.\n\nDKIM ensures that the content of your emails remains trusted and hasn't been tampered with or compromised.\n\nDMARC ties SPF and DKIM together with a consistent set of policies and links the sender's domain name with what is listed in the From: header.",
+          "description": "Deploy SPF, DKIM and DMARC email authentication",
+          "workRole": "THIRD_PARTY_IT",
+          "estimatedTime": "24 hours",
+          "taskType": "technical",
+          "complexity": "moderate",
+          "outcomes": [
+            "Ascertain whether SPF DKIM and DMAEC are deployed",
+            "Enabled SPF DKIM and DMARC is not yet deployed"
+          ],
+          "subtasks": [
+            {
+              "id": "subtask-recover-1-1",
+              "subtaskType": "administrative",
+              "content": "Reviewed whether SPF, DKIM and DMARC are deployed."
+            },
+            {
+              "id": "subtask-recover-1-2",
+              "subtaskType": "administrative",
+              "content": "If not yet deployed, enabled SPF, DKIM and DMARC:\n- Configured an SPF DNS Record (text record with IP addresses allowed to send emails)\n- Configured a DKIM DNS record\n- Configured the DMARC policy and reporting"
+            }
+          ],
+          "criticalTask": false
+        },
+        {
+          "id": "task-recover-2",
+          "title": "Review Corporate Authentication Practices",
+          "content": "Many phishing attacks target gaining access to employee username/password credentials. Requiring the use of a password manager will help alleviate some issues where users reuse passwords on multiple sites. Good password managers include 1Password, Lastpass and Dashlane.\n\nIt is also important to enable multi-factor authentication where the compromise of a password will not result in successful unauthorized device access attempts. Businesses can choose from a variety of two-factor authentication providers, including OneLogin, Yubico and Okta.",
+          "description": "Implement password managers and multi-factor authentication",
+          "workRole": "THIRD_PARTY_IT",
+          "estimatedTime": "24 hours",
+          "taskType": "hybrid",
+          "complexity": "moderate",
+          "outcomes": [
+            "All employees are utilizing a password manager",
+            "Multi factor authentication is used for all device and service access"
+          ],
+          "subtasks": [
+            {
+              "id": "subtask-recover-2-1",
+              "subtaskType": "administrative",
+              "content": "Reviewed whether employees are required to use a password manager."
+            },
+            {
+              "id": "subtask-recover-2-2",
+              "subtaskType": "administrative",
+              "content": "Created a plan to review and deploy a password manager if one is not already used by corporate employees."
+            },
+            {
+              "id": "subtask-recover-2-3",
+              "subtaskType": "administrative",
+              "content": "Reviewed all service and device access to determine where multi-factor authentication is not utilized."
+            },
+            {
+              "id": "subtask-recover-2-4",
+              "subtaskType": "administrative",
+              "content": "Created a plan to deploy multi-factor authentication where not yet deployed."
+            }
+          ],
+          "criticalTask": false
+        }
+      ]
+    },
+    {
+      "phase": "lessons_learned",
+      "description": "The Lessons Learned stage's main goal is to compile all relevant information about the incident and extract lessons that can help with future incident response activity, typically within the two weeks time frame after the incident has been resolved.",
+      "tasks": [
+        {
+          "id": "task-lessons-1",
+          "title": "Generate Incident Report",
+          "content": "Preparing an incident report is an important (and often mandatory) part of the cyber incident response process. This report will be used to perform business impact analysis, comply with the applicable laws and regulations, update relevant stakeholders (e.g. legal counsel, insurance provider, law enforcement, board of directors, etc.) and for other business functions.",
+          "description": "Create comprehensive incident report for stakeholders",
+          "workRole": "CIRT_LEADER",
+          "estimatedTime": "1 hour",
+          "taskType": "administrative",
+          "complexity": "high",
+          "outcomes": [
+            "The Incident Report is generated"
+          ],
+          "subtasks": [
+            {
+              "id": "subtask-lessons-1-1",
+              "subtaskType": "administrative",
+              "content": "Once the Incident was marked as Resolved, used the Reports tab to generate and view the report."
+            },
+            {
+              "id": "subtask-lessons-1-2",
+              "subtaskType": "administrative",
+              "content": "Reviewed the report for accuracy and address any errors/issues with the team member(s) responsible for the task in question."
+            },
+            {
+              "id": "subtask-lessons-1-3",
+              "subtaskType": "administrative",
+              "content": "Ensured all relevant artifacts were included for each task."
+            },
+            {
+              "id": "subtask-lessons-1-4",
+              "subtaskType": "administrative",
+              "content": "Downloaded or exported the report and shared it with the appropriate stakeholders alongside its unique secure access password."
+            },
+            {
+              "id": "subtask-lessons-1-5",
+              "subtaskType": "administrative",
+              "content": "Ensured that the Incident report and all related evidence were retained in accordance with legal and regulatory requirements."
+            }
+          ],
+          "criticalTask": false
+        },
+        {
+          "id": "task-lessons-2",
+          "title": "Fulfill External and Internal Reporting Obligations",
+          "content": "Once the incident is resolved and the investigation is complete, an organization may be required to deliver the incident report (or its appropriate sections) to the regulatory agencies, affected companies or individuals, law enforcement or other stakeholders based on the applicable laws and regulations.",
+          "description": "Submit required reports to regulatory authorities",
+          "workRole": "LEGAL",
+          "estimatedTime": "5 hours",
+          "taskType": "hybrid",
+          "complexity": "moderate",
+          "outcomes": [
+            "The Incident Report is shared with the applicable parties",
+            "Applicable regulatory and legal obligations are fulfilled"
+          ],
+          "subtasks": [
+            {
+              "id": "subtask-lessons-2-1",
+              "subtaskType": "administrative",
+              "content": "Obtained the full Incident Report from the CIRT Leader and reviewed it for accuracy."
+            },
+            {
+              "id": "subtask-lessons-2-2",
+              "subtaskType": "administrative",
+              "content": "Identified all applicable legal and regulatory requirements related to cyber incident reporting."
+            },
+            {
+              "id": "subtask-lessons-2-3",
+              "subtaskType": "administrative",
+              "content": "Delivered the Incident report to the appropriate legal and/or regulatory agencies and the affected individuals, in accordance with the applicable legal and regulatory requirements."
+            }
+          ],
+          "criticalTask": false
+        },
+        {
+          "id": "task-lessons-3",
+          "title": "Host the Lessons Learned Session",
+          "content": "The goal of the Lessons Learned session is to learn from the incident, identify any policy, process or procedure gaps that were revealed during the handling of the incident, and to create initiatives to improve the organizations' security posture. The Lessons Learned session should be held as soon as possible, ideally within 2 weeks after the incident was resolved.",
+          "description": "Conduct post-incident review with CIRT team",
+          "workRole": "CIRT_LEADER",
+          "estimatedTime": "6 hours",
+          "taskType": "hybrid",
+          "complexity": "moderate",
+          "outcomes": [
+            "The Lessons Learned session is conducted",
+            "Gaps and areas for improvement are identified",
+            "Initiatives are created to operationalize identified improvements"
+          ],
+          "subtasks": [
+            {
+              "id": "subtask-lessons-3-1",
+              "subtaskType": "administrative",
+              "content": "Prepared a presentation for the Lessons Learned meeting, containing: when incident was detected, scope, response steps taken, areas of effectiveness, gaps and improvement opportunities, steps to prevent similar incidents."
+            },
+            {
+              "id": "subtask-lessons-3-2",
+              "subtaskType": "administrative",
+              "content": "Hosted the Lessons Learned session and ensured all CIRT members attend and actively participate."
+            },
+            {
+              "id": "subtask-lessons-3-3",
+              "subtaskType": "administrative",
+              "content": "Established an open dialogue discussing: How well staff and management handled the incident, whether procedures were followed and adequate, what needs to be done differently, whether 3rd parties were responsive, what modifications are necessary in policies and procedures, what training may be required."
+            },
+            {
+              "id": "subtask-lessons-3-4",
+              "subtaskType": "administrative",
+              "content": "Documented all identified areas for improvement and prepared a list of agreed upon action items."
+            },
+            {
+              "id": "subtask-lessons-3-5",
+              "subtaskType": "administrative",
+              "content": "Distributed the action items list among relevant CIRT members and ensured that the improvement steps are implemented."
+            }
+          ],
+          "criticalTask": false
+        },
+        {
+          "id": "task-lessons-4",
+          "title": "Perform Employee Security Awareness Training",
+          "content": "Whether the incident resulted from a phishing campaign, configuration error or from an exploited vulnerability, it is always a good idea to conduct an employee awareness training session after any incident is resolved. While the session should not be focused exclusively on the recent phishing incident, the mechanisms used to enable phishing attacks can be called out. The training can emphasize the risks and consequences of cyber incidents, encourage a security minded culture and reinforce how employees can report security related issues and concerns.",
+          "description": "Conduct security awareness training for all employees",
+          "workRole": "CIRT_LEADER",
+          "estimatedTime": "24 hours",
+          "taskType": "hybrid",
+          "complexity": "moderate",
+          "outcomes": [
+            "The employee awareness training is conducted",
+            "A roadmap for table top exercises is developed based on lessons learnt"
+          ],
+          "subtasks": [
+            {
+              "id": "subtask-lessons-4-1",
+              "subtaskType": "administrative",
+              "content": "Prepared educational materials for the employee awareness training, with emphasis on the recent incident and the steps employees can take to help the organization avoid similar incidents in the future."
+            },
+            {
+              "id": "subtask-lessons-4-2",
+              "subtaskType": "administrative",
+              "content": "Tracked employee attendance using a Learning Management System (LMS)."
+            },
+            {
+              "id": "subtask-lessons-4-3",
+              "subtaskType": "administrative",
+              "content": "Where applicable, worked with a 3rd party to prepare and conduct the employee security awareness training."
+            },
+            {
+              "id": "subtask-lessons-4-4",
+              "subtaskType": "administrative",
+              "content": "Used the outcomes from the Lessons Learned part of the Incident Management Process to develop a table-top exercise plan with relevant scenarios and participants to practice any new processes developed post incident."
+            }
+          ],
+          "criticalTask": false
+        }
+      ]
+    }
+  ]
+}

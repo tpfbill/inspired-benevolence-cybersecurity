@@ -33,7 +33,7 @@ body {
   }
 
   .btn-primary {
-    @apply bg-primary-600 text-white hover:bg-primary-700;
+    @apply bg-blue-600 text-white hover:bg-blue-700;
   }
 
   .btn-secondary {
@@ -41,7 +41,7 @@ body {
   }
 
   .btn-danger {
-    @apply bg-danger-600 text-white hover:bg-danger-700;
+    @apply bg-red-600 text-white hover:bg-red-700;
   }
 
   .card {
@@ -49,7 +49,7 @@ body {
   }
 
   .input {
-    @apply w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500;
+    @apply w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500;
   }
 
   .badge {
@@ -57,18 +57,18 @@ body {
   }
 
   .badge-critical {
-    @apply bg-danger-100 text-danger-700;
+    @apply bg-red-100 text-red-800;
   }
 
   .badge-high {
-    @apply bg-warning-100 text-warning-700;
+    @apply bg-red-100 text-red-700;
   }
 
   .badge-medium {
-    @apply bg-primary-100 text-primary-700;
+    @apply bg-blue-100 text-blue-700;
   }
 
   .badge-low {
-    @apply bg-success-100 text-success-700;
+    @apply bg-green-100 text-green-700;
   }
 }

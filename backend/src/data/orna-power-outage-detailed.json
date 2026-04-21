@@ -1,0 +1,381 @@
+{
+  "name": "ORNA Barkley Power Outage Response",
+  "incidentType": "custom",
+  "description": "Comprehensive playbook for responding to power outages affecting business operations",
+  "framework": "NIST CSF",
+  "tags": ["power-outage", "business-continuity", "availability", "orna", "barkley"],
+  "phases": [
+    {
+      "phase": "identification",
+      "description": "The purpose of the Identification stage is to accurately determine the incident type, severity and perform immediate containment and escalation.",
+      "tasks": [
+        {
+          "id": "task-identify-1",
+          "title": "Confirm power outage",
+          "content": "Confirm power outage",
+          "description": "Verify power outage affecting building and operations",
+          "workRole": "HR",
+          "estimatedTime": "1 hour",
+          "taskType": "administrative",
+          "complexity": "low",
+          "outcomes": ["Power outage confirmed"],
+          "subtasks": [
+            {
+              "id": "subtask-identify-1-1",
+              "subtaskType": "administrative",
+              "content": "Attempt to access building"
+            },
+            {
+              "id": "subtask-identify-1-2",
+              "subtaskType": "administrative",
+              "content": "Contact Evergy to confirm power outage and obtain estimated time to repair"
+            }
+          ],
+          "criticalTask": true
+        },
+        {
+          "id": "task-identify-2",
+          "title": "Contact Evergy and determine extent and expected restoration time",
+          "content": "Contact Evergy and determine extent and expected restoration time",
+          "description": "Contact utility provider to get outage information and estimated restoration timeline",
+          "workRole": "HR",
+          "estimatedTime": "1 hour",
+          "taskType": "administrative",
+          "complexity": "low",
+          "outcomes": ["Extent determined and documented"],
+          "subtasks": [
+            {
+              "id": "subtask-identify-2-1",
+              "subtaskType": "administrative",
+              "content": "Call Evergy at xxx-xxx-xxxx or check Evergy website to determine extent and expected restoration time."
+            }
+          ],
+          "dependsOn": ["task-identify-1"],
+          "criticalTask": true
+        },
+        {
+          "id": "task-identify-3",
+          "title": "Communicate status and effect of power outage",
+          "content": "Inform team members and contractors of the problem and what it means to them.",
+          "description": "Notify all staff about power outage and impact on operations",
+          "workRole": "HR",
+          "estimatedTime": "2 hours",
+          "taskType": "administrative",
+          "complexity": "low",
+          "outcomes": ["The team knows about the power outage and how it affects them"],
+          "subtasks": [
+            {
+              "id": "subtask-identify-3-1",
+              "subtaskType": "administrative",
+              "content": "Send email to team about power outage"
+            }
+          ],
+          "dependsOn": ["task-identify-2"],
+          "criticalTask": true
+        }
+      ]
+    },
+    {
+      "phase": "containment",
+      "description": "The main objective of the Containment stage is to limit the impact of the incident promptly and as much as possible, preventing further damage to the organization's assets, business functions, individuals, and reputation.",
+      "tasks": [
+        {
+          "id": "task-contain-1",
+          "title": "Contact staff and arrange for home work",
+          "content": "Arrange for home work",
+          "description": "Enable remote work capabilities for affected employees",
+          "workRole": "HR",
+          "estimatedTime": "2 hours",
+          "taskType": "administrative",
+          "complexity": "moderate",
+          "outcomes": ["All employees understand home work arrangements and are working"],
+          "subtasks": [
+            {
+              "id": "subtask-contain-1-1",
+              "subtaskType": "administrative",
+              "content": "Determine who needs to and is equipped for taking office based equipment in order to work from home."
+            },
+            {
+              "id": "subtask-contain-1-2",
+              "subtaskType": "administrative",
+              "content": "Marshall equipment ready for pick up or transport."
+            },
+            {
+              "id": "subtask-contain-1-3",
+              "subtaskType": "administrative",
+              "content": "If no indication of resolution within X hours, arrange for computer equipment pickup or transport."
+            }
+          ],
+          "criticalTask": true
+        },
+        {
+          "id": "task-contain-2",
+          "title": "Move PBX offsite if possible after X hours of downtime",
+          "content": "Move PBX offsite if possible after X hours of downtime",
+          "description": "Relocate phone system to alternate location if outage extends",
+          "workRole": "MANAGER_IT_SECURITY",
+          "estimatedTime": "2 hours",
+          "taskType": "technical",
+          "complexity": "high",
+          "outcomes": [
+            "PDX determined to be moved",
+            "PBX moved",
+            "PBX operational offsite"
+          ],
+          "subtasks": [
+            {
+              "id": "subtask-contain-2-1",
+              "subtaskType": "administrative",
+              "content": "Move PBX offsite if possible after X hours of downtime"
+            }
+          ],
+          "criticalTask": false
+        },
+        {
+          "id": "task-contain-3",
+          "title": "Communication",
+          "content": "Communicate the situation to staff, external parties and public, as needed",
+          "description": "Execute communication plan for power outage",
+          "workRole": "HR",
+          "estimatedTime": "2 hours",
+          "taskType": "administrative",
+          "complexity": "moderate",
+          "outcomes": [
+            "Access communication plan",
+            "Contact all parties per the plan"
+          ],
+          "subtasks": [
+            {
+              "id": "subtask-contain-3-1",
+              "subtaskType": "administrative",
+              "content": "Contact all parties per the communication plan."
+            }
+          ],
+          "criticalTask": true
+        },
+        {
+          "id": "task-contain-4",
+          "title": "Remote Employee Access",
+          "content": "Address remote employee access.",
+          "description": "Ensure all employees have proper remote access",
+          "workRole": "CORE_CIRT_MEMBER",
+          "estimatedTime": "2 hours",
+          "taskType": "technical",
+          "complexity": "high",
+          "outcomes": ["All employees have remote access"],
+          "subtasks": [
+            {
+              "id": "subtask-contain-4-1",
+              "subtaskType": "administrative",
+              "content": "Notify remote employees of the access plan."
+            },
+            {
+              "id": "subtask-contain-4-2",
+              "subtaskType": "administrative",
+              "content": "Implement remote access plan for all employees."
+            }
+          ],
+          "criticalTask": true
+        },
+        {
+          "id": "task-contain-5",
+          "title": "Monitor Evergy Outages",
+          "content": "Monitor the Evergy outages website.",
+          "description": "Continuously monitor utility provider for restoration updates",
+          "workRole": "HR",
+          "estimatedTime": "2 hours",
+          "taskType": "administrative",
+          "complexity": "low",
+          "outcomes": ["Ongoing monitoring until outage is resolved"],
+          "subtasks": [
+            {
+              "id": "subtask-contain-5-1",
+              "subtaskType": "administrative",
+              "content": "Monitor the Evergy website for outages and restoration times and advise employees, as appropriate."
+            }
+          ],
+          "criticalTask": false
+        },
+        {
+          "id": "task-contain-6",
+          "title": "Financial institution contacts",
+          "content": "Contact appropriate financial institutions of our outage, as needed.",
+          "description": "Notify financial partners about service disruption",
+          "workRole": "CFO",
+          "estimatedTime": "2 hours",
+          "taskType": "administrative",
+          "complexity": "low",
+          "outcomes": ["All appropriate financial institutions contacted"],
+          "subtasks": [
+            {
+              "id": "subtask-contain-6-1",
+              "subtaskType": "administrative",
+              "content": "Contact appropriate financial institutions of our outage, as needed."
+            }
+          ],
+          "criticalTask": false
+        },
+        {
+          "id": "task-contain-7",
+          "title": "Incoming call reconfiguration",
+          "content": "Reconfigure our Sangoma trunks to point to an outside number where incoming calls will be handled.",
+          "description": "Reroute incoming calls to backup number",
+          "workRole": "MANAGER_IT_SECURITY",
+          "estimatedTime": "2 hours",
+          "taskType": "technical",
+          "complexity": "high",
+          "outcomes": ["Incoming calls routed to answering destination"],
+          "subtasks": [
+            {
+              "id": "subtask-contain-7-1",
+              "subtaskType": "administrative",
+              "content": "Reconfigure our Sangoma trunks to point to an outside number where incoming calls will be handled."
+            }
+          ],
+          "criticalTask": true
+        },
+        {
+          "id": "task-contain-8",
+          "title": "Winter impacts",
+          "content": "Winter impacts",
+          "description": "Address winter-specific impacts like frozen pipes and perishable food",
+          "workRole": "HR",
+          "estimatedTime": "2 hours",
+          "taskType": "administrative",
+          "complexity": "low",
+          "outcomes": [
+            "Pipes drained",
+            "Refrigerator food handled"
+          ],
+          "subtasks": [
+            {
+              "id": "subtask-contain-8-1",
+              "subtaskType": "administrative",
+              "content": "Drain pipes per guidance document"
+            },
+            {
+              "id": "subtask-contain-8-2",
+              "subtaskType": "administrative",
+              "content": "Move or dispose of all perishable food"
+            }
+          ],
+          "criticalTask": false
+        },
+        {
+          "id": "task-contain-9",
+          "title": "Alternate power sources",
+          "content": "Check neighboring building for possible power access and implement if possible.",
+          "description": "Explore and implement alternate power options",
+          "workRole": "CIRT_LEADER",
+          "estimatedTime": "2 hours",
+          "taskType": "technical",
+          "complexity": "high",
+          "outcomes": ["Alternate power sources explored and implemented if possible"],
+          "subtasks": [
+            {
+              "id": "subtask-contain-9-1",
+              "subtaskType": "administrative",
+              "content": "Check neighboring building for possible power access and implement if possible."
+            }
+          ],
+          "criticalTask": false
+        }
+      ]
+    },
+    {
+      "phase": "eradication",
+      "description": "The Eradication stage focuses on removing all traces of the threat (such as malware) from the affected assets, and ensuring that the root cause has been eliminated before the assets of affected business functions can be restored to normal.",
+      "tasks": [
+        {
+          "id": "task-erad-1",
+          "title": "Verify power restored",
+          "content": "Verify power restored",
+          "description": "Confirm with utility that power has been restored",
+          "workRole": "CORE_CIRT_MEMBER",
+          "estimatedTime": "2 hours",
+          "taskType": "administrative",
+          "complexity": "low",
+          "outcomes": ["Power is restored"],
+          "subtasks": [
+            {
+              "id": "subtask-erad-1-1",
+              "subtaskType": "administrative",
+              "content": "Contact Evergy to verify power restored."
+            }
+          ],
+          "criticalTask": true
+        },
+        {
+          "id": "task-erad-2",
+          "title": "Communicate to Team Normal Status",
+          "content": "Let team members and contractors know that normal power has been restored",
+          "description": "Notify all staff that operations are returning to normal",
+          "workRole": "HR",
+          "estimatedTime": "2 hours",
+          "taskType": "administrative",
+          "complexity": "low",
+          "outcomes": ["Team and contractors return to normal work routines"],
+          "subtasks": [
+            {
+              "id": "subtask-erad-2-1",
+              "subtaskType": "administrative",
+              "content": "Send email to team and contractors to return to normal work flow."
+            }
+          ],
+          "dependsOn": ["task-erad-1"],
+          "criticalTask": true
+        }
+      ]
+    },
+    {
+      "phase": "recovery",
+      "description": "The Recovery stage aims to restore the affected assets to their full business-as-usual operation in the shortest possible time frame, after eradicating all traces of the threat and verifying that the systems are clean.",
+      "tasks": [
+        {
+          "id": "task-recover-1",
+          "title": "Restore distributed office computer equipment",
+          "content": "Restore distributed office computer equipment",
+          "description": "Collect and return equipment that was distributed for remote work",
+          "workRole": "CIRT_LEADER",
+          "estimatedTime": "2 hours",
+          "taskType": "administrative",
+          "complexity": "moderate",
+          "outcomes": ["Distributed computer equipment is returned and inventory updated"],
+          "subtasks": [
+            {
+              "id": "subtask-recover-1-1",
+              "subtaskType": "administrative",
+              "content": "Restore distributed office computer equipment and update inventory."
+            }
+          ],
+          "criticalTask": false
+        }
+      ]
+    },
+    {
+      "phase": "lessons_learned",
+      "description": "The Lessons Learned stage's main goal is to compile all relevant information about the incident and extract lessons that can help with future incident response activity, typically within the two weeks time frame after the incident has been resolved.",
+      "tasks": [
+        {
+          "id": "task-lessons-1",
+          "title": "Documentation of the incident and results",
+          "content": "Documentation of the incident and results",
+          "description": "Create comprehensive incident report and lessons learned document",
+          "workRole": "CIRT_LEADER",
+          "estimatedTime": "2 hours",
+          "taskType": "administrative",
+          "complexity": "low",
+          "outcomes": ["Incident and results documented"],
+          "subtasks": [
+            {
+              "id": "subtask-lessons-1-1",
+              "subtaskType": "administrative",
+              "content": "Documentation of the incident and results here:"
+            }
+          ],
+          "criticalTask": false
+        }
+      ]
+    }
+  ]
+}

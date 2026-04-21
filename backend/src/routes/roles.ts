@@ -8,7 +8,7 @@ import logger from '../utils/logger';
 const router = express.Router();
 
 // Get all roles
-router.get('/', authenticate, async (req: AuthRequest, res: Response) => {
+router.get('/', authenticate, async (req: AuthRequest, res: Response): Promise<void> => {
   try {
     const roles = await Role.findAll({
       order: [['name', 'ASC']]
@@ -18,11 +18,12 @@ router.get('/', authenticate, async (req: AuthRequest, res: Response) => {
   } catch (error) {
     logger.error('Get roles error:', error);
     res.status(500).json({ error: 'Failed to fetch roles' });
+      return;
   }
 });
 
 // Get available permissions
-router.get('/permissions', authenticate, authorize(UserRole.ADMIN), async (req: AuthRequest, res: Response) => {
+router.get('/permissions', authenticate, authorize(UserRole.ADMIN), async (req: AuthRequest, res: Response): Promise<void> => {
   try {
     const permissions = [
       { key: 'manage_users', label: 'Manage Users', description: 'Create, edit, and delete users' },
@@ -49,6 +50,7 @@ router.get('/permissions', authenticate, authorize(UserRole.ADMIN), async (req: 
   } catch (error) {
     logger.error('Get permissions error:', error);
     res.status(500).json({ error: 'Failed to fetch permissions' });
+      return;
   }
 });
 
@@ -64,11 +66,12 @@ router.post(
     body('permissions').isArray(),
     body('color').notEmpty()
   ],
-  async (req: AuthRequest, res: Response) => {
+  async (req: AuthRequest, res: Response): Promise<void> => {
     try {
       const errors = validationResult(req);
       if (!errors.isEmpty()) {
-        return res.status(400).json({ errors: errors.array() });
+        res.status(400).json({ errors: errors.array() });
+      return;
       }
 
       const { name, slug, description, permissions, color } = req.body;
@@ -76,7 +79,8 @@ router.post(
       // Check if role already exists
       const existing = await Role.findOne({ where: { slug } });
       if (existing) {
-        return res.status(400).json({ error: 'Role with this slug already exists' });
+        res.status(400).json({ error: 'Role with this slug already exists' });
+      return;
       }
 
       const role = await Role.create({
@@ -91,9 +95,11 @@ router.post(
       logger.info(`Custom role created: ${role.name} by user ${req.userId}`);
 
       res.status(201).json(role);
+      return;
     } catch (error) {
       logger.error('Create role error:', error);
       res.status(500).json({ error: 'Failed to create role' });
+      return;
     }
   }
 );
@@ -103,12 +109,13 @@ router.put(
   '/:id',
   authenticate,
   authorize(UserRole.ADMIN),
-  async (req: AuthRequest, res: Response) => {
+  async (req: AuthRequest, res: Response): Promise<void> => {
     try {
       const role = await Role.findByPk(req.params.id);
 
       if (!role) {
-        return res.status(404).json({ error: 'Role not found' });
+        res.status(404).json({ error: 'Role not found' });
+      return;
       }
 
       const { name, description, permissions, color } = req.body;
@@ -126,6 +133,7 @@ router.put(
     } catch (error) {
       logger.error('Update role error:', error);
       res.status(500).json({ error: 'Failed to update role' });
+      return;
     }
   }
 );
@@ -135,12 +143,13 @@ router.delete(
   '/:id',
   authenticate,
   authorize(UserRole.ADMIN),
-  async (req: AuthRequest, res: Response) => {
+  async (req: AuthRequest, res: Response): Promise<void> => {
     try {
       const role = await Role.findByPk(req.params.id);
 
       if (!role) {
-        return res.status(404).json({ error: 'Role not found' });
+        res.status(404).json({ error: 'Role not found' });
+      return;
       }
 
       await role.destroy();
@@ -151,6 +160,7 @@ router.delete(
     } catch (error) {
       logger.error('Delete role error:', error);
       res.status(500).json({ error: 'Failed to delete role' });
+      return;
     }
   }
 );

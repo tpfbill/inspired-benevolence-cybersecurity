@@ -1,0 +1,349 @@
+{
+  "name": "Suspected Virus Response",
+  "incidentType": "malware",
+  "description": "Comprehensive playbook for responding when a virus is suspected on a local or remote system. Covers identification through virus scans, isolation, malware removal, system recovery and lessons learned.",
+  "framework": "NIST CSF",
+  "tags": ["virus", "malware", "antivirus", "edr", "system-compromise"],
+  "phases": [
+    {
+      "phase": "identification",
+      "description": "The purpose of the Identification stage is to accurately determine the incident type, severity and perform immediate containment and escalation.",
+      "tasks": [
+        {
+          "id": "task-identify-1",
+          "title": "A Virus is Reported",
+          "content": "A virus may be reported through EDR alerts or user reports of suspicious computer behavior. Signs of a virus include:\n• Suddenly slow computer performance\n• Problems unexpectedly shutting down or restarting\n• Missing files\n• Frequent system crashes and error messages\n• Unexpected pop-up windows\n• New applications appearing without downloading them\n• Overworked hard drive (fan whirring constantly)\n• Emails sending automatically from accounts\n• Lagging web browser or constant redirects\n• Malfunctioning antivirus programs or firewalls",
+          "description": "Detect virus through EDR or user reports and run virus scans",
+          "workRole": "THIRD_PARTY_IT",
+          "estimatedTime": "2 hours",
+          "taskType": "technical",
+          "complexity": "low",
+          "outcomes": [
+            "A virus scan is run",
+            "A virus scan cannot be run"
+          ],
+          "subtasks": [
+            {
+              "id": "subtask-identify-1-1",
+              "subtaskType": "administrative",
+              "content": "Does the user have TPF's AV installed?\nIf yes, check the Bitdefender security webconsole by searching for the Vault entry: 'Bit Defender'\nIn the Bit Defender web GUI, locate the asset. Were remediation actions taken?\nRun full system scan with Bit Defender.\nRun Ram scan."
+            },
+            {
+              "id": "subtask-identify-1-2",
+              "subtaskType": "administrative",
+              "content": "If the system is so compromised that a virus scan cannot be completed, proceed to recovery."
+            }
+          ],
+          "criticalTask": true
+        }
+      ]
+    },
+    {
+      "phase": "containment",
+      "description": "The main objective of the Containment stage is to limit the impact of the incident promptly and as much as possible, preventing further damage to the organization's assets, business functions, individuals, and reputation.",
+      "tasks": [
+        {
+          "id": "task-contain-1",
+          "title": "Disconnect Affected Assets from the Network",
+          "content": "Viruses can spread through the network without any user interaction. It is crucial to immediately disconnect all devices that have been infected from the rest of the corporate network, containing the infection and preventing the virus from spreading to additional devices.\n\nDo NOT power down the affected devices, as this may lead to the loss of important forensic evidence. Also, if encrypted systems are powered down they may not restart.",
+          "description": "Isolate infected systems to prevent virus spread",
+          "workRole": "CORE_CIRT_MEMBER",
+          "estimatedTime": "2 hours",
+          "taskType": "technical",
+          "complexity": "high",
+          "outcomes": [
+            "All affected devices are isolated"
+          ],
+          "subtasks": [
+            {
+              "id": "subtask-contain-1-1",
+              "subtaskType": "technical",
+              "content": "Preserved forensic evidence, such as system images, before restarting, shutting down, or modifying configurations of the affected systems and assets."
+            },
+            {
+              "id": "subtask-contain-1-2",
+              "subtaskType": "technical",
+              "content": "Disconnected the infected systems, shared drives and devices from any network connection to reduce the risk of the infection spreading to other connected devices."
+            },
+            {
+              "id": "subtask-contain-1-3",
+              "subtaskType": "administrative",
+              "content": "Blocked added communications associated with infected systems to contain the virus infection. Considerations include disabling virtual private network access, remote access servers, single sign on resources, and cloud-based or public-facing assets."
+            },
+            {
+              "id": "subtask-contain-1-4",
+              "subtaskType": "administrative",
+              "content": "Attached the applicable forensics evidence (such as log files or screenshots) to this task using the Upload Artifact feature."
+            }
+          ],
+          "criticalTask": true
+        },
+        {
+          "id": "task-contain-2",
+          "title": "Scan the Network for Additional Malware",
+          "content": "Many malware campaigns utilize various malware families that threat actors use to ensure persistence on the network or to perform additional tasks and monitor the organizations' actions during the incident response process. It is imperative to detect any additional malware and, if possible, eliminate it.",
+          "description": "Search for and identify additional malware infections",
+          "workRole": "CORE_CIRT_MEMBER",
+          "estimatedTime": "4 hours",
+          "taskType": "technical",
+          "complexity": "moderate",
+          "outcomes": [
+            "All additional malware is detected and eliminated"
+          ],
+          "subtasks": [
+            {
+              "id": "subtask-contain-2-1",
+              "subtaskType": "technical",
+              "content": "Ensured that antivirus signatures were up to date and that the antivirus software is installed and enabled on all assets."
+            },
+            {
+              "id": "subtask-contain-2-2",
+              "subtaskType": "technical",
+              "content": "Confirmed that the latest patches, in particular those relating to security updates, were deployed on all assets (prioritizing the targeted devices, software, operating systems, etc.)"
+            }
+          ],
+          "criticalTask": true
+        },
+        {
+          "id": "task-contain-3",
+          "title": "Protect Backups",
+          "content": "The most critical aspect of virus recovery is having trusted backups, which will need immediate attention to ensure that they are protected and not overwritten.",
+          "description": "Secure and verify backup integrity",
+          "workRole": "THIRD_PARTY_IT",
+          "estimatedTime": "2 hours",
+          "taskType": "technical",
+          "complexity": "low",
+          "outcomes": [
+            "Backups are protected and trusted"
+          ],
+          "subtasks": [
+            {
+              "id": "subtask-contain-3-1",
+              "subtaskType": "administrative",
+              "content": "Analyze backup processes for specific systems and data that could have been impacted."
+            },
+            {
+              "id": "subtask-contain-3-2",
+              "subtaskType": "administrative",
+              "content": "Check status of backup snapshots."
+            }
+          ],
+          "criticalTask": false
+        }
+      ]
+    },
+    {
+      "phase": "eradication",
+      "description": "The Eradication stage focuses on removing all traces of the threat from the affected assets, and ensuring that the root cause has been eliminated before the assets of affected business functions can be restored to normal.",
+      "tasks": [
+        {
+          "id": "task-erad-1",
+          "title": "Deep Scan to Remove Malware",
+          "content": "IT will attempt to remove viruses either by the deletion of folders on the drive or through a virus program such as Bit Defender or Malwarebytes.\n\nBit Defender should already be loaded on the system. A ram scan is initiated.\n\nMalwarebytes can be downloaded from https://www.malwarebytes.com/mwb-download",
+          "description": "Run deep scans with multiple tools to eradicate virus",
+          "workRole": "THIRD_PARTY_IT",
+          "estimatedTime": "2 hours",
+          "taskType": "technical",
+          "complexity": "high",
+          "outcomes": [
+            "Malware is no longer present on the system"
+          ],
+          "subtasks": [
+            {
+              "id": "subtask-erad-1-1",
+              "subtaskType": "administrative",
+              "content": "Bit Defender deep scan is run on the system. Done from the Bit Defender web GUI, accessed inside Zoho Vault."
+            },
+            {
+              "id": "subtask-erad-1-2",
+              "subtaskType": "administrative",
+              "content": "Malwarebytes deep scan is run on the system. This is for additional assurance the virus has been totally removed.\nhttps://www.malwarebytes.com/mwb-download"
+            },
+            {
+              "id": "subtask-erad-1-3",
+              "subtaskType": "administrative",
+              "content": "A ram scan is run on the system.\nData can persist inside ram even if it removed from the hard disk. A full reset and ram scan should be initiated BEFORE booting into windows. This can be done from the Bit Defender web GUI, which is accessed via Vault."
+            }
+          ],
+          "criticalTask": true
+        }
+      ]
+    },
+    {
+      "phase": "recovery",
+      "description": "The Recovery stage aims to restore the affected assets to their full business-as-usual operation in the shortest possible time frame, after eradicating all traces of the threat and verifying that the systems are clean.",
+      "tasks": [
+        {
+          "id": "task-recover-1",
+          "title": "Restore From Backup",
+          "content": "Backup can be initiated either partially (from files) or a bare metal backup can be done (Restoring full system image and Windows install). IO safe contains backups from the last 10 days.\n\nThe type of backup done is dependent on the type of compromise.",
+          "description": "Restore system from clean backup",
+          "workRole": "CIRT_LEADER",
+          "estimatedTime": "2 hours",
+          "taskType": "administrative",
+          "complexity": "low",
+          "outcomes": [
+            "System is restored from bare metal backup",
+            "System files are restored"
+          ],
+          "subtasks": [
+            {
+              "id": "subtask-recover-1-1",
+              "subtaskType": "administrative",
+              "content": "IT will need to restore the backup from IO safe 220+.\nThe IO access credentials and authenticator can be found within Zoho Vault.\nIn the IO Safe, IT will need to select the 'Active Backup for Business' application.\nFrom there, individual files can be restored or OS recovery media can be created to restore the entire system to known good point."
+            }
+          ],
+          "criticalTask": true
+        },
+        {
+          "id": "task-recover-2",
+          "title": "Resolve Incident",
+          "content": "Once the affected systems and data are restored to normal business operations the incident can be moved to the 'resolved' state.",
+          "description": "Verify restoration and close incident",
+          "workRole": "CIRT_LEADER",
+          "estimatedTime": "1 hour",
+          "taskType": "administrative",
+          "complexity": "low",
+          "outcomes": [
+            "The incident is declared as resolved"
+          ],
+          "subtasks": [
+            {
+              "id": "subtask-recover-2-1",
+              "subtaskType": "administrative",
+              "content": "Verified with Core CIRT Members and IT staff that all systems and configurations are back to normal business functions."
+            },
+            {
+              "id": "subtask-recover-2-2",
+              "subtaskType": "administrative",
+              "content": "Changed status of incident to 'resolved'."
+            }
+          ],
+          "criticalTask": false
+        }
+      ]
+    },
+    {
+      "phase": "lessons_learned",
+      "description": "The Lessons Learned stage's main goal is to compile all relevant information about the incident and extract lessons that can help with future incident response activity, typically within the two weeks time frame after the incident has been resolved.",
+      "tasks": [
+        {
+          "id": "task-lessons-1",
+          "title": "Generate Incident Report",
+          "content": "Preparing an incident report is an important (and often mandatory) part of the cyber incident response process. This report will be used to perform business impact analysis, comply with the applicable laws and regulations, update relevant stakeholders (e.g. legal counsel, insurance provider, law enforcement, board of directors, etc.) and for other business functions.",
+          "description": "Create comprehensive incident report with forensic details",
+          "workRole": "CIRT_LEADER",
+          "estimatedTime": "1 hour",
+          "taskType": "administrative",
+          "complexity": "high",
+          "outcomes": [
+            "The Incident Report is generated"
+          ],
+          "subtasks": [
+            {
+              "id": "subtask-lessons-1-1",
+              "subtaskType": "administrative",
+              "content": "1. Executive Summary\nOne–two paragraphs describing what happened, when it was discovered, and the overall impact. A high-level overview of root cause and key corrective actions."
+            },
+            {
+              "id": "subtask-lessons-1-2",
+              "subtaskType": "administrative",
+              "content": "2. Incident Description\n• Date/time of detection\n• Who identified the issue\n• System(s) affected (hostname, user, OS, network segment)\n• Type of infection (malware, ransomware, trojan, PUP, etc.)\n• Initial symptoms (slow performance, pop-ups, AV alerts, strange processes, file modifications)"
+            },
+            {
+              "id": "subtask-lessons-1-3",
+              "subtaskType": "administrative",
+              "content": "3. Timeline of Events\nCreate a chronological list:\n• When the system was infected (if known)\n• When symptoms first appeared\n• When IT/security was notified\n• Actions taken during triage\n• Escalation steps\n• Containment, eradication, and recovery timestamps"
+            },
+            {
+              "id": "subtask-lessons-1-4",
+              "subtaskType": "administrative",
+              "content": "4. Root Cause Analysis\nClearly identify:\n• Entry vector (phishing email, malicious attachment, drive-by download, USB, RDP brute force, outdated plugin, etc.)\n• Vulnerabilities exploited (unpatched OS, outdated antivirus, weak password, disabled protections)\n• Any user actions that contributed (clicked link, installed unauthorized software)\nInclude evidence if available: Logs, AV scan results, EDR telemetry, Browser history, Email metadata"
+            },
+            {
+              "id": "subtask-lessons-1-5",
+              "subtaskType": "administrative",
+              "content": "5. Impact Assessment\nDocument what the malware actually did or attempted to do:\n• Data exposure (if any)\n• Files encrypted or modified\n• Lateral movement attempts\n• Credential compromise risk\n• Downtime experienced\n• Business impact (lost productivity, delayed tasks, incident response time)\nIf nothing significant happened (common with commodity malware), state that explicitly."
+            }
+          ],
+          "criticalTask": false
+        },
+        {
+          "id": "task-lessons-2",
+          "title": "Host the Lessons Learned Session",
+          "content": "The goal of the Lessons Learned session is to learn from the incident, identify any policy, process or procedure gaps that were revealed during the handling of the incident, and to create initiatives to improve the organizations' security posture.\n\nThe Lessons Learned session should be held as soon as possible, ideally within 2 weeks after the incident was resolved.\n\nThink in terms of 'What allowed this infection to succeed?'\n• Missing patches?\n• Weak security configuration?\n• Insufficient user training?\n• Lack of logging or alerting?\n• AV signatures outdated?\n• No EDR installed?",
+          "description": "Conduct post-incident review and identify improvements",
+          "workRole": "CIRT_LEADER",
+          "estimatedTime": "6 hours",
+          "taskType": "hybrid",
+          "complexity": "moderate",
+          "outcomes": [
+            "The Lessons Learned session is conducted",
+            "Gaps and areas for improvement are identified",
+            "Initiatives are created to operationalize identified improvements"
+          ],
+          "subtasks": [
+            {
+              "id": "subtask-lessons-2-1",
+              "subtaskType": "administrative",
+              "content": "Prepared a presentation for the Lessons Learned meeting, containing the following information:\n• When the incident was first detected and by whom (or what)\n• The scope of the incident\n• Identification, Containment, Eradication and Recovery steps that were taken\n• Areas where CIRT members were effective\n• Gaps in the incident response process along with improvement opportunities\n• Steps taken at this time to prevent similar incidents."
+            },
+            {
+              "id": "subtask-lessons-2-2",
+              "subtaskType": "administrative",
+              "content": "Hosted the Lessons Learned session. Make sure that all CIRT members attend and actively participate in the session."
+            },
+            {
+              "id": "subtask-lessons-2-3",
+              "subtaskType": "administrative",
+              "content": "Documented all identified areas for improvement and prepared a list of agreed upon action items."
+            },
+            {
+              "id": "subtask-lessons-2-4",
+              "subtaskType": "administrative",
+              "content": "Distributed the action items list among relevant CIRT members and ensured that the improvement steps are implemented."
+            }
+          ],
+          "criticalTask": false
+        },
+        {
+          "id": "task-lessons-3",
+          "title": "Perform Employee Security Awareness Training",
+          "content": "Whether the incident resulted from a phishing campaign, configuration error or from an exploited vulnerability, it is always a good idea to conduct an employee awareness training session after any incident is resolved.\n\nWhile the session should not be focused exclusively on the recent virus incident, the risks and methods of malware infection can be called out. The training can emphasize the risks and consequences of cyber incidents, encourage a security minded culture and reinforce how employees can report security related issues and concerns.",
+          "description": "Conduct security awareness training for employees",
+          "workRole": "CIRT_LEADER",
+          "estimatedTime": "24 hours",
+          "taskType": "hybrid",
+          "complexity": "moderate",
+          "outcomes": [
+            "The employee awareness training is conducted",
+            "A roadmap for table top exercises is developed based on lessons learnt"
+          ],
+          "subtasks": [
+            {
+              "id": "subtask-lessons-3-1",
+              "subtaskType": "administrative",
+              "content": "Prepared educational materials for the employee awareness training, with emphasis on the recent incident and the steps employees can take to help the organization avoid similar incidents in the future."
+            },
+            {
+              "id": "subtask-lessons-3-2",
+              "subtaskType": "administrative",
+              "content": "Tracked employee attendance using a Learning Management System (LMS)."
+            },
+            {
+              "id": "subtask-lessons-3-3",
+              "subtaskType": "administrative",
+              "content": "Where applicable, worked with a 3rd party to prepare and conduct the employee security awareness training."
+            },
+            {
+              "id": "subtask-lessons-3-4",
+              "subtaskType": "administrative",
+              "content": "Used the outcomes from the Lessons Learned part of the Incident Management Process to develop a table top exercise plan with relevant scenarios and participants to practice any new processes developed post incident."
+            }
+          ],
+          "criticalTask": false
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login API Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+        }
+        .result {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 5px;
+        }
+        .success { background-color: #d4edda; color: #155724; }
+        .error { background-color: #f8d7da; color: #721c24; }
+        button {
+            padding: 10px 20px;
+            margin: 5px;
+            cursor: pointer;
+        }
+        pre {
+            background: #f5f5f5;
+            padding: 10px;
+            border-radius: 3px;
+            overflow-x: auto;
+        }
+    </style>
+</head>
+<body>
+    <h1>IB Cybersecurity - Login API Test</h1>
+    
+    <div>
+        <h2>Test Login API</h2>
+        <p><strong>Email:</strong> admin@example.com</p>
+        <p><strong>Password:</strong> admin123</p>
+        
+        <button onclick="testDirect()">Test Direct Backend (Port 5012)</button>
+        <button onclick="testProxy()">Test Via Proxy (Port 3012)</button>
+        <button onclick="testFromEnv()">Test Using VITE_API_URL</button>
+    </div>
+
+    <div id="result"></div>
+
+    <script>
+        const resultDiv = document.getElementById('result');
+
+        function showResult(title, success, data) {
+            const className = success ? 'success' : 'error';
+            resultDiv.innerHTML = `
+                <div class="result ${className}">
+                    <h3>${title}</h3>
+                    <pre>${JSON.stringify(data, null, 2)}</pre>
+                </div>
+            `;
+        }
+
+        async function testLogin(url, label) {
+            resultDiv.innerHTML = '<p>Testing...</p>';
+            
+            try {
+                const response = await fetch(url, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        email: 'admin@example.com',
+                        password: 'admin123'
+                    })
+                });
+
+                const data = await response.json();
+                
+                if (response.ok && data.token) {
+                    showResult(
+                        `✅ ${label} - SUCCESS`, 
+                        true, 
+                        {
+                            status: response.status,
+                            message: 'Login successful!',
+                            user: data.user,
+                            tokenReceived: true
+                        }
+                    );
+                } else {
+                    showResult(
+                        `❌ ${label} - FAILED`, 
+                        false, 
+                        {
+                            status: response.status,
+                            error: data.error || data,
+                            url: url
+                        }
+                    );
+                }
+            } catch (error) {
+                showResult(
+                    `❌ ${label} - ERROR`, 
+                    false, 
+                    {
+                        error: error.message,
+                        url: url,
+                        note: 'Network error or CORS issue'
+                    }
+                );
+            }
+        }
+
+        function testDirect() {
+            testLogin('http://localhost:5012/api/auth/login', 'Direct Backend');
+        }
+
+        function testProxy() {
+            testLogin('http://localhost:3012/api/auth/login', 'Via Proxy');
+        }
+
+        function testFromEnv() {
+            testLogin('/api/auth/login', 'Relative Path (Same as Frontend)');
+        }
+
+        // Auto-run test on page load
+        window.addEventListener('load', () => {
+            console.log('Test page loaded');
+            console.log('VITE_API_URL should be:', 'http://localhost:5012');
+        });
+    </script>
+</body>
+</html>

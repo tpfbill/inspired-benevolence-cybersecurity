@@ -16,7 +16,8 @@ export enum IncidentStatus {
   ERADICATING = 'eradicating',
   RECOVERING = 'recovering',
   RESOLVED = 'resolved',
-  CLOSED = 'closed'
+  CLOSED = 'closed',
+  ARCHIVED = 'archived'
 }
 
 interface IncidentAttributes {
@@ -27,6 +28,7 @@ interface IncidentAttributes {
   severity: IncidentSeverity;
   status: IncidentStatus;
   playbookId?: string;
+  playbookSnapshot?: any;
   detectedAt: Date;
   reportedBy: string;
   assignedTo?: string;
@@ -35,6 +37,10 @@ interface IncidentAttributes {
   timeline?: any[];
   resolvedAt?: Date;
   postMortem?: string;
+  archivedAt?: Date;
+  archivedBy?: string;
+  archiveReason?: string;
+  escalationLevel?: number;
   createdAt?: Date;
   updatedAt?: Date;
 }
@@ -49,6 +55,7 @@ class Incident extends Model<IncidentAttributes, IncidentCreationAttributes> imp
   public severity!: IncidentSeverity;
   public status!: IncidentStatus;
   public playbookId?: string;
+  public playbookSnapshot?: any;
   public detectedAt!: Date;
   public reportedBy!: string;
   public assignedTo?: string;
@@ -57,6 +64,10 @@ class Incident extends Model<IncidentAttributes, IncidentCreationAttributes> imp
   public timeline?: any[];
   public resolvedAt?: Date;
   public postMortem?: string;
+  public archivedAt?: Date;
+  public archivedBy?: string;
+  public archiveReason?: string;
+  public escalationLevel?: number;
   public readonly createdAt!: Date;
   public readonly updatedAt!: Date;
 }
@@ -92,6 +103,10 @@ Incident.init(
       type: DataTypes.UUID,
       allowNull: true
     },
+    playbookSnapshot: {
+      type: DataTypes.JSONB,
+      allowNull: true
+    },
     detectedAt: {
       type: DataTypes.DATE,
       allowNull: false,
@@ -124,6 +139,27 @@ Incident.init(
     postMortem: {
       type: DataTypes.TEXT,
       allowNull: true
+    },
+    archivedAt: {
+      type: DataTypes.DATE,
+      allowNull: true
+    },
+    archivedBy: {
+      type: DataTypes.UUID,
+      allowNull: true,
+      references: {
+        model: 'users',
+        key: 'id'
+      }
+    },
+    archiveReason: {
+      type: DataTypes.TEXT,
+      allowNull: true
+    },
+    escalationLevel: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      defaultValue: 1
     }
   },
   {

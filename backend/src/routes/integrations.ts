@@ -11,7 +11,7 @@ router.post(
   '/manageengine/test',
   authenticate,
   authorize(UserRole.ADMIN, UserRole.SECURITY_ANALYST),
-  async (req: AuthRequest, res: Response) => {
+  async (req: AuthRequest, res: Response): Promise<void> => {
     try {
       const integration = initManageEngineIntegration();
       const isConnected = await integration.testConnection();
@@ -23,6 +23,7 @@ router.post(
     } catch (error) {
       logger.error('ManageEngine test error:', error);
       res.status(500).json({ error: 'Failed to test connection' });
+      return;
     }
   }
 );
@@ -32,7 +33,7 @@ router.post(
   '/manageengine/import',
   authenticate,
   authorize(UserRole.ADMIN, UserRole.SECURITY_ANALYST),
-  async (req: AuthRequest, res: Response) => {
+  async (req: AuthRequest, res: Response): Promise<void> => {
     try {
       const { since } = req.body;
       const sinceDate = since ? new Date(since) : new Date(Date.now() - 24 * 60 * 60 * 1000); // Last 24 hours
@@ -51,6 +52,7 @@ router.post(
     } catch (error) {
       logger.error('ManageEngine import error:', error);
       res.status(500).json({ error: 'Failed to import alerts' });
+      return;
     }
   }
 );
@@ -59,7 +61,7 @@ router.post(
 router.get(
   '/status',
   authenticate,
-  async (req: AuthRequest, res: Response) => {
+  async (req: AuthRequest, res: Response): Promise<void> => {
     try {
       const integrations = {
         manageengine: {
@@ -80,6 +82,7 @@ router.get(
     } catch (error) {
       logger.error('Get integration status error:', error);
       res.status(500).json({ error: 'Failed to get integration status' });
+      return;
     }
   }
 );

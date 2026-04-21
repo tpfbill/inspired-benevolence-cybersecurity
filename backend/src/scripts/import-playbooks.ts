@@ -30,19 +30,36 @@ async function importPlaybooks() {
         continue;
       }
 
-      // Create the playbook
-      const playbook = await Playbook.create({
+      // Create the playbook - support both phases and legacy steps format
+      const playbookData: any = {
         name: template.name,
         incidentType: template.incidentType,
         description: template.description,
-        steps: template.steps,
         framework: template.framework,
         tags: template.tags,
         createdBy: adminUser.id,
         status: 'active' // Make templates active by default
-      });
+      };
 
-      console.log(`✓ Imported: ${playbook.name} (${playbook.steps.length} steps)`);
+      // Add phases if present (new format)
+      if (template.phases && template.phases.length > 0) {
+        playbookData.phases = template.phases;
+        playbookData.steps = template.steps || []; // Keep empty steps for compatibility
+      } else {
+        // Legacy format - only has steps
+        playbookData.steps = template.steps || [];
+        playbookData.phases = [];
+      }
+
+      const playbook = await Playbook.create(playbookData);
+
+      // Log appropriate count message
+      if (playbookData.phases.length > 0) {
+        const taskCount = playbookData.phases.reduce((sum: number, phase: any) => sum + (phase.tasks?.length || 0), 0);
+        console.log(`✓ Imported: ${playbook.name} (${playbookData.phases.length} phases, ${taskCount} tasks)`);
+      } else {
+        console.log(`✓ Imported: ${playbook.name} (${playbook.steps.length} steps)`);
+      }
     }
 
     console.log('\n✅ Playbook import complete!');

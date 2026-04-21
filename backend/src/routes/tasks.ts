@@ -7,7 +7,7 @@ import logger from '../utils/logger';
 const router = express.Router();
 
 // Get all tasks for an incident
-router.get('/incident/:incidentId', authenticate, async (req: AuthRequest, res: Response) => {
+router.get('/incident/:incidentId', authenticate, async (req: AuthRequest, res: Response): Promise<void> => {
   try {
     const { incidentId } = req.params;
 
@@ -20,16 +20,18 @@ router.get('/incident/:incidentId', authenticate, async (req: AuthRequest, res: 
   } catch (error) {
     logger.error('Get incident tasks error:', error);
     res.status(500).json({ error: 'Failed to fetch tasks' });
+      return;
   }
 });
 
 // Update task status
-router.put('/:id', authenticate, async (req: AuthRequest, res: Response) => {
+router.put('/:id', authenticate, async (req: AuthRequest, res: Response): Promise<void> => {
   try {
     const task = await Task.findByPk(req.params.id);
 
     if (!task) {
-      return res.status(404).json({ error: 'Task not found' });
+      res.status(404).json({ error: 'Task not found' });
+      return;
     }
 
     const { status, notes, assignedTo } = req.body;
@@ -56,6 +58,7 @@ router.put('/:id', authenticate, async (req: AuthRequest, res: Response) => {
   } catch (error) {
     logger.error('Update task error:', error);
     res.status(500).json({ error: 'Failed to update task' });
+      return;
   }
 });
 

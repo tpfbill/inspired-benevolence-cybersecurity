@@ -1,0 +1,482 @@
+{
+  "name": "Offboarding Employee",
+  "description": "Comprehensive playbook for secure employee offboarding process to ensure proper access revocation, asset collection, and security controls when employees leave the organization.",
+  "incidentType": "unauthorized_access",
+  "phases": [
+    {
+      "name": "Preparation",
+      "description": "Initial preparation and documentation phase for employee offboarding.",
+      "order": 1,
+      "tasks": [
+        {
+          "title": "Receive Offboarding Notification",
+          "content": "Receive formal notification that an employee is leaving the organization and begin the offboarding process.",
+          "taskType": "administrative",
+          "complexity": "low",
+          "estimatedDuration": 30,
+          "preferredWorkRole": "HR",
+          "order": 1,
+          "outcomes": [
+            "Offboarding notification is received",
+            "Last working day is documented",
+            "Offboarding process is initiated"
+          ],
+          "subtasks": [
+            {
+              "subtaskType": "administrative",
+              "title": "Receive notification from HR",
+              "content": "Received formal notification from HR about employee departure including last working day and reason for departure.",
+              "order": 1
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Notify IT and Security teams",
+              "content": "Notified IT and Security teams to begin offboarding preparations.",
+              "order": 2
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Review employee role and access",
+              "content": "Reviewed employee's role, responsibilities, and access levels to plan appropriate offboarding steps.",
+              "order": 3
+            }
+          ]
+        },
+        {
+          "title": "Document Employee Access",
+          "content": "Create a comprehensive inventory of all systems, applications, and resources the employee has access to.",
+          "taskType": "technical",
+          "complexity": "moderate",
+          "estimatedDuration": 60,
+          "preferredWorkRole": "CORE_CIRT_MEMBER",
+          "order": 2,
+          "outcomes": [
+            "Complete access inventory is created",
+            "All systems and applications are documented",
+            "Physical access is documented"
+          ],
+          "subtasks": [
+            {
+              "subtaskType": "technical",
+              "title": "Document system accounts",
+              "content": "Documented all system accounts including Active Directory, email, VPN, cloud services, and applications.",
+              "order": 1
+            },
+            {
+              "subtaskType": "technical",
+              "title": "Document privileged access",
+              "content": "Documented any privileged or administrative access the employee has.",
+              "order": 2
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Document physical access",
+              "content": "Documented physical access including badges, keys, alarm codes, and building access.",
+              "order": 3
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Document company assets",
+              "content": "Documented all company assets assigned to the employee including devices, equipment, and materials.",
+              "order": 4
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Access Revocation",
+      "description": "Systematically revoke all access to systems, applications, and physical facilities.",
+      "order": 2,
+      "tasks": [
+        {
+          "title": "Revoke System Access",
+          "content": "Disable or remove the employee's access to all IT systems and applications on or after their last working day.",
+          "taskType": "technical",
+          "complexity": "high",
+          "estimatedDuration": 120,
+          "preferredWorkRole": "CORE_CIRT_MEMBER",
+          "order": 1,
+          "outcomes": [
+            "All system accounts are disabled",
+            "Remote access is revoked",
+            "Cloud service access is removed"
+          ],
+          "subtasks": [
+            {
+              "subtaskType": "technical",
+              "title": "Disable Active Directory account",
+              "content": "Disabled the employee's Active Directory account and all associated group memberships.",
+              "order": 1
+            },
+            {
+              "subtaskType": "technical",
+              "title": "Disable email account",
+              "content": "Disabled email account and set up forwarding if required by business needs.",
+              "order": 2
+            },
+            {
+              "subtaskType": "technical",
+              "title": "Revoke VPN and remote access",
+              "content": "Revoked VPN access, remote desktop access, and any other remote connectivity methods.",
+              "order": 3
+            },
+            {
+              "subtaskType": "technical",
+              "title": "Remove cloud service access",
+              "content": "Removed access to cloud services including SaaS applications, cloud storage, and collaboration tools.",
+              "order": 4
+            },
+            {
+              "subtaskType": "technical",
+              "title": "Revoke application access",
+              "content": "Revoked access to all business applications including CRM, ERP, databases, and specialized tools.",
+              "order": 5
+            }
+          ]
+        },
+        {
+          "title": "Revoke Physical Access",
+          "content": "Revoke the employee's physical access to all company facilities and secured areas.",
+          "taskType": "administrative",
+          "complexity": "moderate",
+          "estimatedDuration": 60,
+          "preferredWorkRole": "HR",
+          "order": 2,
+          "outcomes": [
+            "Physical access badges are disabled",
+            "Keys and access cards are collected",
+            "Access codes are changed"
+          ],
+          "subtasks": [
+            {
+              "subtaskType": "administrative",
+              "title": "Disable access badges",
+              "content": "Disabled all physical access badges and key cards in the access control system.",
+              "order": 1
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Collect badges and keys",
+              "content": "Collected all physical badges, keys, and access cards from the departing employee.",
+              "order": 2
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Update access codes",
+              "content": "Changed alarm codes, safe combinations, and any other access codes the employee knew.",
+              "order": 3
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Update parking access",
+              "content": "Revoked parking permits and garage access if applicable.",
+              "order": 4
+            }
+          ]
+        },
+        {
+          "title": "Reset Shared Credentials",
+          "content": "Reset all shared passwords, service accounts, and credentials that the departing employee had knowledge of.",
+          "taskType": "technical",
+          "complexity": "high",
+          "estimatedDuration": 180,
+          "preferredWorkRole": "CORE_CIRT_MEMBER",
+          "order": 3,
+          "outcomes": [
+            "All shared credentials are reset",
+            "Service accounts are secured",
+            "Team accounts are updated"
+          ],
+          "subtasks": [
+            {
+              "subtaskType": "technical",
+              "title": "Reset shared passwords",
+              "content": "Reset all shared passwords and credentials that the employee had access to.",
+              "order": 1
+            },
+            {
+              "subtaskType": "technical",
+              "title": "Rotate service account credentials",
+              "content": "Rotated service account credentials and API keys the employee may have known.",
+              "order": 2
+            },
+            {
+              "subtaskType": "technical",
+              "title": "Update team accounts",
+              "content": "Updated credentials for any team or department accounts the employee had access to.",
+              "order": 3
+            },
+            {
+              "subtaskType": "technical",
+              "title": "Reset admin credentials",
+              "content": "Reset any administrative or privileged credentials the employee had access to.",
+              "order": 4
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Asset Collection",
+      "description": "Collect all company property and assets from the departing employee.",
+      "order": 3,
+      "tasks": [
+        {
+          "title": "Collect Company Assets",
+          "content": "Collect all company-owned devices, equipment, documents, and other property from the departing employee.",
+          "taskType": "administrative",
+          "complexity": "moderate",
+          "estimatedDuration": 90,
+          "preferredWorkRole": "HR",
+          "order": 1,
+          "outcomes": [
+            "All company devices are returned",
+            "All equipment is collected",
+            "Company documents are retrieved"
+          ],
+          "subtasks": [
+            {
+              "subtaskType": "administrative",
+              "title": "Collect computers and devices",
+              "content": "Collected all company-owned computers, laptops, tablets, and mobile devices.",
+              "order": 1
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Collect peripherals and accessories",
+              "content": "Collected monitors, keyboards, mice, headsets, chargers, and other peripherals.",
+              "order": 2
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Collect company documents",
+              "content": "Collected any physical company documents, files, and proprietary materials.",
+              "order": 3
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Collect company credit cards",
+              "content": "Collected company credit cards, expense cards, and corporate accounts.",
+              "order": 4
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Verify asset return",
+              "content": "Verified all assets against the documented inventory and obtained sign-off.",
+              "order": 5
+            }
+          ]
+        },
+        {
+          "title": "Backup and Transfer Data",
+          "content": "Back up the employee's work data and transfer ownership of critical files and projects to appropriate team members.",
+          "taskType": "technical",
+          "complexity": "moderate",
+          "estimatedDuration": 120,
+          "preferredWorkRole": "CORE_CIRT_MEMBER",
+          "order": 2,
+          "outcomes": [
+            "Employee's work data is backed up",
+            "File ownership is transferred",
+            "Knowledge transfer is documented"
+          ],
+          "subtasks": [
+            {
+              "subtaskType": "technical",
+              "title": "Backup employee files",
+              "content": "Created a backup of the employee's work files, emails, and documents for business continuity.",
+              "order": 1
+            },
+            {
+              "subtaskType": "technical",
+              "title": "Transfer file ownership",
+              "content": "Transferred ownership of shared files, folders, and documents to appropriate team members.",
+              "order": 2
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Transfer project ownership",
+              "content": "Transferred ownership and responsibility for ongoing projects to designated individuals.",
+              "order": 3
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Document knowledge transfer",
+              "content": "Documented critical knowledge, processes, and information the employee possessed.",
+              "order": 4
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Review and Monitoring",
+      "description": "Review the employee's access history and monitor for any post-departure security concerns.",
+      "order": 4,
+      "tasks": [
+        {
+          "title": "Review Data Access Logs",
+          "content": "Review the employee's access logs and activity history to identify any suspicious or concerning behavior prior to departure.",
+          "taskType": "technical",
+          "complexity": "moderate",
+          "estimatedDuration": 120,
+          "preferredWorkRole": "CORE_CIRT_MEMBER",
+          "order": 1,
+          "outcomes": [
+            "Access logs are reviewed",
+            "Unusual activity is identified",
+            "Security concerns are documented"
+          ],
+          "subtasks": [
+            {
+              "subtaskType": "technical",
+              "title": "Review authentication logs",
+              "content": "Reviewed authentication logs for unusual access patterns or timing.",
+              "order": 1
+            },
+            {
+              "subtaskType": "technical",
+              "title": "Review file access logs",
+              "content": "Reviewed file access and download logs for mass data access or exfiltration attempts.",
+              "order": 2
+            },
+            {
+              "subtaskType": "technical",
+              "title": "Review email activity",
+              "content": "Reviewed email activity for forwarding to personal accounts or unusual external communications.",
+              "order": 3
+            },
+            {
+              "subtaskType": "technical",
+              "title": "Check for data exfiltration",
+              "content": "Checked for signs of data exfiltration via USB drives, cloud storage, or email.",
+              "order": 4
+            }
+          ]
+        },
+        {
+          "title": "Conduct Exit Interview",
+          "content": "Conduct an exit interview with the departing employee to reinforce confidentiality obligations and collect final information.",
+          "taskType": "administrative",
+          "complexity": "low",
+          "estimatedDuration": 60,
+          "preferredWorkRole": "HR",
+          "order": 2,
+          "outcomes": [
+            "Exit interview is conducted",
+            "Confidentiality obligations are reinforced",
+            "Non-compete/NDA are reviewed"
+          ],
+          "subtasks": [
+            {
+              "subtaskType": "administrative",
+              "title": "Conduct exit interview",
+              "content": "Conducted exit interview with HR present to discuss the transition and gather feedback.",
+              "order": 1
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Review confidentiality agreements",
+              "content": "Reviewed confidentiality agreements, non-disclosure agreements (NDA), and non-compete clauses.",
+              "order": 2
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Remind of obligations",
+              "content": "Reminded the employee of their ongoing obligations regarding confidential information and company property.",
+              "order": 3
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Document exit interview",
+              "content": "Documented the exit interview and any relevant information for HR records.",
+              "order": 4
+            }
+          ]
+        },
+        {
+          "title": "Monitor for Post-Departure Activity",
+          "content": "Monitor for any attempted access or suspicious activity from the departed employee after their last working day.",
+          "taskType": "technical",
+          "complexity": "low",
+          "estimatedDuration": 720,
+          "preferredWorkRole": "CORE_CIRT_MEMBER",
+          "order": 3,
+          "outcomes": [
+            "Monitoring is established",
+            "Unauthorized access attempts are detected",
+            "Security incidents are escalated"
+          ],
+          "subtasks": [
+            {
+              "subtaskType": "technical",
+              "title": "Monitor access attempts",
+              "content": "Monitored logs for any attempts by the departed employee to access systems using old credentials.",
+              "order": 1
+            },
+            {
+              "subtaskType": "technical",
+              "title": "Set up alerts",
+              "content": "Set up alerts for any activity associated with the departed employee's accounts or identifiers.",
+              "order": 2
+            },
+            {
+              "subtaskType": "technical",
+              "title": "Monitor for data disclosure",
+              "content": "Monitored for any disclosure or misuse of company information by the departed employee.",
+              "order": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Completion",
+      "description": "Finalize the offboarding process and ensure all steps have been completed.",
+      "order": 5,
+      "tasks": [
+        {
+          "title": "Document Offboarding Completion",
+          "content": "Document that all offboarding steps have been completed and obtain sign-offs from appropriate stakeholders.",
+          "taskType": "administrative",
+          "complexity": "low",
+          "estimatedDuration": 30,
+          "preferredWorkRole": "HR",
+          "order": 1,
+          "outcomes": [
+            "Offboarding checklist is complete",
+            "All stakeholders have signed off",
+            "Offboarding is documented"
+          ],
+          "subtasks": [
+            {
+              "subtaskType": "administrative",
+              "title": "Complete offboarding checklist",
+              "content": "Completed the full offboarding checklist verifying all steps have been performed.",
+              "order": 1
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Obtain stakeholder sign-offs",
+              "content": "Obtained sign-offs from IT, Security, HR, and the employee's manager confirming completion.",
+              "order": 2
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Update employee records",
+              "content": "Updated employee records in HRIS system to reflect departure and offboarding completion.",
+              "order": 3
+            },
+            {
+              "subtaskType": "administrative",
+              "title": "Archive offboarding documentation",
+              "content": "Archived all offboarding documentation for future reference and audit purposes.",
+              "order": 4
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

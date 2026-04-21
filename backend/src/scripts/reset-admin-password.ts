@@ -18,7 +18,7 @@ async function resetAdminPassword() {
         password: 'Password123!',
         firstName: 'Admin',
         lastName: 'User',
-        role: 'admin',
+        role: UserRole.ADMIN as any,
         isActive: true
       });
       

@@ -1,0 +1,37 @@
+[
+  {
+    "name": "Test Playbook",
+    "incidentType": "test",
+    "description": "Test playbook for demonstration and testing purposes",
+    "framework": "NIST CSF",
+    "tags": ["test", "demo"],
+    "steps": [
+      {
+        "stepNumber": 1,
+        "title": "Identification task",
+        "description": "Identification of threat. Task action goes here",
+        "assignedRole": "CIRT_LEADER",
+        "estimatedTime": "2 hours",
+        "criticalStep": true
+      },
+      {
+        "stepNumber": 2,
+        "title": "Step 1",
+        "description": "Step 1 description. Action goes here",
+        "assignedRole": "THIRD_PARTY_IT",
+        "estimatedTime": "2 hours",
+        "dependencies": [1],
+        "criticalStep": false
+      },
+      {
+        "stepNumber": 3,
+        "title": "Next Step",
+        "description": "Next Step. Third Party action",
+        "assignedRole": "THIRD_PARTY_IT",
+        "estimatedTime": "2 hours",
+        "dependencies": [2],
+        "criticalStep": false
+      }
+    ]
+  }
+]

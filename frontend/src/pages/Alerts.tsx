@@ -1,12 +1,15 @@
 import { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { AlertTriangle, CheckCircle, Clock, XCircle, ArrowRight } from 'lucide-react';
+import { AlertTriangle, CheckCircle, Clock, XCircle, ArrowRight, Archive, Shield, Trash2 } from 'lucide-react';
 import apiClient from '../api/client';
-import { formatDistanceToNow } from 'date-fns';
+import { formatDistanceToNow, format } from 'date-fns';
+
+type FilterType = 'active' | 'resolved' | 'archived';
 
 export default function Alerts() {
   const queryClient = useQueryClient();
   const [escalatingAlert, setEscalatingAlert] = useState<string | null>(null);
+  const [activeFilter, setActiveFilter] = useState<FilterType>('active');
 
   const { data: alerts, isLoading } = useQuery({
     queryKey: ['alerts'],
@@ -96,6 +99,80 @@ export default function Alerts() {
     }
   };
 
+  // Archive mutation
+  const archiveAlertMutation = useMutation({
+    mutationFn: async ({ alertId, reason }: { alertId: string; reason: string }) => {
+      return apiClient.post(`/api/alerts/${alertId}/archive`, { reason });
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['alerts'] });
+    }
+  });
+
+  // Restore mutation
+  const restoreAlertMutation = useMutation({
+    mutationFn: async (alertId: string) => {
+      return apiClient.post(`/api/alerts/${alertId}/restore`);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['alerts'] });
+    }
+  });
+
+  // Delete mutation
+  const deleteAlertMutation = useMutation({
+    mutationFn: async (alertId: string) => {
+      return apiClient.delete(`/api/alerts/${alertId}`);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['alerts'] });
+    }
+  });
+
+  const handleArchive = (alertId: string) => {
+    const reason = window.prompt('Reason for archiving this alert:', 'Alert reviewed and no action needed');
+    if (reason) {
+      archiveAlertMutation.mutate({ alertId, reason });
+    }
+  };
+
+  const handleRestore = (alertId: string) => {
+    if (window.confirm('Restore this alert?')) {
+      restoreAlertMutation.mutate(alertId);
+    }
+  };
+
+  const handleDelete = (alert: any) => {
+    if (alert.incidentId) {
+      window.alert('Cannot delete an alert that has been escalated to an incident. Archive it instead.');
+      return;
+    }
+
+    if (window.confirm(`Are you sure you want to permanently delete this alert?\n\n"${alert.title}"\n\nThis action cannot be undone.`)) {
+      deleteAlertMutation.mutate(alert.id);
+    }
+  };
+
+  // Filter alerts by status
+  const activeAlerts = alerts?.filter((a: any) => 
+    !['resolved', 'false_positive', 'archived'].includes(a.status)
+  ) || [];
+  
+  const resolvedAlerts = alerts?.filter((a: any) => 
+    ['resolved', 'false_positive'].includes(a.status)
+  ) || [];
+
+  const archivedAlerts = alerts?.filter((a: any) => 
+    a.status === 'archived'
+  ) || [];
+
+  // Filter based on active filter
+  const filteredAlerts = activeFilter === 'active' 
+    ? activeAlerts 
+    : activeFilter === 'resolved' 
+    ? resolvedAlerts 
+    : archivedAlerts;
+
   const getSeverityColor = (severity: string) => {
     switch (severity) {
       case 'critical': return 'bg-danger-100 text-danger-700 border-danger-300';
@@ -130,27 +207,70 @@ export default function Alerts() {
 
   return (
     <div className="space-y-6">
-      <div className="flex justify-between items-center">
-        <h1 className="text-3xl font-bold text-gray-900">Security Alerts</h1>
-        <div className="flex space-x-3">
-          <span className="px-3 py-1 rounded-full text-sm font-semibold bg-danger-100 text-danger-700">
-            {criticalAlerts.length} Critical
+      {/* Header */}
+      <h1 className="text-3xl font-bold text-gray-900">Security Alerts</h1>
+
+      {/* Filter Buttons */}
+      <div className="flex items-center space-x-3">
+        <button
+          onClick={() => setActiveFilter('active')}
+          className={`px-4 py-2 rounded-lg text-sm font-semibold transition-all flex items-center gap-2 ${
+            activeFilter === 'active'
+              ? 'bg-orange-600 text-white shadow-lg scale-105'
+              : 'bg-orange-100 text-orange-700 hover:bg-orange-200'
+          }`}
+        >
+          <AlertTriangle className="w-4 h-4" />
+          Active
+          <span className={`px-2 py-0.5 rounded-full text-xs ${
+            activeFilter === 'active' ? 'bg-white text-orange-600' : 'bg-orange-200 text-orange-800'
+          }`}>
+            {activeAlerts.length}
           </span>
-          <span className="px-3 py-1 rounded-full text-sm font-semibold bg-warning-100 text-warning-700">
-            {highAlerts.length} High
+        </button>
+
+        <button
+          onClick={() => setActiveFilter('resolved')}
+          className={`px-4 py-2 rounded-lg text-sm font-semibold transition-all flex items-center gap-2 ${
+            activeFilter === 'resolved'
+              ? 'bg-green-600 text-white shadow-lg scale-105'
+              : 'bg-green-100 text-green-700 hover:bg-green-200'
+          }`}
+        >
+          <CheckCircle className="w-4 h-4" />
+          Resolved
+          <span className={`px-2 py-0.5 rounded-full text-xs ${
+            activeFilter === 'resolved' ? 'bg-white text-green-600' : 'bg-green-200 text-green-800'
+          }`}>
+            {resolvedAlerts.length}
           </span>
-        </div>
+        </button>
+
+        <button
+          onClick={() => setActiveFilter('archived')}
+          className={`px-4 py-2 rounded-lg text-sm font-semibold transition-all flex items-center gap-2 ${
+            activeFilter === 'archived'
+              ? 'bg-gray-600 text-white shadow-lg scale-105'
+              : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+          }`}
+        >
+          <Archive className="w-4 h-4" />
+          Archived
+          <span className={`px-2 py-0.5 rounded-full text-xs ${
+            activeFilter === 'archived' ? 'bg-white text-gray-600' : 'bg-gray-200 text-gray-800'
+          }`}>
+            {archivedAlerts.length}
+          </span>
+        </button>
       </div>
 
-      {/* Critical Alerts */}
-      {criticalAlerts.length > 0 && (
+      {/* Filtered Alerts Display */}
+      {filteredAlerts.length > 0 ? (
         <div className="space-y-3">
-          <h2 className="text-xl font-semibold text-danger-700 flex items-center">
-            <AlertTriangle className="h-6 w-6 mr-2" />
-            Critical Alerts - Immediate Action Required
-          </h2>
-          {criticalAlerts.map((alert: any) => (
-            <div key={alert.id} className="card border-l-4 border-danger-500 hover:shadow-lg transition-shadow">
+          {filteredAlerts.map((alert: any) => (
+            <div key={alert.id} className={`card hover:shadow-lg transition-shadow ${
+              alert.status === 'archived' ? 'opacity-70' : ''
+            }`}>
               <div className="flex items-start justify-between">
                 <div className="flex-1">
                   <div className="flex items-center space-x-3 mb-2">
@@ -159,12 +279,38 @@ export default function Alerts() {
                     <span className={`px-2 py-1 rounded text-xs font-semibold border ${getSeverityColor(alert.severity)}`}>
                       {alert.severity.toUpperCase()}
                     </span>
+                    <span className={`text-xs px-2 py-1 rounded ${
+                      alert.status === 'new' ? 'bg-warning-100 text-warning-700' :
+                      alert.status === 'investigating' || alert.status === 'acknowledged' ? 'bg-primary-100 text-primary-700' :
+                      alert.status === 'resolved' || alert.status === 'false_positive' ? 'bg-success-100 text-success-700' :
+                      alert.status === 'escalated' ? 'bg-danger-100 text-danger-700' :
+                      alert.status === 'archived' ? 'bg-gray-100 text-gray-700' :
+                      'bg-gray-100 text-gray-700'
+                    }`}>
+                      {alert.status.toUpperCase().replace('_', ' ')}
+                    </span>
                   </div>
                   <p className="text-gray-600 mb-3">{alert.description}</p>
+                  
+                  {alert.status === 'archived' && alert.archiveReason && (
+                    <div className="mb-3 p-2 bg-gray-50 rounded border border-gray-200">
+                      <span className="text-xs font-medium text-gray-700">Archive Reason: </span>
+                      <span className="text-xs text-gray-600">{alert.archiveReason}</span>
+                    </div>
+                  )}
+
                   <div className="flex items-center space-x-4 text-sm text-gray-500">
                     <span>Source: {alert.source}</span>
                     <span>•</span>
-                    <span>Detected {formatDistanceToNow(new Date(alert.detectedAt), { addSuffix: true })}</span>
+                    <span title={alert.status === 'archived' 
+                      ? format(new Date(alert.archivedAt), 'MMM d, yyyy h:mm a')
+                      : format(new Date(alert.detectedAt), 'MMM d, yyyy h:mm a')
+                    }>
+                      {alert.status === 'archived' 
+                        ? `Archived: ${format(new Date(alert.archivedAt), 'MMM d, yyyy h:mm a')} (${formatDistanceToNow(new Date(alert.archivedAt), { addSuffix: true })})`
+                        : `Detected: ${format(new Date(alert.detectedAt), 'MMM d, yyyy h:mm a')} (${formatDistanceToNow(new Date(alert.detectedAt), { addSuffix: true })})`
+                      }
+                    </span>
                     {alert.affectedAssets && alert.affectedAssets.length > 0 && (
                       <>
                         <span>•</span>
@@ -173,176 +319,101 @@ export default function Alerts() {
                     )}
                   </div>
                 </div>
-                <div className="ml-4 flex space-x-2">
-                  {alert.status === 'new' && (
+                <div className="ml-4 flex flex-col space-y-2">
+                  {alert.status === 'archived' ? (
                     <>
                       <button 
-                        onClick={() => handleEscalate(alert)}
-                        disabled={escalatingAlert === alert.id}
-                        className="btn btn-danger text-sm flex items-center"
+                        onClick={() => handleRestore(alert.id)}
+                        disabled={restoreAlertMutation.isPending}
+                        className="px-3 py-2 bg-green-600 text-white rounded hover:bg-green-700 text-sm flex items-center gap-1 disabled:opacity-50"
                       >
-                        <ArrowRight className="h-4 w-4 mr-1" />
-                        {escalatingAlert === alert.id ? 'Escalating...' : 'Escalate'}
+                        <Shield className="w-4 h-4" />
+                        Restore
                       </button>
-                      <button 
-                        onClick={() => handleAcknowledge(alert.id)}
-                        className="btn btn-secondary text-sm"
+                      <button
+                        onClick={() => handleDelete(alert)}
+                        disabled={deleteAlertMutation.isPending}
+                        className="px-3 py-2 bg-red-600 text-white rounded hover:bg-red-700 text-sm flex items-center gap-1 disabled:opacity-50"
                       >
-                        Acknowledge
+                        <Trash2 className="w-4 h-4" />
+                        Delete
                       </button>
                     </>
-                  )}
-                  {alert.status === 'escalated' && (
-                    <span className="text-sm text-primary-600 font-medium">
-                      ✓ Escalated to Incident
-                    </span>
-                  )}
-                  {alert.status === 'acknowledged' && (
-                    <button 
-                      onClick={() => handleEscalate(alert)}
-                      className="btn btn-primary text-sm flex items-center"
-                    >
-                      <ArrowRight className="h-4 w-4 mr-1" />
-                      Escalate
-                    </button>
-                  )}
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-      )}
-
-      {/* High Priority Alerts */}
-      {highAlerts.length > 0 && (
-        <div className="space-y-3">
-          <h2 className="text-xl font-semibold text-warning-700 flex items-center">
-            <AlertTriangle className="h-5 w-5 mr-2" />
-            High Priority Alerts
-          </h2>
-          {highAlerts.map((alert: any) => (
-            <div key={alert.id} className="card border-l-4 border-warning-500 hover:shadow-lg transition-shadow">
-              <div className="flex items-start justify-between">
-                <div className="flex-1">
-                  <div className="flex items-center space-x-3 mb-2">
-                    {getStatusIcon(alert.status)}
-                    <h3 className="text-lg font-semibold text-gray-900">{alert.title}</h3>
-                    <span className={`px-2 py-1 rounded text-xs font-semibold border ${getSeverityColor(alert.severity)}`}>
-                      {alert.severity.toUpperCase()}
-                    </span>
-                  </div>
-                  <p className="text-gray-600 mb-3">{alert.description}</p>
-                  <div className="flex items-center space-x-4 text-sm text-gray-500">
-                    <span>Source: {alert.source}</span>
-                    <span>•</span>
-                    <span>Detected {formatDistanceToNow(new Date(alert.detectedAt), { addSuffix: true })}</span>
-                    {alert.affectedAssets && alert.affectedAssets.length > 0 && (
-                      <>
-                        <span>•</span>
-                        <span>Assets: {alert.affectedAssets.join(', ')}</span>
-                      </>
-                    )}
-                  </div>
-                </div>
-                <div className="ml-4 flex space-x-2">
-                  {alert.status === 'new' && (
+                  ) : (
                     <>
-                      <button 
-                        onClick={() => handleEscalate(alert)}
-                        disabled={escalatingAlert === alert.id}
-                        className="btn btn-primary text-sm flex items-center"
-                      >
-                        <ArrowRight className="h-4 w-4 mr-1" />
-                        {escalatingAlert === alert.id ? 'Escalating...' : 'Escalate'}
-                      </button>
-                      <button 
-                        onClick={() => handleAcknowledge(alert.id)}
-                        className="btn btn-secondary text-sm"
-                      >
-                        Acknowledge
-                      </button>
+                      {alert.status === 'new' && (
+                        <>
+                          <button 
+                            onClick={() => handleEscalate(alert)}
+                            disabled={escalatingAlert === alert.id}
+                            className="btn btn-danger text-sm flex items-center"
+                          >
+                            <ArrowRight className="h-4 w-4 mr-1" />
+                            {escalatingAlert === alert.id ? 'Escalating...' : 'Escalate'}
+                          </button>
+                          <button 
+                            onClick={() => handleAcknowledge(alert.id)}
+                            className="btn btn-secondary text-sm"
+                          >
+                            Acknowledge
+                          </button>
+                        </>
+                      )}
+                      {alert.status === 'acknowledged' && (
+                        <button 
+                          onClick={() => handleEscalate(alert)}
+                          className="btn btn-primary text-sm flex items-center"
+                        >
+                          <ArrowRight className="h-4 w-4 mr-1" />
+                          Escalate
+                        </button>
+                      )}
+                      {alert.status === 'escalated' && (
+                        <span className="text-sm text-primary-600 font-medium">
+                          ✓ Escalated to Incident
+                        </span>
+                      )}
+                      {alert.status !== 'escalated' && (
+                        <>
+                          <button
+                            onClick={() => handleArchive(alert.id)}
+                            disabled={archiveAlertMutation.isPending}
+                            className="px-3 py-2 bg-gray-600 text-white rounded hover:bg-gray-700 text-sm flex items-center gap-1 disabled:opacity-50"
+                          >
+                            <Archive className="w-4 h-4" />
+                            Archive
+                          </button>
+                          {!alert.incidentId && (
+                            <button
+                              onClick={() => handleDelete(alert)}
+                              disabled={deleteAlertMutation.isPending}
+                              className="px-3 py-2 bg-red-600 text-white rounded hover:bg-red-700 text-sm flex items-center gap-1 disabled:opacity-50"
+                              title="Permanently delete this alert"
+                            >
+                              <Trash2 className="w-4 h-4" />
+                              Delete
+                            </button>
+                          )}
+                        </>
+                      )}
                     </>
                   )}
-                  {alert.status === 'escalated' && (
-                    <span className="text-sm text-primary-600 font-medium">
-                      ✓ Escalated to Incident
-                    </span>
-                  )}
-                  {alert.status === 'acknowledged' && (
-                    <button 
-                      onClick={() => handleEscalate(alert)}
-                      className="btn btn-primary text-sm flex items-center"
-                    >
-                      <ArrowRight className="h-4 w-4 mr-1" />
-                      Escalate
-                    </button>
-                  )}
                 </div>
               </div>
             </div>
           ))}
         </div>
-      )}
-
-      {/* Other Alerts */}
-      {otherAlerts.length > 0 && (
-        <div className="space-y-3">
-          <h2 className="text-xl font-semibold text-gray-700">Other Alerts</h2>
-          {otherAlerts.map((alert: any) => (
-            <div key={alert.id} className="card hover:shadow-lg transition-shadow">
-              <div className="flex items-start justify-between">
-                <div className="flex-1">
-                  <div className="flex items-center space-x-3 mb-2">
-                    {getStatusIcon(alert.status)}
-                    <h3 className="text-lg font-semibold text-gray-900">{alert.title}</h3>
-                    <span className={`px-2 py-1 rounded text-xs font-semibold border ${getSeverityColor(alert.severity)}`}>
-                      {alert.severity.toUpperCase()}
-                    </span>
-                  </div>
-                  <p className="text-gray-600 mb-3">{alert.description}</p>
-                  <div className="flex items-center space-x-4 text-sm text-gray-500">
-                    <span>Source: {alert.source}</span>
-                    <span>•</span>
-                    <span>Detected {formatDistanceToNow(new Date(alert.detectedAt), { addSuffix: true })}</span>
-                    {alert.affectedAssets && alert.affectedAssets.length > 0 && (
-                      <>
-                        <span>•</span>
-                        <span>Assets: {alert.affectedAssets.join(', ')}</span>
-                      </>
-                    )}
-                  </div>
-                </div>
-                <div className="ml-4 flex space-x-2">
-                  {alert.status === 'new' && (
-                    <button 
-                      onClick={() => handleAcknowledge(alert.id)}
-                      className="btn btn-secondary text-sm"
-                    >
-                      Acknowledge
-                    </button>
-                  )}
-                  {alert.status === 'escalated' && (
-                    <span className="text-sm text-primary-600 font-medium">
-                      ✓ Escalated to Incident
-                    </span>
-                  )}
-                  {alert.status === 'acknowledged' && (
-                    <span className="text-sm text-success-600 font-medium">
-                      ✓ Acknowledged
-                    </span>
-                  )}
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-      )}
-
-      {alerts?.length === 0 && (
+      ) : (
         <div className="card text-center py-12">
-          <CheckCircle className="h-16 w-16 text-success-500 mx-auto mb-4" />
-          <h3 className="text-xl font-semibold text-gray-900 mb-2">No Active Alerts</h3>
-          <p className="text-gray-600">All clear! No security alerts at this time.</p>
+          <Shield className="h-16 w-16 text-gray-400 mx-auto mb-4" />
+          <h3 className="text-xl font-semibold text-gray-900 mb-2">
+            No {activeFilter === 'active' ? 'Active' : activeFilter === 'resolved' ? 'Resolved' : 'Archived'} Alerts
+          </h3>
+          <p className="text-gray-600">
+            {activeFilter === 'active' && 'No active alerts at this time.'}
+            {activeFilter === 'resolved' && 'No resolved alerts yet.'}
+            {activeFilter === 'archived' && 'No archived alerts yet.'}
+          </p>
         </div>
       )}
     </div>

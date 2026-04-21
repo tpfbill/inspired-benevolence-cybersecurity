@@ -1,0 +1,1233 @@
+[
+  {
+    "name": "ORNA Ransomware Response",
+    "incidentType": "ransomware",
+    "description": "Comprehensive ORNA ransomware incident response playbook covering identification through lessons learned",
+    "framework": "NIST CSF, SANS IR",
+    "tags": ["ransomware", "malware", "encryption", "orna"],
+    "steps": [
+      {
+        "stepNumber": 1,
+        "title": "Setup War Room",
+        "description": "Set up secure communication channel for CIRT members. Establish physical or virtual war room with restricted access.",
+        "assignedRole": "CIRT_LEADER",
+        "estimatedTime": "3 hours",
+        "criticalStep": true
+      },
+      {
+        "stepNumber": 2,
+        "title": "Inform CIRT and Perform Triage",
+        "description": "Notify CIRT team members, verify incident severity and type, establish scope and root cause.",
+        "assignedRole": "CIRT_LEADER",
+        "estimatedTime": "2 hours",
+        "dependencies": [1],
+        "criticalStep": true
+      },
+      {
+        "stepNumber": 3,
+        "title": "Notify Legal, Insurance and Law Enforcement",
+        "description": "Notify legal counsel, cybersecurity insurance provider/broker, and appropriate law enforcement agencies.",
+        "assignedRole": "CIRT_LEADER",
+        "estimatedTime": "1 hour",
+        "dependencies": [2],
+        "criticalStep": true
+      },
+      {
+        "stepNumber": 4,
+        "title": "Issue Internal and External Communications",
+        "description": "Establish proactive communication with staff and stakeholders. Control narrative and maintain trust.",
+        "assignedRole": "COMMUNICATIONS_LEADER",
+        "estimatedTime": "2 hours",
+        "dependencies": [2],
+        "criticalStep": false
+      },
+      {
+        "stepNumber": 5,
+        "title": "Invoke Data Breach Notification Protocols",
+        "description": "Determine notification requirements under applicable laws (GDPR, CCPA, PIPEDA, etc.) and notify affected parties.",
+        "assignedRole": "LEGAL",
+        "estimatedTime": "2 hours",
+        "dependencies": [3],
+        "criticalStep": true
+      },
+      {
+        "stepNumber": 6,
+        "title": "Disconnect Affected Assets",
+        "description": "Isolate infected systems from network. Do not power down devices to preserve forensic evidence.",
+        "assignedRole": "CORE_CIRT_MEMBER",
+        "estimatedTime": "2 hours",
+        "dependencies": [2],
+        "criticalStep": true
+      },
+      {
+        "stepNumber": 7,
+        "title": "Scan Network for Additional Malware",
+        "description": "Detect and eliminate additional malware, backdoors, and persistence mechanisms used by threat actors.",
+        "assignedRole": "CORE_CIRT_MEMBER",
+        "estimatedTime": "4 hours",
+        "dependencies": [6],
+        "criticalStep": true
+      },
+      {
+        "stepNumber": 8,
+        "title": "Protect Backups",
+        "description": "Ensure backups are protected and not overwritten. Verify backup integrity and availability.",
+        "assignedRole": "THIRD_PARTY_IT",
+        "estimatedTime": "2 hours",
+        "dependencies": [6],
+        "criticalStep": true
+      },
+      {
+        "stepNumber": 9,
+        "title": "Invoke Business Continuity Plan",
+        "description": "Activate BCP to minimize business disruption. Consider MTD, RPO, RTO, and WRT metrics.",
+        "assignedRole": "EXECUTIVE",
+        "estimatedTime": "4 hours",
+        "dependencies": [2],
+        "criticalStep": false
+      },
+      {
+        "stepNumber": 10,
+        "title": "Identify and Mitigate Vulnerabilities",
+        "description": "Run vulnerability scans, implement mitigation recommendations, and prevent similar attacks.",
+        "assignedRole": "CORE_CIRT_MEMBER",
+        "estimatedTime": "14 hours",
+        "dependencies": [7],
+        "criticalStep": false
+      },
+      {
+        "stepNumber": 11,
+        "title": "Restore from Backups",
+        "description": "Restore affected systems from clean, verified backups. Verify system integrity before reconnecting to network.",
+        "assignedRole": "THIRD_PARTY_IT",
+        "estimatedTime": "8-24 hours",
+        "dependencies": [8, 10],
+        "criticalStep": true
+      },
+      {
+        "stepNumber": 12,
+        "title": "Generate Incident Report",
+        "description": "Prepare comprehensive incident report for stakeholders, compliance, and lessons learned.",
+        "assignedRole": "CIRT_LEADER",
+        "estimatedTime": "1 hour",
+        "dependencies": [11],
+        "criticalStep": false
+      },
+      {
+        "stepNumber": 13,
+        "title": "Host Lessons Learned Session",
+        "description": "Conduct post-incident review, identify gaps, and implement improvements to prevent future incidents.",
+        "assignedRole": "CIRT_LEADER",
+        "estimatedTime": "6 hours",
+        "dependencies": [12],
+        "criticalStep": false
+      }
+    ]
+  },
+  {
+    "name": "ORNA Phishing Response",
+    "incidentType": "phishing",
+    "description": "ORNA playbook for responding to phishing attacks and business email compromise",
+    "framework": "NIST CSF",
+    "tags": ["phishing", "email", "social-engineering", "orna"],
+    "steps": [
+      {
+        "stepNumber": 1,
+        "title": "Setup War Room",
+        "description": "Establish secure communication channel for CIRT team. Set up physical or virtual war room.",
+        "assignedRole": "CIRT_LEADER",
+        "estimatedTime": "3 hours",
+        "criticalStep": true
+      },
+      {
+        "stepNumber": 2,
+        "title": "Verify and Triage Phishing Email",
+        "description": "Confirm phishing attempt, analyze headers/links/attachments, determine scope and affected users.",
+        "assignedRole": "CIRT_LEADER",
+        "estimatedTime": "2 hours",
+        "dependencies": [1],
+        "criticalStep": true
+      },
+      {
+        "stepNumber": 3,
+        "title": "Identify Recipients",
+        "description": "Search email logs to identify all recipients. Determine who clicked links or opened attachments.",
+        "assignedRole": "THIRD_PARTY_IT",
+        "estimatedTime": "1 hour",
+        "dependencies": [2],
+        "criticalStep": true
+      },
+      {
+        "stepNumber": 4,
+        "title": "Quarantine and Block",
+        "description": "Remove phishing emails from mailboxes, block sender, and blacklist malicious URLs.",
+        "assignedRole": "THIRD_PARTY_IT",
+        "estimatedTime": "1 hour",
+        "dependencies": [3],
+        "criticalStep": true
+      },
+      {
+        "stepNumber": 5,
+        "title": "Check for Compromises",
+        "description": "Scan for malware, check for credential compromise, and assess data exfiltration risk.",
+        "assignedRole": "SECURITY_ANALYST",
+        "estimatedTime": "2 hours",
+        "dependencies": [3],
+        "criticalStep": true
+      },
+      {
+        "stepNumber": 6,
+        "title": "Reset Compromised Credentials",
+        "description": "Force password resets for affected users. Enable MFA if not already active.",
+        "assignedRole": "THIRD_PARTY_IT",
+        "estimatedTime": "1 hour",
+        "dependencies": [5],
+        "criticalStep": true
+      },
+      {
+        "stepNumber": 7,
+        "title": "Notify Legal and Insurance",
+        "description": "Alert legal counsel and insurance provider about the incident. Determine regulatory obligations.",
+        "assignedRole": "CIRT_LEADER",
+        "estimatedTime": "1 hour",
+        "dependencies": [2],
+        "criticalStep": true
+      },
+      {
+        "stepNumber": 8,
+        "title": "Employee Communication",
+        "description": "Send security alert to all employees. Provide clear instructions and security guidance.",
+        "assignedRole": "COMMUNICATIONS_LEADER",
+        "estimatedTime": "2 hours",
+        "dependencies": [4],
+        "criticalStep": false
+      },
+      {
+        "stepNumber": 9,
+        "title": "Security Awareness Training",
+        "description": "Conduct targeted training for affected users on identifying phishing attempts.",
+        "assignedRole": "HR",
+        "estimatedTime": "4 hours",
+        "dependencies": [8],
+        "criticalStep": false
+      },
+      {
+        "stepNumber": 10,
+        "title": "Generate Incident Report",
+        "description": "Document incident details, response actions, and outcomes for compliance and learning.",
+        "assignedRole": "CIRT_LEADER",
+        "estimatedTime": "1 hour",
+        "dependencies": [6],
+        "criticalStep": false
+      },
+      {
+        "stepNumber": 11,
+        "title": "Lessons Learned Session",
+        "description": "Review incident response effectiveness, identify improvements, and update procedures.",
+        "assignedRole": "CIRT_LEADER",
+        "estimatedTime": "6 hours",
+        "dependencies": [10],
+        "criticalStep": false
+      }
+    ]
+  },
+  {
+    "name": "ORNA Denial of Service Response",
+    "incidentType": "ddos",
+    "description": "ORNA playbook for responding to Denial of Service and DDoS attacks",
+    "framework": "NIST CSF",
+    "tags": ["ddos", "dos", "availability", "network", "orna"],
+    "steps": [
+      {
+        "stepNumber": 1,
+        "title": "Setup War Room",
+        "description": "Establish secure communication channel for incident response team.",
+        "assignedRole": "CIRT_LEADER",
+        "estimatedTime": "3 hours",
+        "criticalStep": true
+      },
+      {
+        "stepNumber": 2,
+        "title": "Confirm and Triage DDoS Attack",
+        "description": "Verify traffic patterns, analyze network logs, confirm attack type and severity.",
+        "assignedRole": "CIRT_LEADER",
+        "estimatedTime": "2 hours",
+        "dependencies": [1],
+        "criticalStep": true
+      },
+      {
+        "stepNumber": 3,
+        "title": "Contact ISP and DDoS Mitigation Provider",
+        "description": "Immediately contact ISP and DDoS mitigation service to activate protection measures.",
+        "assignedRole": "THIRD_PARTY_IT",
+        "estimatedTime": "1 hour",
+        "dependencies": [2],
+        "criticalStep": true
+      },
+      {
+        "stepNumber": 4,
+        "title": "Enable DDoS Protection",
+        "description": "Activate CDN, load balancers, and traffic filtering to absorb and filter attack traffic.",
+        "assignedRole": "THIRD_PARTY_IT",
+        "estimatedTime": "2 hours",
+        "dependencies": [3],
+        "criticalStep": true
+      },
+      {
+        "stepNumber": 5,
+        "title": "Analyze Attack Vectors",
+        "description": "Identify attack type (volumetric, application layer, protocol) and source IPs.",
+        "assignedRole": "SECURITY_ANALYST",
+        "estimatedTime": "1 hour",
+        "dependencies": [2],
+        "criticalStep": false
+      },
+      {
+        "stepNumber": 6,
+        "title": "Implement Rate Limiting",
+        "description": "Configure rate limiting and traffic shaping to protect critical services.",
+        "assignedRole": "THIRD_PARTY_IT",
+        "estimatedTime": "1 hour",
+        "dependencies": [5],
+        "criticalStep": true
+      },
+      {
+        "stepNumber": 7,
+        "title": "Notify Stakeholders",
+        "description": "Inform legal counsel, insurance, and executive leadership about the attack.",
+        "assignedRole": "CIRT_LEADER",
+        "estimatedTime": "1 hour",
+        "dependencies": [2],
+        "criticalStep": true
+      },
+      {
+        "stepNumber": 8,
+        "title": "Invoke Business Continuity Plan",
+        "description": "Activate BCP to minimize business disruption and maintain critical operations.",
+        "assignedRole": "EXECUTIVE",
+        "estimatedTime": "4 hours",
+        "dependencies": [2],
+        "criticalStep": false
+      },
+      {
+        "stepNumber": 9,
+        "title": "Monitor and Adjust",
+        "description": "Continuously monitor attack patterns and adjust mitigation strategies as needed.",
+        "assignedRole": "SECURITY_ANALYST",
+        "estimatedTime": "Ongoing",
+        "dependencies": [4, 6],
+        "criticalStep": true
+      },
+      {
+        "stepNumber": 10,
+        "title": "Document and Report",
+        "description": "Record attack timeline, mitigation steps, and effectiveness for post-incident analysis.",
+        "assignedRole": "CIRT_LEADER",
+        "estimatedTime": "2 hours",
+        "dependencies": [9],
+        "criticalStep": false
+      },
+      {
+        "stepNumber": 11,
+        "title": "Lessons Learned",
+        "description": "Conduct post-incident review and implement improvements to DDoS defenses.",
+        "assignedRole": "CIRT_LEADER",
+        "estimatedTime": "6 hours",
+        "dependencies": [10],
+        "criticalStep": false
+      }
+    ]
+  },
+  {
+    "name": "ORNA Insider Threat Response",
+    "incidentType": "insider_threat",
+    "description": "ORNA playbook for responding to malicious or negligent insider threats",
+    "framework": "NIST CSF",
+    "tags": ["insider-threat", "data-loss", "employee", "orna"],
+    "steps": [
+      {
+        "stepNumber": 1,
+        "title": "Setup War Room",
+        "description": "Establish secure, confidential communication channel for sensitive insider threat investigation.",
+        "assignedRole": "CIRT_LEADER",
+        "estimatedTime": "3 hours",
+        "criticalStep": true
+      },
+      {
+        "stepNumber": 2,
+        "title": "Verify Threat Indicators",
+        "description": "Review logs, access patterns, and data movement to confirm suspicious insider activity.",
+        "assignedRole": "SECURITY_ANALYST",
+        "estimatedTime": "2 hours",
+        "dependencies": [1],
+        "criticalStep": true
+      },
+      {
+        "stepNumber": 3,
+        "title": "Consult Legal and HR",
+        "description": "Immediately involve legal counsel and HR to ensure compliance with employment and privacy laws.",
+        "assignedRole": "LEGAL",
+        "estimatedTime": "1 hour",
+        "dependencies": [2],
+        "criticalStep": true
+      },
+      {
+        "stepNumber": 4,
+        "title": "Preserve Evidence",
+        "description": "Collect evidence including logs, emails, file access records without alerting the suspect.",
+        "assignedRole": "SECURITY_ANALYST",
+        "estimatedTime": "4 hours",
+        "dependencies": [2],
+        "criticalStep": true
+      },
+      {
+        "stepNumber": 5,
+        "title": "Assess Data Exfiltration",
+        "description": "Determine what data was accessed, copied, or transmitted outside the organization.",
+        "assignedRole": "SECURITY_ANALYST",
+        "estimatedTime": "4 hours",
+        "dependencies": [4],
+        "criticalStep": true
+      },
+      {
+        "stepNumber": 6,
+        "title": "Restrict Access",
+        "description": "Revoke suspect's access to systems, networks, and physical facilities.",
+        "assignedRole": "IT_DIRECTOR",
+        "estimatedTime": "30 minutes",
+        "dependencies": [3],
+        "criticalStep": true
+      },
+      {
+        "stepNumber": 7,
+        "title": "Notify Insurance and Counsel",
+        "description": "Inform cybersecurity insurance provider and coordinate with legal counsel on next steps.",
+        "assignedRole": "CIRT_LEADER",
+        "estimatedTime": "1 hour",
+        "dependencies": [3],
+        "criticalStep": true
+      },
+      {
+        "stepNumber": 8,
+        "title": "Conduct Investigation",
+        "description": "Perform detailed investigation with HR, Legal, and potentially external forensics team.",
+        "assignedRole": "SECURITY_ANALYST",
+        "estimatedTime": "1-2 weeks",
+        "dependencies": [4, 5],
+        "criticalStep": true
+      },
+      {
+        "stepNumber": 9,
+        "title": "Employee Interview",
+        "description": "HR and Legal conduct formal interview with the employee if appropriate.",
+        "assignedRole": "HR",
+        "estimatedTime": "2 hours",
+        "dependencies": [8],
+        "criticalStep": false
+      },
+      {
+        "stepNumber": 10,
+        "title": "Determine Actions",
+        "description": "Decide on disciplinary action, termination, or legal prosecution based on findings.",
+        "assignedRole": "EXECUTIVE",
+        "estimatedTime": "4 hours",
+        "dependencies": [8, 9],
+        "criticalStep": true
+      },
+      {
+        "stepNumber": 11,
+        "title": "Remediation and Prevention",
+        "description": "Enhance monitoring, implement DLP solutions, and improve access controls.",
+        "assignedRole": "IT_DIRECTOR",
+        "estimatedTime": "2 weeks",
+        "dependencies": [10],
+        "criticalStep": false
+      },
+      {
+        "stepNumber": 12,
+        "title": "Lessons Learned",
+        "description": "Review incident, update insider threat program, and enhance detection capabilities.",
+        "assignedRole": "CIRT_LEADER",
+        "estimatedTime": "6 hours",
+        "dependencies": [11],
+        "criticalStep": false
+      }
+    ]
+  },
+  {
+    "name": "ORNA Suspected Virus Response",
+    "incidentType": "malware",
+    "description": "ORNA playbook for responding to suspected virus or malware infections",
+    "framework": "NIST CSF",
+    "tags": ["virus", "malware", "infection", "orna"],
+    "steps": [
+      {
+        "stepNumber": 1,
+        "title": "Report and Verify Virus",
+        "description": "User or EDR reports virus. Check for symptoms: slow performance, pop-ups, crashes, file modifications.",
+        "assignedRole": "THIRD_PARTY_IT",
+        "estimatedTime": "2 hours",
+        "criticalStep": true
+      },
+      {
+        "stepNumber": 2,
+        "title": "Run Initial Virus Scan",
+        "description": "Run BitDefender full system scan and RAM scan to detect and identify malware.",
+        "assignedRole": "THIRD_PARTY_IT",
+        "estimatedTime": "1 hour",
+        "dependencies": [1],
+        "criticalStep": true
+      },
+      {
+        "stepNumber": 3,
+        "title": "Disconnect Affected Systems",
+        "description": "Isolate infected systems from network to prevent spread. Preserve forensic evidence.",
+        "assignedRole": "CORE_CIRT_MEMBER",
+        "estimatedTime": "2 hours",
+        "dependencies": [2],
+        "criticalStep": true
+      },
+      {
+        "stepNumber": 4,
+        "title": "Scan Network for Additional Malware",
+        "description": "Ensure antivirus signatures are current. Scan all network assets for additional infections.",
+        "assignedRole": "CORE_CIRT_MEMBER",
+        "estimatedTime": "4 hours",
+        "dependencies": [3],
+        "criticalStep": true
+      },
+      {
+        "stepNumber": 5,
+        "title": "Protect Backups",
+        "description": "Analyze backup processes and verify backup integrity. Protect backups from infection.",
+        "assignedRole": "THIRD_PARTY_IT",
+        "estimatedTime": "2 hours",
+        "dependencies": [3],
+        "criticalStep": true
+      },
+      {
+        "stepNumber": 6,
+        "title": "Deep Scan to Remove Malware",
+        "description": "Run BitDefender deep scan and Malwarebytes scan. Remove malware through deletion or AV tools.",
+        "assignedRole": "THIRD_PARTY_IT",
+        "estimatedTime": "2 hours",
+        "dependencies": [4],
+        "criticalStep": true
+      },
+      {
+        "stepNumber": 7,
+        "title": "Restore from Backup if Needed",
+        "description": "If system is severely compromised, restore from clean backup (files or bare metal).",
+        "assignedRole": "THIRD_PARTY_IT",
+        "estimatedTime": "2-8 hours",
+        "dependencies": [5, 6],
+        "criticalStep": true
+      },
+      {
+        "stepNumber": 8,
+        "title": "Verify System is Clean",
+        "description": "Confirm malware is removed. Verify system functionality before reconnecting to network.",
+        "assignedRole": "CIRT_LEADER",
+        "estimatedTime": "1 hour",
+        "dependencies": [7],
+        "criticalStep": true
+      },
+      {
+        "stepNumber": 9,
+        "title": "Generate Incident Report",
+        "description": "Document virus type, entry vector, impact, remediation actions, and lessons learned.",
+        "assignedRole": "CIRT_LEADER",
+        "estimatedTime": "1 hour",
+        "dependencies": [8],
+        "criticalStep": false
+      },
+      {
+        "stepNumber": 10,
+        "title": "Lessons Learned Session",
+        "description": "Review incident to identify gaps and implement improvements to prevent future infections.",
+        "assignedRole": "CIRT_LEADER",
+        "estimatedTime": "6 hours",
+        "dependencies": [9],
+        "criticalStep": false
+      }
+    ]
+  },
+  {
+    "name": "ORNA General Vulnerability Response",
+    "incidentType": "unauthorized_access",
+    "description": "ORNA playbook for responding to general security vulnerabilities",
+    "framework": "NIST CSF",
+    "tags": ["vulnerability", "patch", "security", "orna"],
+    "steps": [
+      {
+        "stepNumber": 1,
+        "title": "Identify Vulnerability",
+        "description": "Vulnerability is reported or discovered through scanning. Document CVE, CVSS score, and affected systems.",
+        "assignedRole": "SECURITY_ANALYST",
+        "estimatedTime": "1 hour",
+        "criticalStep": true
+      },
+      {
+        "stepNumber": 2,
+        "title": "Assess Risk and Priority",
+        "description": "Evaluate severity, exploitability, and business impact. Prioritize remediation based on risk.",
+        "assignedRole": "SECURITY_ANALYST",
+        "estimatedTime": "2 hours",
+        "dependencies": [1],
+        "criticalStep": true
+      },
+      {
+        "stepNumber": 3,
+        "title": "Check for Active Exploitation",
+        "description": "Review logs and IDS/IPS alerts to determine if vulnerability is being actively exploited.",
+        "assignedRole": "SECURITY_ANALYST",
+        "estimatedTime": "2 hours",
+        "dependencies": [1],
+        "criticalStep": true
+      },
+      {
+        "stepNumber": 4,
+        "title": "Implement Temporary Mitigations",
+        "description": "Apply workarounds, firewall rules, or compensating controls while patch is being prepared.",
+        "assignedRole": "THIRD_PARTY_IT",
+        "estimatedTime": "2 hours",
+        "dependencies": [2],
+        "criticalStep": true
+      },
+      {
+        "stepNumber": 5,
+        "title": "Test Patch or Update",
+        "description": "Test patch in non-production environment to ensure compatibility and stability.",
+        "assignedRole": "THIRD_PARTY_IT",
+        "estimatedTime": "4 hours",
+        "dependencies": [2],
+        "criticalStep": false
+      },
+      {
+        "stepNumber": 6,
+        "title": "Deploy Patch",
+        "description": "Deploy tested patch to production systems. Start with less critical systems before production.",
+        "assignedRole": "THIRD_PARTY_IT",
+        "estimatedTime": "4 hours",
+        "dependencies": [5],
+        "criticalStep": true
+      },
+      {
+        "stepNumber": 7,
+        "title": "Verify Remediation",
+        "description": "Run vulnerability scan to confirm patch was successful and vulnerability is resolved.",
+        "assignedRole": "SECURITY_ANALYST",
+        "estimatedTime": "2 hours",
+        "dependencies": [6],
+        "criticalStep": true
+      },
+      {
+        "stepNumber": 8,
+        "title": "Document and Report",
+        "description": "Document vulnerability, remediation actions, and timeline. Report to stakeholders.",
+        "assignedRole": "SECURITY_ANALYST",
+        "estimatedTime": "1 hour",
+        "dependencies": [7],
+        "criticalStep": false
+      },
+      {
+        "stepNumber": 9,
+        "title": "Update Security Policies",
+        "description": "Review and update patch management and vulnerability management procedures.",
+        "assignedRole": "CIRT_LEADER",
+        "estimatedTime": "4 hours",
+        "dependencies": [8],
+        "criticalStep": false
+      }
+    ]
+  },
+  {
+    "name": "ORNA Network IoT Incident Response",
+    "incidentType": "unauthorized_access",
+    "description": "ORNA playbook for responding to IoT device security incidents",
+    "framework": "NIST CSF",
+    "tags": ["iot", "network", "devices", "orna"],
+    "steps": [
+      {
+        "stepNumber": 1,
+        "title": "Setup War Room",
+        "description": "Establish secure communication channel for IoT incident response team.",
+        "assignedRole": "CIRT_LEADER",
+        "estimatedTime": "3 hours",
+        "criticalStep": true
+      },
+      {
+        "stepNumber": 2,
+        "title": "Identify Compromised IoT Devices",
+        "description": "Detect anomalous IoT device behavior through network monitoring, logs, or reports.",
+        "assignedRole": "CIRT_LEADER",
+        "estimatedTime": "2 hours",
+        "dependencies": [1],
+        "criticalStep": true
+      },
+      {
+        "stepNumber": 3,
+        "title": "Isolate Affected IoT Devices",
+        "description": "Disconnect compromised IoT devices from network. Use network segmentation to contain threat.",
+        "assignedRole": "THIRD_PARTY_IT",
+        "estimatedTime": "1 hour",
+        "dependencies": [2],
+        "criticalStep": true
+      },
+      {
+        "stepNumber": 4,
+        "title": "Analyze IoT Device Compromise",
+        "description": "Examine device logs, firmware, and configuration to determine attack vector and scope.",
+        "assignedRole": "SECURITY_ANALYST",
+        "estimatedTime": "4 hours",
+        "dependencies": [3],
+        "criticalStep": true
+      },
+      {
+        "stepNumber": 5,
+        "title": "Check for Lateral Movement",
+        "description": "Investigate if attackers used IoT devices as pivot points to access other network resources.",
+        "assignedRole": "SECURITY_ANALYST",
+        "estimatedTime": "4 hours",
+        "dependencies": [4],
+        "criticalStep": true
+      },
+      {
+        "stepNumber": 6,
+        "title": "Reset and Update IoT Devices",
+        "description": "Factory reset compromised devices, update firmware, and change default credentials.",
+        "assignedRole": "THIRD_PARTY_IT",
+        "estimatedTime": "2 hours",
+        "dependencies": [4],
+        "criticalStep": true
+      },
+      {
+        "stepNumber": 7,
+        "title": "Implement IoT Security Controls",
+        "description": "Deploy network segmentation, disable unnecessary services, and implement monitoring.",
+        "assignedRole": "IT_DIRECTOR",
+        "estimatedTime": "8 hours",
+        "dependencies": [6],
+        "criticalStep": false
+      },
+      {
+        "stepNumber": 8,
+        "title": "Notify Stakeholders",
+        "description": "Inform legal counsel, insurance, and executive leadership about IoT security incident.",
+        "assignedRole": "CIRT_LEADER",
+        "estimatedTime": "1 hour",
+        "dependencies": [5],
+        "criticalStep": true
+      },
+      {
+        "stepNumber": 9,
+        "title": "Document and Report",
+        "description": "Create incident report documenting IoT device compromise, impact, and remediation.",
+        "assignedRole": "CIRT_LEADER",
+        "estimatedTime": "2 hours",
+        "dependencies": [7],
+        "criticalStep": false
+      },
+      {
+        "stepNumber": 10,
+        "title": "Lessons Learned",
+        "description": "Review IoT security posture and implement long-term improvements to IoT device management.",
+        "assignedRole": "CIRT_LEADER",
+        "estimatedTime": "6 hours",
+        "dependencies": [9],
+        "criticalStep": false
+      }
+    ]
+  },
+  {
+    "name": "ORNA Offboarding Employee",
+    "incidentType": "unauthorized_access",
+    "description": "ORNA playbook for secure employee offboarding process",
+    "framework": "NIST CSF",
+    "tags": ["offboarding", "employee", "access-control", "orna"],
+    "steps": [
+      {
+        "stepNumber": 1,
+        "title": "Receive Offboarding Notification",
+        "description": "HR notifies IT and security team of employee departure (termination, resignation, or retirement).",
+        "assignedRole": "HR",
+        "estimatedTime": "30 minutes",
+        "criticalStep": true
+      },
+      {
+        "stepNumber": 2,
+        "title": "Document Employee Access",
+        "description": "Create comprehensive list of employee's access rights, accounts, devices, and data access.",
+        "assignedRole": "IT_DIRECTOR",
+        "estimatedTime": "1 hour",
+        "dependencies": [1],
+        "criticalStep": true
+      },
+      {
+        "stepNumber": 3,
+        "title": "Revoke System Access",
+        "description": "Disable all user accounts, VPN access, email, and application access immediately.",
+        "assignedRole": "IT_DIRECTOR",
+        "estimatedTime": "1 hour",
+        "dependencies": [2],
+        "criticalStep": true
+      },
+      {
+        "stepNumber": 4,
+        "title": "Revoke Physical Access",
+        "description": "Deactivate building access cards, collect keys, and update physical security systems.",
+        "assignedRole": "HR",
+        "estimatedTime": "30 minutes",
+        "dependencies": [1],
+        "criticalStep": true
+      },
+      {
+        "stepNumber": 5,
+        "title": "Collect Company Assets",
+        "description": "Retrieve laptops, mobile devices, access tokens, RSA keys, and other company property.",
+        "assignedRole": "HR",
+        "estimatedTime": "1 hour",
+        "dependencies": [1],
+        "criticalStep": true
+      },
+      {
+        "stepNumber": 6,
+        "title": "Backup and Transfer Data",
+        "description": "Backup employee's work data and transfer ownership to manager or team members.",
+        "assignedRole": "IT_DIRECTOR",
+        "estimatedTime": "2 hours",
+        "dependencies": [3],
+        "criticalStep": false
+      },
+      {
+        "stepNumber": 7,
+        "title": "Review Data Access Logs",
+        "description": "Review employee's recent access logs for suspicious activity or data exfiltration.",
+        "assignedRole": "SECURITY_ANALYST",
+        "estimatedTime": "2 hours",
+        "dependencies": [2],
+        "criticalStep": true
+      },
+      {
+        "stepNumber": 8,
+        "title": "Conduct Exit Interview",
+        "description": "HR conducts exit interview, reminds employee of confidentiality obligations and NDA.",
+        "assignedRole": "HR",
+        "estimatedTime": "1 hour",
+        "dependencies": [5],
+        "criticalStep": false
+      },
+      {
+        "stepNumber": 9,
+        "title": "Reset Shared Credentials",
+        "description": "Change passwords for any shared accounts or services the employee had access to.",
+        "assignedRole": "IT_DIRECTOR",
+        "estimatedTime": "1 hour",
+        "dependencies": [3],
+        "criticalStep": true
+      },
+      {
+        "stepNumber": 10,
+        "title": "Monitor for Post-Departure Activity",
+        "description": "Monitor for unauthorized access attempts or suspicious activity for 30-60 days post-departure.",
+        "assignedRole": "SECURITY_ANALYST",
+        "estimatedTime": "Ongoing",
+        "dependencies": [3],
+        "criticalStep": false
+      },
+      {
+        "stepNumber": 11,
+        "title": "Document Offboarding Completion",
+        "description": "Create offboarding checklist completion report for HR and management records.",
+        "assignedRole": "IT_DIRECTOR",
+        "estimatedTime": "30 minutes",
+        "dependencies": [9],
+        "criticalStep": false
+      }
+    ]
+  },
+  {
+    "name": "ORNA Other/Hybrid Incident Response",
+    "incidentType": "custom",
+    "description": "ORNA playbook for hybrid or difficult-to-identify incident types",
+    "framework": "NIST CSF",
+    "tags": ["hybrid", "unknown", "custom", "orna"],
+    "steps": [
+      {
+        "stepNumber": 1,
+        "title": "Setup War Room",
+        "description": "Establish secure communication channel for incident response team to handle unknown threat.",
+        "assignedRole": "CIRT_LEADER",
+        "estimatedTime": "3 hours",
+        "criticalStep": true
+      },
+      {
+        "stepNumber": 2,
+        "title": "Initial Triage and Classification",
+        "description": "Collect all available information, attempt to classify incident type, and determine severity.",
+        "assignedRole": "CIRT_LEADER",
+        "estimatedTime": "2 hours",
+        "dependencies": [1],
+        "criticalStep": true
+      },
+      {
+        "stepNumber": 3,
+        "title": "Preserve Evidence",
+        "description": "Collect and preserve all available evidence before it's lost or contaminated.",
+        "assignedRole": "SECURITY_ANALYST",
+        "estimatedTime": "2 hours",
+        "dependencies": [2],
+        "criticalStep": true
+      },
+      {
+        "stepNumber": 4,
+        "title": "Determine Root Cause",
+        "description": "Investigate to identify the root cause, attack vector, and specific threat type.",
+        "assignedRole": "SECURITY_ANALYST",
+        "estimatedTime": "4 hours",
+        "dependencies": [3],
+        "criticalStep": true
+      },
+      {
+        "stepNumber": 5,
+        "title": "Implement Containment Measures",
+        "description": "Based on findings, implement appropriate containment to prevent further damage.",
+        "assignedRole": "CORE_CIRT_MEMBER",
+        "estimatedTime": "2 hours",
+        "dependencies": [4],
+        "criticalStep": true
+      },
+      {
+        "stepNumber": 6,
+        "title": "Notify Stakeholders",
+        "description": "Inform legal counsel, insurance, and executive leadership about the incident.",
+        "assignedRole": "CIRT_LEADER",
+        "estimatedTime": "1 hour",
+        "dependencies": [4],
+        "criticalStep": true
+      },
+      {
+        "stepNumber": 7,
+        "title": "Issue Communications",
+        "description": "Prepare internal and external communications as appropriate for the incident type.",
+        "assignedRole": "COMMUNICATIONS_LEADER",
+        "estimatedTime": "2 hours",
+        "dependencies": [6],
+        "criticalStep": false
+      },
+      {
+        "stepNumber": 8,
+        "title": "Invoke Business Continuity Plan",
+        "description": "Activate BCP if incident impacts business operations.",
+        "assignedRole": "EXECUTIVE",
+        "estimatedTime": "4 hours",
+        "dependencies": [2],
+        "criticalStep": false
+      },
+      {
+        "stepNumber": 9,
+        "title": "Eradicate Threat",
+        "description": "Remove all traces of the threat from affected systems based on identified threat type.",
+        "assignedRole": "CORE_CIRT_MEMBER",
+        "estimatedTime": "8 hours",
+        "dependencies": [5],
+        "criticalStep": true
+      },
+      {
+        "stepNumber": 10,
+        "title": "Restore Operations",
+        "description": "Restore affected systems and services to normal operation.",
+        "assignedRole": "IT_DIRECTOR",
+        "estimatedTime": "4-24 hours",
+        "dependencies": [9],
+        "criticalStep": true
+      },
+      {
+        "stepNumber": 11,
+        "title": "Generate Incident Report",
+        "description": "Document the hybrid incident, classification, response actions, and outcomes.",
+        "assignedRole": "CIRT_LEADER",
+        "estimatedTime": "2 hours",
+        "dependencies": [10],
+        "criticalStep": false
+      },
+      {
+        "stepNumber": 12,
+        "title": "Lessons Learned",
+        "description": "Review incident response effectiveness and update procedures for similar future incidents.",
+        "assignedRole": "CIRT_LEADER",
+        "estimatedTime": "6 hours",
+        "dependencies": [11],
+        "criticalStep": false
+      }
+    ]
+  },
+  {
+    "name": "ORNA 3rd Party Breach Response",
+    "incidentType": "data_breach",
+    "description": "ORNA playbook for responding to third-party vendor or supplier data breaches",
+    "framework": "NIST CSF, GDPR",
+    "tags": ["third-party", "vendor", "data-breach", "supply-chain", "orna"],
+    "steps": [
+      {
+        "stepNumber": 1,
+        "title": "Receive Third-Party Breach Notification",
+        "description": "Vendor notifies organization of data breach. Document notification details and affected data.",
+        "assignedRole": "CIRT_LEADER",
+        "estimatedTime": "1 hour",
+        "criticalStep": true
+      },
+      {
+        "stepNumber": 2,
+        "title": "Setup War Room",
+        "description": "Establish secure communication channel for third-party breach response team.",
+        "assignedRole": "CIRT_LEADER",
+        "estimatedTime": "3 hours",
+        "dependencies": [1],
+        "criticalStep": true
+      },
+      {
+        "stepNumber": 3,
+        "title": "Assess Scope and Impact",
+        "description": "Determine what organizational data was affected, number of records, and sensitivity level.",
+        "assignedRole": "CIRT_LEADER",
+        "estimatedTime": "4 hours",
+        "dependencies": [1],
+        "criticalStep": true
+      },
+      {
+        "stepNumber": 4,
+        "title": "Verify Vendor Containment",
+        "description": "Confirm vendor has contained the breach and taken appropriate security measures.",
+        "assignedRole": "SECURITY_ANALYST",
+        "estimatedTime": "2 hours",
+        "dependencies": [3],
+        "criticalStep": true
+      },
+      {
+        "stepNumber": 5,
+        "title": "Review Vendor Contracts and SLAs",
+        "description": "Review contracts for breach notification requirements, liability, and remediation obligations.",
+        "assignedRole": "LEGAL",
+        "estimatedTime": "2 hours",
+        "dependencies": [1],
+        "criticalStep": true
+      },
+      {
+        "stepNumber": 6,
+        "title": "Determine Notification Requirements",
+        "description": "Identify legal obligations for breach notification under GDPR, CCPA, PIPEDA, etc.",
+        "assignedRole": "LEGAL",
+        "estimatedTime": "4 hours",
+        "dependencies": [3, 5],
+        "criticalStep": true
+      },
+      {
+        "stepNumber": 7,
+        "title": "Notify Regulatory Authorities",
+        "description": "Report third-party breach to required authorities within mandated timeframes.",
+        "assignedRole": "LEGAL",
+        "estimatedTime": "4 hours",
+        "dependencies": [6],
+        "criticalStep": true
+      },
+      {
+        "stepNumber": 8,
+        "title": "Notify Affected Individuals",
+        "description": "Prepare and send notification to affected individuals with details and remediation steps.",
+        "assignedRole": "LEGAL",
+        "estimatedTime": "8 hours",
+        "dependencies": [6],
+        "criticalStep": true
+      },
+      {
+        "stepNumber": 9,
+        "title": "Notify Insurance Provider",
+        "description": "Inform cybersecurity insurance provider about third-party breach and potential claims.",
+        "assignedRole": "CIRT_LEADER",
+        "estimatedTime": "1 hour",
+        "dependencies": [3],
+        "criticalStep": true
+      },
+      {
+        "stepNumber": 10,
+        "title": "Public Communication",
+        "description": "Prepare public statement if required. Coordinate messaging with vendor and PR team.",
+        "assignedRole": "COMMUNICATIONS_LEADER",
+        "estimatedTime": "4 hours",
+        "dependencies": [6],
+        "criticalStep": false
+      },
+      {
+        "stepNumber": 11,
+        "title": "Offer Credit Monitoring",
+        "description": "Arrange credit monitoring services for affected individuals if PII was compromised.",
+        "assignedRole": "LEGAL",
+        "estimatedTime": "8 hours",
+        "dependencies": [8],
+        "criticalStep": false
+      },
+      {
+        "stepNumber": 12,
+        "title": "Review Vendor Relationship",
+        "description": "Assess vendor's security posture and determine if relationship should continue.",
+        "assignedRole": "EXECUTIVE",
+        "estimatedTime": "4 hours",
+        "dependencies": [4],
+        "criticalStep": true
+      },
+      {
+        "stepNumber": 13,
+        "title": "Enhance Third-Party Risk Management",
+        "description": "Update vendor risk assessment process and security requirements in contracts.",
+        "assignedRole": "CIRT_LEADER",
+        "estimatedTime": "8 hours",
+        "dependencies": [12],
+        "criticalStep": false
+      },
+      {
+        "stepNumber": 14,
+        "title": "Document and Report",
+        "description": "Create comprehensive report of third-party breach impact and organizational response.",
+        "assignedRole": "CIRT_LEADER",
+        "estimatedTime": "4 hours",
+        "dependencies": [12],
+        "criticalStep": false
+      },
+      {
+        "stepNumber": 15,
+        "title": "Lessons Learned",
+        "description": "Review third-party breach response and improve vendor risk management program.",
+        "assignedRole": "CIRT_LEADER",
+        "estimatedTime": "6 hours",
+        "dependencies": [14],
+        "criticalStep": false
+      }
+    ]
+  },
+  {
+    "name": "ORNA Power Outage Response",
+    "incidentType": "custom",
+    "description": "ORNA playbook for responding to power outages and ensuring business continuity",
+    "framework": "NIST CSF",
+    "tags": ["power-outage", "business-continuity", "availability", "orna"],
+    "steps": [
+      {
+        "stepNumber": 1,
+        "title": "Confirm Power Outage",
+        "description": "Verify power outage affecting data center, office, or facilities. Determine scope and estimated duration.",
+        "assignedRole": "IT_DIRECTOR",
+        "estimatedTime": "30 minutes",
+        "criticalStep": true
+      },
+      {
+        "stepNumber": 2,
+        "title": "Activate UPS and Backup Power",
+        "description": "Verify UPS systems activated. Start backup generators if available and outage is extended.",
+        "assignedRole": "IT_DIRECTOR",
+        "estimatedTime": "30 minutes",
+        "dependencies": [1],
+        "criticalStep": true
+      },
+      {
+        "stepNumber": 3,
+        "title": "Assess Impact on Critical Systems",
+        "description": "Determine which systems are affected and prioritize restoration based on business criticality.",
+        "assignedRole": "IT_DIRECTOR",
+        "estimatedTime": "1 hour",
+        "dependencies": [1],
+        "criticalStep": true
+      },
+      {
+        "stepNumber": 4,
+        "title": "Notify Stakeholders",
+        "description": "Inform executive leadership, employees, and customers about power outage and expected impact.",
+        "assignedRole": "COMMUNICATIONS_LEADER",
+        "estimatedTime": "1 hour",
+        "dependencies": [3],
+        "criticalStep": true
+      },
+      {
+        "stepNumber": 5,
+        "title": "Invoke Business Continuity Plan",
+        "description": "Activate BCP procedures for power outage. Implement workarounds and alternate operations.",
+        "assignedRole": "EXECUTIVE",
+        "estimatedTime": "2 hours",
+        "dependencies": [3],
+        "criticalStep": true
+      },
+      {
+        "stepNumber": 6,
+        "title": "Coordinate with Utility Provider",
+        "description": "Contact electric utility to get updates on restoration timeline and coordinate response.",
+        "assignedRole": "IT_DIRECTOR",
+        "estimatedTime": "Ongoing",
+        "dependencies": [1],
+        "criticalStep": false
+      },
+      {
+        "stepNumber": 7,
+        "title": "Monitor Battery and Generator Status",
+        "description": "Continuously monitor UPS battery levels and generator fuel. Plan for extended outage if needed.",
+        "assignedRole": "IT_DIRECTOR",
+        "estimatedTime": "Ongoing",
+        "dependencies": [2],
+        "criticalStep": true
+      },
+      {
+        "stepNumber": 8,
+        "title": "Perform Controlled Shutdown",
+        "description": "If backup power is depleting, perform graceful shutdown of systems to prevent data loss.",
+        "assignedRole": "IT_DIRECTOR",
+        "estimatedTime": "1 hour",
+        "dependencies": [7],
+        "criticalStep": true
+      },
+      {
+        "stepNumber": 9,
+        "title": "Restore Power and Systems",
+        "description": "Once power is restored, systematically bring systems back online and verify functionality.",
+        "assignedRole": "IT_DIRECTOR",
+        "estimatedTime": "2-4 hours",
+        "dependencies": [6],
+        "criticalStep": true
+      },
+      {
+        "stepNumber": 10,
+        "title": "Verify System Integrity",
+        "description": "Check all systems for data corruption, service availability, and proper operation.",
+        "assignedRole": "IT_DIRECTOR",
+        "estimatedTime": "2 hours",
+        "dependencies": [9],
+        "criticalStep": true
+      },
+      {
+        "stepNumber": 11,
+        "title": "Notify Stakeholders of Restoration",
+        "description": "Inform stakeholders that power and systems are restored and operations are normal.",
+        "assignedRole": "COMMUNICATIONS_LEADER",
+        "estimatedTime": "30 minutes",
+        "dependencies": [10],
+        "criticalStep": false
+      },
+      {
+        "stepNumber": 12,
+        "title": "Document Incident",
+        "description": "Create report documenting outage duration, impact, response actions, and system restoration.",
+        "assignedRole": "IT_DIRECTOR",
+        "estimatedTime": "2 hours",
+        "dependencies": [10],
+        "criticalStep": false
+      },
+      {
+        "stepNumber": 13,
+        "title": "Lessons Learned",
+        "description": "Review power outage response, test BCP effectiveness, and improve backup power capabilities.",
+        "assignedRole": "CIRT_LEADER",
+        "estimatedTime": "4 hours",
+        "dependencies": [12],
+        "criticalStep": false
+      }
+    ]
+  }
+]
