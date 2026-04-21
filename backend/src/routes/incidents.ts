@@ -253,7 +253,7 @@ router.post('/:id/restore', authenticate, async (req: AuthRequest, res: Response
     }
 
     // Restore to previous status or default to 'detected'
-    const restoredStatus = incident.resolvedAt ? 'resolved' : 'investigating';
+    const restoredStatus = incident.resolvedAt ? IncidentStatus.RESOLVED : IncidentStatus.INVESTIGATING;
 
     await incident.update({
       status: restoredStatus,
@@ -284,10 +284,11 @@ router.delete('/:id', authenticate, async (req: AuthRequest, res: Response): Pro
     }
 
     // Check if incident is in active response (has active playbook)
-    if (incident.status === IncidentStatus.INVESTIGATING || incident.status === 'investigating') {
+    if (incident.status === IncidentStatus.INVESTIGATING) {
       res.status(400).json({ 
         error: 'Cannot delete an incident that is in active response. Close or archive it first.' 
       });
+      return;
     }
 
     const incidentId = incident.id;
